@@ -9,7 +9,7 @@ public class ClassType extends Type {
 
     private String name;
     private InstanceType canon;
-    private Type superclass;
+    public Type superclass;
 
 
     public ClassType(@NotNull String name, @Nullable Scope parent) {

@@ -143,38 +143,70 @@ public class FunType extends Type {
     }
 
 
-    private boolean subsumed(Type type1, Type type2) {
+    private Type subsumed(Type type1, Type type2) {
         return subsumedInner(type1, type2, new TypeStack());
     }
 
 
-    private boolean subsumedInner(Type type1, Type type2, TypeStack typeStack) {
+    private Type subsumedInner(Type type1, Type type2, TypeStack typeStack) {
         if (typeStack.contains(type1, type2)) {
-            return true;
+            return null;
         }
 
         if (type1.isUnknownType() || type1 == Analyzer.self.builtins.None || type1.equals(type2)) {
-            return true;
+            return type2;
+        }
+
+        if (type1.isInstanceType() && type2.isInstanceType()) {
+            InstanceType it1 = type1.asInstanceType();
+            InstanceType it2 = type2.asInstanceType();
+            Type cls1 = it1.getClassType();
+            Type cls2 = it2.getClassType();
+            if (cls1.isClassType() && cls2.isClassType()) {
+                ClassType c1 = cls1.asClassType();
+                ClassType c2 = cls2.asClassType();
+                if (c1.superclass != null && c1.superclass.equals(c2)) {
+                    return it2;
+                } else if (c2.superclass != null && c2.superclass.equals(c1)) {
+                    return it1;
+                } else if (!c1.equals(c2) &&
+                        c1.superclass != null &&
+                        c2.superclass != null &&
+                        c1.superclass.equals(c2.superclass)) {
+                    return new InstanceType(c1.superclass);
+                }
+            }
+
         }
 
         if (type1 instanceof TupleType && type2 instanceof TupleType) {
             List<Type> elems1 = ((TupleType) type1).getElementTypes();
             List<Type> elems2 = ((TupleType) type2).getElementTypes();
+            TupleType ret = new TupleType();
 
             if (elems1.size() == elems2.size()) {
                 typeStack.push(type1, type2);
                 for (int i = 0; i < elems1.size(); i++) {
-                    if (!subsumedInner(elems1.get(i), elems2.get(i), typeStack)) {
+                    Type t = subsumedInner(elems1.get(i), elems2.get(i), typeStack);
+                    if (t == null) {
                         typeStack.pop(type1, type2);
-                        return false;
+                        return null;
+                    } else {
+                        ret.add(t);
                     }
                 }
             }
 
-            return true;
+            return ret;
         }
 
-        return false;
+        if (type1 instanceof ListType && type2 instanceof ListType) {
+            return subsumedInner(type1.asListType().toTupleType(),
+                    type2.asListType().toTupleType(),
+                    typeStack);
+        }
+
+        return null;
     }
 
 
@@ -182,17 +214,22 @@ public class FunType extends Type {
         Map<Type, Type> ret = new HashMap<>();
 
         for (Map.Entry<Type, Type> e1 : arrows.entrySet()) {
-            boolean subsumed = false;
+            Type subsumedType = null;
 
             for (Map.Entry<Type, Type> e2 : arrows.entrySet()) {
-                if (e1 != e2 && subsumed(e1.getKey(), e2.getKey())) {
-                    subsumed = true;
-                    break;
+
+                if (e1 != e2) {
+                    subsumedType = subsumed(e1.getKey(), e2.getKey());
+                    if (subsumedType != null) {
+                        break;
+                    }
                 }
             }
 
-            if (!subsumed) {
+            if (subsumedType == null) {
                 ret.put(e1.getKey(), e1.getValue());
+            } else {
+                ret.put(subsumedType, e1.getValue());
             }
         }
 
