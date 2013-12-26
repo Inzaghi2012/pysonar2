@@ -21,7 +21,7 @@ public class State {
     }
 
 
-    @Nullable
+    @NotNull
     public Map<String, List<Binding>> table = new HashMap<>();
     @Nullable
     public State parent;      // all are non-null except global table
@@ -50,10 +50,8 @@ public class State {
 
 
     public State(@NotNull State s) {
-        if (s.table != null) {
-            this.table = new HashMap<>();
-            this.table.putAll(s.table);
-        }
+        this.table = new HashMap<>();
+        this.table.putAll(s.table);
         this.parent = s.parent;
         this.stateType = s.stateType;
         this.forwarding = s.forwarding;
@@ -160,9 +158,7 @@ public class State {
 
 
     public void remove(String id) {
-        if (table != null) {
-            table.remove(id);
-        }
+        table.remove(id);
     }
 
 
@@ -211,11 +207,7 @@ public class State {
      */
     @Nullable
     public List<Binding> lookupLocal(String name) {
-        if (table == null) {
-            return null;
-        } else {
-            return table.get(name);
-        }
+        return table.get(name);
     }
 
 
@@ -386,38 +378,28 @@ public class State {
 
     @NotNull
     public Set<String> keySet() {
-        if (table != null) {
-            return table.keySet();
-        } else {
-            return Collections.emptySet();
-        }
+        return table.keySet();
     }
 
 
     @NotNull
     public Collection<Binding> values() {
-        if (table != null) {
-            List<Binding> ret = new ArrayList<>();
-            for (List<Binding> bs : table.values()) {
-                ret.addAll(bs);
-            }
-            return ret;
+        List<Binding> ret = new ArrayList<>();
+        for (List<Binding> bs : table.values()) {
+            ret.addAll(bs);
         }
-        return Collections.emptySet();
+        return ret;
     }
 
 
     @NotNull
     public Set<Entry<String, List<Binding>>> entrySet() {
-        if (table != null) {
-            return table.entrySet();
-        }
-        return Collections.emptySet();
+        return table.entrySet();
     }
 
 
     public boolean isEmpty() {
-        return table == null || table.isEmpty();
+        return table.isEmpty();
     }
 
 
@@ -434,8 +416,7 @@ public class State {
     @NotNull
     @Override
     public String toString() {
-        return "<State:" + stateType + ":" +
-                (table == null ? "{}" : table.keySet()) + ">";
+        return "(state:" + stateType + ":" + table.keySet() + ")";
     }
 
 }
