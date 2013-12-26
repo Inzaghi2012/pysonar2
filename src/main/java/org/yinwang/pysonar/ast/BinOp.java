@@ -47,9 +47,9 @@ public class BinOp extends Node {
                 return Type.TRUE;
             } else if (ltype.isFalse() || rtype.isFalse()) {
                 return Type.FALSE;
-            } else if (ltype.isUndecidedBool() && rtype.isUndecidedBool()) {
-                State falseState = State.merge(ltype.asBool().s2, rtype.asBool().s2);
-                return new BoolType(rtype.asBool().s1, falseState);
+//            } else if (ltype.isUndecidedBool() && rtype.isUndecidedBool()) {
+//                State falseState = State.merge(ltype.asBool().s2, rtype.asBool().s2);
+//                return new BoolType(rtype.asBool().s1, falseState);
             } else {
                 return Type.BOOL;
             }
@@ -66,9 +66,9 @@ public class BinOp extends Node {
                 return Type.TRUE;
             } else if (ltype.isFalse() && rtype.isFalse()) {
                 return Type.FALSE;
-            } else if (ltype.isUndecidedBool() && rtype.isUndecidedBool()) {
-                State trueState = State.merge(ltype.asBool().s1, rtype.asBool().s1);
-                return new BoolType(trueState, rtype.asBool().s2);
+//            } else if (ltype.isUndecidedBool() && rtype.isUndecidedBool()) {
+//                State trueState = State.merge(ltype.asBool().s1, rtype.asBool().s1);
+//                return new BoolType(trueState, rtype.asBool().s2);
             } else {
                 return Type.BOOL;
             }
@@ -142,11 +142,10 @@ public class BinOp extends Node {
                             falseType.setLower(rightNum.lower);
                             String id = leftNode.asName().id;
 
-                            for (Binding b : s.lookup(id)) {
-                                Node loc = b.node;
-                                s1.update(id, new Binding(id, loc, trueType, b.kind));
-                                s2.update(id, new Binding(id, loc, falseType, b.kind));
-                            }
+                            Binding b = s.lookup(id);
+                            Node loc = b.node;
+                            s1.update(id, new Binding(id, loc, trueType, b.kind));
+                            s2.update(id, new Binding(id, loc, falseType, b.kind));
                         }
                         return new BoolType(s1, s2);
                     }
@@ -172,11 +171,10 @@ public class BinOp extends Node {
                             falseType.setUpper(rightNum.upper);
                             String id = leftNode.asName().id;
 
-                            for (Binding b : s.lookup(id)) {
-                                Node loc = b.node;
-                                s1.update(id, new Binding(id, loc, trueType, b.kind));
-                                s2.update(id, new Binding(id, loc, falseType, b.kind));
-                            }
+                            Binding b = s.lookup(id);
+                            Node loc = b.node;
+                            s1.update(id, new Binding(id, loc, trueType, b.kind));
+                            s2.update(id, new Binding(id, loc, falseType, b.kind));
                         }
                         return new BoolType(s1, s2);
                     }

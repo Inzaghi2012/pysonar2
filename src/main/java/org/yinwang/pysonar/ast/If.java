@@ -56,8 +56,8 @@ public class If extends Node {
             s.overwrite(s1);
         } else if (conditionType.isFalse() && cont2) {
             s.overwrite(s2);
-        } else if (cont1 && cont2) {
-            s.overwrite(State.merge(s1, s2));
+//        } else if (cont1 && cont2) {
+//            s.overwrite(State.merge(s1, s2));
         } else if (cont1) {
             s.overwrite(s1);
         } else if (cont2) {

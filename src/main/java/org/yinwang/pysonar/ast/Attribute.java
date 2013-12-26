@@ -8,7 +8,6 @@ import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.Type;
 import org.yinwang.pysonar.types.UnionType;
 
-import java.util.List;
 import java.util.Set;
 
 import static org.yinwang.pysonar.Binding.Kind.ATTRIBUTE;
@@ -81,23 +80,20 @@ public class Attribute extends Node {
 
 
     private Type getAttrType(@NotNull Type targetType) {
-        List<Binding> bs = targetType.table.lookupAttr(attr.id);
-        if (bs == null) {
+        Binding b = targetType.table.lookupAttr(attr.id);
+        if (b == null) {
             Analyzer.self.putProblem(attr, "attribute not found in type: " + targetType);
             Type t = Type.UNKNOWN;
             t.table.setPath(targetType.table.extendPath(attr.id));
             return t;
         } else {
-            for (Binding b : bs) {
-                Analyzer.self.putRef(attr, b);
-                if (parent != null && parent.isCall() &&
-                        b.type.isFuncType() && targetType.isInstanceType())
-                {  // method call
-                    b.type.asFuncType().setSelfType(targetType);
-                }
+            Analyzer.self.putRef(attr, b);
+            if (parent != null && parent.isCall() &&
+                    b.type.isFuncType() && targetType.isInstanceType())
+            {  // method call
+                b.type.asFuncType().setSelfType(targetType);
             }
-
-            return State.makeUnion(bs);
+            return b.type;
         }
     }
 
@@ -105,7 +101,7 @@ public class Attribute extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "<Attribute:" + start + ":" + target + "." + attr.id + ">";
+        return "(attr:" + start + ":" + target + "." + attr.id + ")";
     }
 
 }

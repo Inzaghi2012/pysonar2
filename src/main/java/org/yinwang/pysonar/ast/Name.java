@@ -63,11 +63,11 @@ public class Name extends Node {
     @NotNull
     @Override
     public Type transform(@NotNull State s) {
-        List<Binding> b = s.lookup(id);
+        Binding b = s.lookup(id);
         if (b != null) {
             Analyzer.self.putRef(this, b);
             Analyzer.self.stats.inc("resolved");
-            return State.makeUnion(b);
+            return b.type;
         } else if (id.equals("True") || id.equals("False")) {
             return Type.BOOL;
         } else {

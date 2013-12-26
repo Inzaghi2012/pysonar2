@@ -31,9 +31,9 @@ public class Block extends Node {
             if (n.isGlobal()) {
                 for (Name name : n.asGlobal().names) {
                     state.addGlobalName(name.id);
-                    List<Binding> nb = state.lookup(name.id);
-                    if (nb != null) {
-                        Analyzer.self.putRef(name, nb);
+                    Binding b = state.lookup(name.id);
+                    if (b != null) {
+                        Analyzer.self.putRef(name, b);
                     }
                 }
             }

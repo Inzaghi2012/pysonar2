@@ -45,14 +45,14 @@ public class ImportFrom extends Node {
         } else {
             for (Alias a : names) {
                 Name first = a.name.get(0);
-                List<Binding> bs = mod.table.lookup(first.id);
-                if (bs != null) {
+                Binding b = mod.table.lookup(first.id);
+                if (b != null) {
                     if (a.asname != null) {
-                        s.update(a.asname.id, bs);
-                        Analyzer.self.putRef(a.asname, bs);
+                        s.update(a.asname.id, b);
+                        Analyzer.self.putRef(a.asname, b);
                     } else {
-                        s.update(first.id, bs);
-                        Analyzer.self.putRef(first, bs);
+                        s.update(first.id, b);
+                        Analyzer.self.putRef(first, b);
                     }
                 } else {
                     List<Name> ext = new ArrayList<>(module);
@@ -103,7 +103,7 @@ public class ImportFrom extends Node {
 
         if (!names.isEmpty()) {
             for (String name : names) {
-                List<Binding> b = mt.table.lookupLocal(name);
+                Binding b = mt.table.lookupLocal(name);
                 if (b != null) {
                     s.update(name, b);
                 } else {
@@ -117,7 +117,7 @@ public class ImportFrom extends Node {
             }
         } else {
             // Fall back to importing all names not starting with "_".
-            for (Entry<String, List<Binding>> e : mt.table.entrySet()) {
+            for (Entry<String, Binding> e : mt.table.entrySet()) {
                 if (!e.getKey().startsWith("_")) {
                     s.update(e.getKey(), e.getValue());
                 }
