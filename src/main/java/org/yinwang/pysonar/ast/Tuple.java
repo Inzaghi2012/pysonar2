@@ -28,13 +28,6 @@ public class Tuple extends Sequence {
 
     @NotNull
     @Override
-    public String toString() {
-        return "<Tuple:" + start + ":" + elts + ">";
-    }
-
-
-    @NotNull
-    @Override
     public String toDisplay() {
         StringBuilder sb = new StringBuilder();
         sb.append("(");
@@ -50,6 +43,13 @@ public class Tuple extends Sequence {
 
         sb.append(")");
         return sb.toString();
+    }
+
+
+    @NotNull
+    @Override
+    public String toString() {
+        return "(tuple:" + elts + ")";
     }
 
 }

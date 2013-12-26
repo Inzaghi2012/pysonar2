@@ -40,7 +40,7 @@ public class With extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "<With:" + items + ":" + body + ">";
+        return "(with:" + items + ":" + body + ")";
     }
 
 }

@@ -33,7 +33,7 @@ public class ExtSlice extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "<ExtSlice:" + dims + ">";
+        return "(extslice:" + dims + ")";
     }
 
 }

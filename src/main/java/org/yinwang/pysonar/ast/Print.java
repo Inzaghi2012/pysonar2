@@ -38,7 +38,7 @@ public class Print extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "<Print:" + values + ">";
+        return "(print:" + values + ")";
     }
 
 }

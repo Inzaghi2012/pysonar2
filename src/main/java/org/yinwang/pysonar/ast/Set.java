@@ -38,7 +38,7 @@ public class Set extends Sequence {
     @NotNull
     @Override
     public String toString() {
-        return "<List:" + start + ":" + elts + ">";
+        return "(list:" + elts + ")";
     }
 
 }

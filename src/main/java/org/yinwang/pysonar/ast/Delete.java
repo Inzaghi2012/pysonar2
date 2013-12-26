@@ -35,7 +35,7 @@ public class Delete extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "<Delete:" + targets + ">";
+        return "(delete:" + targets + ")";
     }
 
 }

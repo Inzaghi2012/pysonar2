@@ -35,7 +35,7 @@ public class Assert extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "<Assert:" + test + ":" + msg + ">";
+        return "(assert:" + test + ":" + msg + ")";
     }
 
 }

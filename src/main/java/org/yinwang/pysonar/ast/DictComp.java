@@ -43,7 +43,7 @@ public class DictComp extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "<DictComp:" + start + ":" + key + ">";
+        return "(dictcomp:" + key + ":" + value + ")";
     }
 
 }

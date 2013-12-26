@@ -30,7 +30,7 @@ public class Global extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "<Global:" + names + ">";
+        return "(global:" + names + ")";
     }
 
 }

@@ -29,7 +29,7 @@ public class PyComplex extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "(" + real + "+" + imag + "j)";
+        return "(complex:" + real + "+" + imag + "j)";
     }
 
 }

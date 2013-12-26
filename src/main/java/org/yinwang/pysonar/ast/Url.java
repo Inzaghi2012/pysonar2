@@ -29,7 +29,7 @@ public class Url extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "<Url:\"" + url + "\">";
+        return "(url:\"" + url + "\")";
     }
 
 }

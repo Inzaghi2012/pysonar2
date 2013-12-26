@@ -32,7 +32,7 @@ public class Alias extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "<Alias:" + name + " as " + asname + ">";
+        return "(alias:" + name + " as " + asname + ")";
     }
 
 }

@@ -100,7 +100,7 @@ public class Function extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "(func:" + start + ":" + name + ")";
+        return "(func:" + name + ")";
     }
 
 }

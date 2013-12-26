@@ -40,7 +40,7 @@ public class Exec extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "<Exec:" + start + ":" + end + ">";
+        return "(exec:" + start + ":" + end + ")";
     }
 
 }

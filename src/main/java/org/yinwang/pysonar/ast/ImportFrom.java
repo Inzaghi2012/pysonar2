@@ -129,7 +129,7 @@ public class ImportFrom extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "<FromImport:" + module + ":" + names + ">";
+        return "(FromImport:" + module + ":" + names + ")";
     }
 
 }

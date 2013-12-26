@@ -69,7 +69,7 @@ public class Block extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "<Block:" + seq + ">";
+        return "(block:" + seq + ")";
     }
 
 }

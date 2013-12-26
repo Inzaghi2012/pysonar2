@@ -30,7 +30,7 @@ public class Repr extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "<Repr:" + value + ">";
+        return "(repr:" + value + ")";
     }
 
 }

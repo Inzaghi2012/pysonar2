@@ -40,7 +40,7 @@ public class Raise extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "<Raise:" + traceback + ":" + exceptionType + ">";
+        return "(raise:" + traceback + ":" + exceptionType + ")";
     }
 
 }

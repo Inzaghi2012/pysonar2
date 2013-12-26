@@ -22,7 +22,7 @@ public class Pass extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "<Pass>";
+        return "(pass)";
     }
 
 }

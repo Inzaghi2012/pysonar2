@@ -37,7 +37,7 @@ public class NList extends Sequence {
     @NotNull
     @Override
     public String toString() {
-        return "<List:" + start + ":" + elts + ">";
+        return "(list:" + start + ":" + elts + ")";
     }
 
 }

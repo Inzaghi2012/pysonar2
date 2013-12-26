@@ -38,7 +38,7 @@ public class GeneratorExp extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "<GeneratorExp:" + start + ":" + elt + ">";
+        return "(GeneratorExp:" + elt + ")";
     }
 
 }

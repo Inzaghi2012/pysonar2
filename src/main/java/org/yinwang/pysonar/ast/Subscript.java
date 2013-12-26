@@ -97,7 +97,7 @@ public class Subscript extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "<Subscript:" + value + ":" + slice + ">";
+        return "(subscript:" + value + ":" + slice + ")";
     }
 
 }

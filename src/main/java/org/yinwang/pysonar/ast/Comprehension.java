@@ -38,7 +38,7 @@ public class Comprehension extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "<Comprehension:" + start + ":" + target + ":" + iter + ":" + ifs + ">";
+        return "(comprehension:" + target + ":" + iter + ":" + ifs + ")";
     }
 
 }

@@ -39,7 +39,7 @@ public class ListComp extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "<NListComp:" + start + ":" + elt + ">";
+        return "(ListComp:" + elt + ")";
     }
 
 }

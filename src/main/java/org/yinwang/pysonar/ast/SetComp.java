@@ -34,7 +34,7 @@ public class SetComp extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "<NSetComp:" + start + ":" + elt + ">";
+        return "(SetComp:" + elt + ")";
     }
 
 }

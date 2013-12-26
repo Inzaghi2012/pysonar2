@@ -39,7 +39,7 @@ public class Import extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "<Import:" + names + ">";
+        return "(import:" + names + ")";
     }
 
 }

@@ -25,18 +25,18 @@ public class Withitem extends Node {
     }
 
 
-    @NotNull
-    @Override
-    public String toString() {
-        return "(withitem:" + context_expr + " as " + optional_vars + ")";
-    }
-
-
     // dummy, will never be called
     @NotNull
     @Override
     public Type transform(State s) {
         return Type.UNKNOWN;
+    }
+
+
+    @NotNull
+    @Override
+    public String toString() {
+        return "(withitem:" + context_expr + " as " + optional_vars + ")";
     }
 
 }

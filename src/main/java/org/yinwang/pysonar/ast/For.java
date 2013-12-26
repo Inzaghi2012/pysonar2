@@ -49,7 +49,7 @@ public class For extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "<For:" + target + ":" + iter + ":" + body + ":" + orelse + ">";
+        return "(for:" + target + ":" + iter + ":" + body + ":" + orelse + ")";
     }
 
 }
