@@ -31,8 +31,10 @@ public class Assign extends Node {
         List<State> states = transformExpr(value, s);
 
         for (State s1 : states) {
-            Type t1 = s1.lookupType("#return");
-            Binder.bind(s1, target, t1);
+            Type t1 = s1.lookupType(value);
+            if (t1 != null) {
+                Binder.bind(s1, target, t1);
+            }
         }
 
         return states;

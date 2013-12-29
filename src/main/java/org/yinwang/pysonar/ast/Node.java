@@ -2,8 +2,9 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.yinwang.pysonar.*;
-import org.yinwang.pysonar.types.Type;
+import org.yinwang.pysonar.Analyzer;
+import org.yinwang.pysonar.State;
+import org.yinwang.pysonar._;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -154,18 +155,6 @@ public abstract class Node implements java.io.Serializable, Comparable<Object> {
             ret.addAll(transformList(nodes, s));
         }
         return ret;
-    }
-
-
-    public static List<State> returnState(Binding b, State s) {
-        s.put(Constants.RETURN_NAME, b);
-        return s.single();
-    }
-
-
-    public static List<State> returnType(Type type, State s) {
-        s.put(Constants.RETURN_NAME, null, type, Binding.Kind.SCOPE);
-        return s.single();
     }
 
 

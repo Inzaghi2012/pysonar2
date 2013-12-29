@@ -57,18 +57,22 @@ public class Attribute extends Node {
         List<State> ss = transformExpr(target, s);
         for (State s1 : ss) {
             Type targetType = s1.lookupType(target);
-            Binding b = targetType.table.lookupAttr(attr.id);
-            if (b == null) {
-                Analyzer.self.putProblem(attr, "attribute not found in type: " + targetType);
-                s1.put(this, Type.UNKNOWN);
-            } else {
-                Analyzer.self.putRef(attr, b);
-                if (parent != null && parent.isCall() &&
-                        b.type.isFuncType() && targetType.isInstanceType())
-                {  // method call
-                    b.type.asFuncType().setSelfType(targetType);
+            if (targetType != null) {
+                Binding b = targetType.table.lookupAttr(attr.id);
+                if (b == null) {
+                    Analyzer.self.putProblem(attr, "attribute not found in type: " + targetType);
+                    s1.put(this, Type.UNKNOWN);
+                } else {
+                    Analyzer.self.putRef(attr, b);
+                    if (parent != null && parent.isCall() &&
+                            b.type.isFuncType() && targetType.isInstanceType())
+                    {  // method call
+                        b.type.asFuncType().setSelfType(targetType);
+                    }
+                    s1.put(this, b);
                 }
-                s1.put(this, b);
+            } else {
+                Analyzer.self.putProblem(target, "not found");
             }
         }
         return ss;

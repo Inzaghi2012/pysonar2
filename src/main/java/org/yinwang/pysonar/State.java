@@ -132,7 +132,7 @@ public class State {
     }
 
 
-    public void put(Object o, @NotNull Binding b) {
+    public void put(@NotNull Object o, @NotNull Binding b) {
         if (o instanceof Name) {
             table.put(((Name) o).id, b);
         } else {
@@ -141,13 +141,13 @@ public class State {
     }
 
 
-    public List<State> put(Node node, Type type) {
+    public List<State> put(@NotNull Node node, Type type) {
         put(node, new Binding(node, type, Binding.Kind.SCOPE));
         return single();
     }
 
 
-    public void put(String id, Node node, Type type, Binding.Kind kind) {
+    public void put(String id, @NotNull Node node, Type type, Binding.Kind kind) {
         Binding b = new Binding(node, type, kind);
         if (type.isModuleType()) {
             b.setQname(type.asModuleType().qname);
