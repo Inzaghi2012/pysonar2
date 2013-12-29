@@ -135,9 +135,9 @@ public abstract class Node implements java.io.Serializable, Comparable<Object> {
     @NotNull
     static protected List<State> transformList(@NotNull Collection<? extends Node> nodes, State s) {
         List<State> ret = new ArrayList<>();
-        List<State> ret2 = new ArrayList<>();
         ret.add(s);
         for (Node n : nodes) {
+            List<State> ret2 = new ArrayList<>();
             for (State s1 : ret) {
                 List<State> ss = transformExpr(n, s1);
                 ret2.addAll(ss);

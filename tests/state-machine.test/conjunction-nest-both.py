@@ -11,6 +11,6 @@ if 2 < x < 5:
     else:
         z = 'hi'
 
-print y
-print z
+print y,z
+
 
