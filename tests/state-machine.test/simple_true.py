@@ -1,7 +1,7 @@
 x = 1
 
 if x < 2:
-    y = 42
+    y = 42    # here
 else:
     y = 'hi'
 
