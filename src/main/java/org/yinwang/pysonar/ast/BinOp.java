@@ -60,6 +60,7 @@ public class BinOp extends Node {
         // all the rest op's has sequential flow
         List<State> ss = transformExpr(left, s);
         ss = transformExpr(right, ss);
+        List<State> ret = new ArrayList<>();
 
         if (op == Op.And) {
             for (State s1 : ss) {
@@ -74,6 +75,7 @@ public class BinOp extends Node {
                     s1.put(this, Type.FALSE);
                 }
             }
+
             return ss;
         }
 
@@ -123,8 +125,10 @@ public class BinOp extends Node {
                     if (op1 == Op.Lt) {
                         if (leftNum.lt(rightNum)) {
                             s1.put(this, Type.TRUE);
+                            ret.add(s1);
                         } else if (leftNum.gt(rightNum) || leftNum.eq(rightNum)) {
                             s1.put(this, Type.FALSE);
+                            ret.add(s1);
                         } else {
                             // transfer bound information
                             if (leftNode.isName()) {
@@ -138,12 +142,15 @@ public class BinOp extends Node {
                                 String id = leftNode.asName().id;
 
                                 Binding b = s1.lookup(id);
+                                State s1true = s1.copy();
                                 State s1false = s1.copy();
-                                s1.put(this, Type.TRUE);
-                                s1.put(id, new Binding(b.node, trueType, b.kind));
+                                s1true.put(this, Type.TRUE);
+                                s1true.put(id, new Binding(b.node, trueType, b.kind));
+                                ret.add(s1true);
+
                                 s1false.put(this, Type.FALSE);
                                 s1false.put(id, new Binding(b.node, falseType, b.kind));
-                                ss.add(s1false);
+                                ret.add(s1false);
                             }
                         }
                     }
@@ -151,8 +158,10 @@ public class BinOp extends Node {
                     if (op1 == Op.Gt) {
                         if (leftNum.gt(rightNum)) {
                             s1.put(this, Type.TRUE);
+                            ret.add(s1);
                         } else if (leftNum.lt(rightNum) || leftNum.eq(rightNum)) {
                             s1.put(this, Type.FALSE);
+                            ret.add(s1);
                         } else {
                             if (leftNode.isName()) {
                                 // true branch: if l > r, then l's lower bound is r's lower bound
@@ -165,12 +174,15 @@ public class BinOp extends Node {
                                 String id = leftNode.asName().id;
 
                                 Binding b = s1.lookup(id);
+                                State s1true = s1.copy();
                                 State s1false = s1.copy();
-                                s1.put(this, Type.TRUE);
-                                s1.put(id, new Binding(b.node, trueType, b.kind));
+                                s1true.put(this, Type.TRUE);
+                                s1true.put(id, new Binding(b.node, trueType, b.kind));
+                                ret.add(s1true);
+
                                 s1false.put(this, Type.FALSE);
                                 s1false.put(id, new Binding(b.node, falseType, b.kind));
-                                ss.add(s1false);
+                                ret.add(s1false);
                             }
                         }
                     }
@@ -181,7 +193,7 @@ public class BinOp extends Node {
                     "operator " + op + " cannot be applied on operands " + ltype + " and " + rtype);
         }
 
-        return ss;
+        return ret;
     }
 
 

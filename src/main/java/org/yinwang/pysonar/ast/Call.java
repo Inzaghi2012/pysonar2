@@ -134,13 +134,14 @@ public class Call extends Node {
 
         if (func.table.parent != null) {
             funcTable.setPath(func.table.parent.extendPath(func.func.name.id));
-        } else {
+        } else if (func.func != null) {
             funcTable.setPath(func.func.name.id);
         }
 
-        Type fromType = bindParams(call, func.func, funcTable, func.func.args,
-                func.func.vararg, func.func.kwarg,
-                pTypes, func.defaultTypes, hash, kw, star);
+        Type fromType = func.func == null ? Type.UNKNOWN :
+                bindParams(call, func.func, funcTable, func.func.args,
+                        func.func.vararg, func.func.kwarg,
+                        pTypes, func.defaultTypes, hash, kw, star);
 
         Type cachedTo = func.getMapping(fromType);
         if (cachedTo != null) {
@@ -158,7 +159,6 @@ public class Call extends Node {
             }
 
             func.setSelfType(null);
-            return;
         }
     }
 
