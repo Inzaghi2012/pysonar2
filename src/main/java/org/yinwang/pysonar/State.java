@@ -81,6 +81,15 @@ public class State {
     }
 
 
+    public static List<State> copy(List<State> ss) {
+        List<State> ret = new ArrayList<>();
+        for (State s : ss) {
+            ret.add(s.copy());
+        }
+        return ret;
+    }
+
+
     public void setParent(@Nullable State parent) {
         this.parent = parent;
     }

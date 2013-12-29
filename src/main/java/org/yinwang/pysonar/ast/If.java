@@ -2,6 +2,7 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.State;
+import org.yinwang.pysonar.types.Type;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,26 +28,31 @@ public class If extends Node {
     @NotNull
     @Override
     public List<State> transform(@NotNull State s) {
-        State s1 = s.copy();
-        State s2 = s.copy();
-        List<State> ss = new ArrayList<>();
+        List<State> ss = transformExpr(test, s);
+        List<State> ret = new ArrayList<>();
 
-        if (body != null) {
-            ss = transformExpr(body, s1);
+        for (State s1 : ss) {
+            Type testType = s1.lookupType(test);
+            State s2 = s1.copy();
+            List<State> trueStates = transformExpr(body, s1);
+            List<State> falseStates = transformExpr(orelse, s2);
+
+            if (testType != null && !testType.isFalse() && body != null) {
+                ret.addAll(trueStates);
+            }
+
+            if (testType != null && !testType.isTrue() && orelse != null) {
+                ret.addAll(falseStates);
+            }
         }
-
-        if (orelse != null) {
-            ss.addAll(transformExpr(orelse, s2));
-        }
-
-        return ss;
+        return ret;
     }
 
 
     @NotNull
     @Override
     public String toString() {
-        return "(if:" + test + ":" + body + ":" + orelse + ">";
+        return "(if:" + test + ":" + body + ":" + orelse + ")";
     }
 
 }

@@ -8,7 +8,6 @@ import org.yinwang.pysonar.ast.Node;
 import java.io.File;
 import java.util.*;
 import java.util.Map.Entry;
-import java.util.regex.Pattern;
 
 
 /**
@@ -16,8 +15,6 @@ import java.util.regex.Pattern;
  * symbol table to resolve properly.
  */
 class Linker {
-
-    private static final Pattern CONSTANT = Pattern.compile("[A-Z_][A-Z0-9_]*");
 
     // Map of file-path to semantic styles & links for that path.
     @NotNull
