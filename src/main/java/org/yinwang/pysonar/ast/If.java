@@ -29,22 +29,21 @@ public class If extends Node {
     @Override
     public List<State> transform(@NotNull State s) {
         List<State> ss = transformExpr(test, s);
-        List<State> ret = new ArrayList<>();
+        List<State> trueS = new ArrayList<>();
+        List<State> falseS = new ArrayList<>();
 
         for (State s1 : ss) {
             Type testType = s1.lookupType(test);
-            State s2 = s1.copy();
-            List<State> trueStates = transformExpr(body, s1);
-            List<State> falseStates = transformExpr(orelse, s2);
-
-            if (testType != null && !testType.isFalse() && body != null) {
-                ret.addAll(trueStates);
-            }
-
-            if (testType != null && !testType.isTrue() && orelse != null) {
-                ret.addAll(falseStates);
+            if (testType != null && testType.isTrue()) {
+                trueS.add(s1);
+            } else {
+                falseS.add(s1);
             }
         }
+
+        List<State> ret = new ArrayList<>();
+        ret.addAll(transformExpr(body, trueS));
+        ret.addAll(transformExpr(orelse, falseS));
         return ret;
     }
 

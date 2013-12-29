@@ -1,10 +1,8 @@
 package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
-import org.yinwang.pysonar.Analyzer;
 import org.yinwang.pysonar.Binding;
 import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.types.BoolType;
 import org.yinwang.pysonar.types.IntType;
 import org.yinwang.pysonar.types.Type;
 
@@ -37,10 +35,26 @@ public class BinOp extends Node {
 
         // or has a special flow
         if (op == Op.Or) {
-            State scopy = s.copy();
+
+            // evaluate left and separate the states into true and false
+            List<State> ss1 = transformExpr(left, s);
+            List<State> trueS = new ArrayList<>();
+            List<State> falseS = new ArrayList<>();
+
+            for (State s1 : ss1) {
+                Type ltype = s1.lookupType(left);
+                if (ltype != null && ltype.isTrue()) {
+                    trueS.add(s1);
+                } else {
+                    falseS.add(s1);
+                }
+            }
+
             List<State> ret = new ArrayList<>();
-            ret.addAll(transformExpr(left, s));
-            ret.addAll(transformExpr(right, scopy));
+            // take all true states
+            ret.addAll(trueS);
+            // only the false states from left go into right
+            ret.addAll(transformExpr(right, falseS));
 
             for (State s1 : ret) {
                 Type ltype = s1.lookupType(left);
@@ -189,8 +203,7 @@ public class BinOp extends Node {
                 }
             }
 
-            Analyzer.self.putProblem(this,
-                    "operator " + op + " cannot be applied on operands " + ltype + " and " + rtype);
+
         }
 
         return ret;
