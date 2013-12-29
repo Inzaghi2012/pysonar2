@@ -6,7 +6,8 @@ import org.yinwang.pysonar.Binding;
 import org.yinwang.pysonar.State;
 import org.yinwang.pysonar._;
 import org.yinwang.pysonar.types.ModuleType;
-import org.yinwang.pysonar.types.Type;
+
+import java.util.List;
 
 
 public class Module extends Node {
@@ -24,11 +25,10 @@ public class Module extends Node {
 
     @NotNull
     @Override
-    public Type transform(@NotNull State s) {
+    public List<State> transform(@NotNull State s) {
         ModuleType mt = new ModuleType(name, file, Analyzer.self.globaltable);
-        s.insert(_.moduleQname(file), this, mt, Binding.Kind.MODULE);
-        transformExpr(body, mt.table);
-        return mt;
+        s.put(_.moduleQname(file), this, mt, Binding.Kind.MODULE);
+        return transformExpr(body, mt.table);
     }
 
 

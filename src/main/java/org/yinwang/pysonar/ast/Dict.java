@@ -25,10 +25,8 @@ public class Dict extends Node {
 
     @NotNull
     @Override
-    public Type transform(State s) {
-        Type keyType = resolveUnion(keys, s);
-        Type valType = resolveUnion(values, s);
-        return new DictType(keyType, valType);
+    public List<State> transform(State s) {
+        return s.put(this, new DictType(Type.UNKNOWN, Type.UNKNOWN));
     }
 
 

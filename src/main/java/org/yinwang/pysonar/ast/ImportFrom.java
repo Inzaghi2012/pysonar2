@@ -31,9 +31,9 @@ public class ImportFrom extends Node {
 
     @NotNull
     @Override
-    public Type transform(@NotNull State s) {
+    public List<State> transform(@NotNull State s) {
         if (module == null) {
-            return Type.CONT;
+            return s.put(this, Type.CONT);
         }
 
         Type mod = Analyzer.self.loadModule(module, s);
@@ -48,10 +48,10 @@ public class ImportFrom extends Node {
                 Binding b = mod.table.lookup(first.id);
                 if (b != null) {
                     if (a.asname != null) {
-                        s.update(a.asname.id, b);
+                        s.put(a.asname.id, b);
                         Analyzer.self.putRef(a.asname, b);
                     } else {
-                        s.update(first.id, b);
+                        s.put(first.id, b);
                         Analyzer.self.putRef(first, b);
                     }
                 } else {
@@ -60,16 +60,16 @@ public class ImportFrom extends Node {
                     Type mod2 = Analyzer.self.loadModule(ext, s);
                     if (mod2 != null) {
                         if (a.asname != null) {
-                            s.insert(a.asname.id, a.asname, mod2, Binding.Kind.VARIABLE);
+                            s.put(a.asname.id, a.asname, mod2, Binding.Kind.VARIABLE);
                         } else {
-                            s.insert(first.id, first, mod2, Binding.Kind.VARIABLE);
+                            s.put(first.id, first, mod2, Binding.Kind.VARIABLE);
                         }
                     }
                 }
             }
         }
 
-        return Type.CONT;
+        return s.put(this, Type.CONT);
     }
 
 
@@ -105,21 +105,21 @@ public class ImportFrom extends Node {
             for (String name : names) {
                 Binding b = mt.table.lookupLocal(name);
                 if (b != null) {
-                    s.update(name, b);
+                    s.put(name, b);
                 } else {
                     List<Name> m2 = new ArrayList<>(module);
                     m2.add(new Name(name));
                     Type type = Analyzer.self.loadModule(m2, s);
                     if (type != null) {
-                        s.insert(name, null, type, Binding.Kind.VARIABLE);
+                        s.put(name, null, type, Binding.Kind.VARIABLE);
                     }
                 }
             }
         } else {
             // Fall back to importing all names not starting with "_".
-            for (Entry<String, Binding> e : mt.table.entrySet()) {
-                if (!e.getKey().startsWith("_")) {
-                    s.update(e.getKey(), e.getValue());
+            for (Entry<Object, Binding> e : mt.table.entrySet()) {
+                if (!(e.getKey() instanceof String) && ((String) e.getKey()).startsWith("_")) {
+                    s.put(e.getKey(), e.getValue());
                 }
             }
         }

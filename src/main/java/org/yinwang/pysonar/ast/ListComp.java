@@ -3,7 +3,6 @@ package org.yinwang.pysonar.ast;
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.ListType;
-import org.yinwang.pysonar.types.Type;
 
 import java.util.List;
 
@@ -30,9 +29,9 @@ public class ListComp extends Node {
      */
     @NotNull
     @Override
-    public Type transform(State s) {
-        resolveList(generators, s);
-        return new ListType(transformExpr(elt, s));
+    public List<State> transform(State s) {
+        transformList(generators, s);
+        return transformExpr(elt, s);
     }
 
 

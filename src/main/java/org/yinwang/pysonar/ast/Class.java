@@ -2,9 +2,13 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.*;
-import org.yinwang.pysonar.types.*;
+import org.yinwang.pysonar.types.ClassType;
+import org.yinwang.pysonar.types.DictType;
+import org.yinwang.pysonar.types.TupleType;
+import org.yinwang.pysonar.types.Type;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Class extends Node {
@@ -33,22 +37,25 @@ public class Class extends Node {
 
     @NotNull
     @Override
-    public Type transform(@NotNull State s) {
+    public List<State> transform(@NotNull State s) {
         ClassType classType = new ClassType(name.id, s);
         List<Type> baseTypes = new ArrayList<>();
         for (Node base : bases) {
-            Type baseType = transformExpr(base, s);
-            if (baseType.isClassType()) {
-                classType.addSuper(baseType);
-            } else if (baseType.isUnionType()) {
-                for (Type b : baseType.asUnionType().types) {
-                    classType.addSuper(b);
-                    break;
+            List<State> ss = transformExpr(base, s);
+            for (State s1 : ss) {
+                Type baseType = s1.lookupType(base);
+                if (baseType.isClassType()) {
+                    classType.addSuper(baseType);
+                } else if (baseType.isUnionType()) {
+                    for (Type b : baseType.asUnionType().types) {
+                        classType.addSuper(b);
+                        break;
+                    }
+                } else {
+                    Analyzer.self.putProblem(base, base + " is not a class");
                 }
-            } else {
-                Analyzer.self.putProblem(base, base + " is not a class");
+                baseTypes.add(baseType);
             }
-            baseTypes.add(baseType);
         }
 
         // XXX: Not sure if we should add "bases", "name" and "dict" here. They
@@ -63,16 +70,13 @@ public class Class extends Node {
         // Bind ClassType to name here before resolving the body because the
         // methods need this type as self.
         Binder.bind(s, name, classType, Binding.Kind.CLASS);
-        if (body != null) {
-            transformExpr(body, classType.table);
-        }
-        return Type.CONT;
+        return transformExpr(body, classType.table);
     }
 
 
     private void addSpecialAttribute(@NotNull State s, String name, Type proptype) {
-        Binding b = new Binding(name, Builtins.newTutUrl("classes.html"), proptype, Binding.Kind.ATTRIBUTE);
-        s.update(name, b);
+        Binding b = new Binding(Builtins.newTutUrl("classes.html"), proptype, Binding.Kind.ATTRIBUTE);
+        s.put(name, b);
         b.markSynthetic();
         b.markStatic();
 

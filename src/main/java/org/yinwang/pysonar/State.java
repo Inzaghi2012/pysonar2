@@ -2,6 +2,7 @@ package org.yinwang.pysonar;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.yinwang.pysonar.ast.Name;
 import org.yinwang.pysonar.ast.Node;
 import org.yinwang.pysonar.types.Type;
 
@@ -21,7 +22,7 @@ public class State {
 
 
     @NotNull
-    public Map<String, Binding> table = new HashMap<>();
+    public Map<Object, Binding> table = new HashMap<>();
     @Nullable
     public State parent;      // all are non-null except global table
     @Nullable
@@ -131,22 +132,29 @@ public class State {
     }
 
 
-    // create new binding and insert
-    public void insert(String id, Node node, Type type, Binding.Kind kind) {
-        Binding b = new Binding(id, node, type, kind);
+    public void put(Object o, @NotNull Binding b) {
+        if (o instanceof Name) {
+            table.put(((Name) o).id, b);
+        } else {
+            table.put(o, b);
+        }
+    }
+
+
+    public List<State> put(Node node, Type type) {
+        put(node, new Binding(node, type, Binding.Kind.SCOPE));
+        return single();
+    }
+
+
+    public void put(String id, Node node, Type type, Binding.Kind kind) {
+        Binding b = new Binding(node, type, kind);
         if (type.isModuleType()) {
             b.setQname(type.asModuleType().qname);
         } else {
             b.setQname(extendPath(id));
         }
-        update(id, b);
-    }
-
-
-    @NotNull
-    public Binding update(String id, @NotNull Binding b) {
-        table.put(id, b);
-        return b;
+        put(id, b);
     }
 
 
@@ -165,8 +173,12 @@ public class State {
      * parent table.
      */
     @Nullable
-    public Binding lookupLocal(String name) {
-        return table.get(name);
+    public Binding lookupLocal(Object name) {
+        if (name instanceof Name) {
+            return table.get(((Name) name).id);
+        } else {
+            return table.get(name);
+        }
     }
 
 
@@ -175,17 +187,17 @@ public class State {
      * recurse on the parent table.
      */
     @Nullable
-    public Binding lookup(@NotNull String name) {
-        Binding b = getModuleBindingIfGlobal(name);
+    public Binding lookup(@NotNull Object node) {
+        Binding b = getModuleBindingIfGlobal(node);
         if (b != null) {
             return b;
         } else {
-            Binding ent = lookupLocal(name);
+            Binding ent = lookupLocal(node);
             if (ent != null) {
                 return ent;
             } else {
                 if (parent != null) {
-                    return parent.lookup(name);
+                    return parent.lookup(node);
                 } else {
                     return null;
                 }
@@ -252,8 +264,8 @@ public class State {
      * Look for a binding named {@code name} and if found, return its type.
      */
     @Nullable
-    public Type lookupType(String name) {
-        Binding b = lookup(name);
+    public Type lookupType(Object node) {
+        Binding b = lookup(node);
         if (b == null) {
             return null;
         } else {
@@ -304,11 +316,14 @@ public class State {
 
 
     @Nullable
-    private Binding getModuleBindingIfGlobal(@NotNull String name) {
-        if (isGlobalName(name)) {
-            State module = getGlobalTable();
-            if (module != this) {
-                return module.lookupLocal(name);
+    private Binding getModuleBindingIfGlobal(@NotNull Object name) {
+        if (name instanceof Name) {
+            String id = ((Name) name).id;
+            if (isGlobalName(id)) {
+                State module = getGlobalTable();
+                if (module != this) {
+                    return module.lookupLocal(id);
+                }
             }
         }
         return null;
@@ -320,8 +335,25 @@ public class State {
     }
 
 
+    public List<State> single() {
+        List<State> sl = new ArrayList<>();
+        sl.add(this);
+        return sl;
+    }
+
+
+    public Type getReturnType() {
+        return lookupType(Constants.RETURN_NAME);
+    }
+
+
+    public Binding getReturn() {
+        return lookup(Constants.RETURN_NAME);
+    }
+
+
     @NotNull
-    public Set<String> keySet() {
+    public Set<Object> keySet() {
         return table.keySet();
     }
 
@@ -333,7 +365,7 @@ public class State {
 
 
     @NotNull
-    public Set<Entry<String, Binding>> entrySet() {
+    public Set<Entry<Object, Binding>> entrySet() {
         return table.entrySet();
     }
 

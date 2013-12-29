@@ -4,7 +4,6 @@ import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Binder;
 import org.yinwang.pysonar.Binding;
 import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.types.Type;
 
 import java.util.List;
 
@@ -28,9 +27,9 @@ public class Comprehension extends Node {
 
     @NotNull
     @Override
-    public Type transform(@NotNull State s) {
+    public List<State> transform(@NotNull State s) {
         Binder.bindIter(s, target, iter, Binding.Kind.SCOPE);
-        resolveList(ifs, s);
+        transformList(ifs, s);
         return transformExpr(target, s);
     }
 

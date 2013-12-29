@@ -5,6 +5,8 @@ import org.jetbrains.annotations.Nullable;
 import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.Type;
 
+import java.util.List;
+
 
 /**
  * A name alias.  Used for the components of import and import-from statements.
@@ -28,8 +30,8 @@ public class Withitem extends Node {
     // dummy, will never be called
     @NotNull
     @Override
-    public Type transform(State s) {
-        return Type.UNKNOWN;
+    public List<State> transform(State s) {
+        return s.put(this, Type.UNKNOWN);
     }
 
 

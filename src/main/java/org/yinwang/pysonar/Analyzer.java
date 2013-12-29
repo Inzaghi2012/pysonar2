@@ -333,9 +333,9 @@ public class Analyzer {
                 failedToParse.add(file);
                 return null;
             } else {
-                Type type = Node.transformExpr(ast, moduleTable);
+                Node.transformExpr(ast, moduleTable);
                 loadedFiles.add(file);
-                return type;
+                return moduleTable.lookupType(ast);
             }
         } catch (OutOfMemoryError e) {
             if (astCache != null) {
@@ -437,7 +437,7 @@ public class Analyzer {
 
         Type mt = getBuiltinModule(qname);
         if (mt != null) {
-            state.insert(name.get(0).id,
+            state.put(name.get(0).id,
                     new Url(Builtins.LIBRARY_URL + mt.table.path + ".html"),
                     mt, Binding.Kind.SCOPE);
             return mt;
@@ -465,9 +465,9 @@ public class Analyzer {
                 }
 
                 if (prev != null) {
-                    prev.table.insert(name.get(i).id, name.get(i), mod, Binding.Kind.VARIABLE);
+                    prev.table.put(name.get(i).id, name.get(i), mod, Binding.Kind.VARIABLE);
                 } else {
-                    state.insert(name.get(i).id, name.get(i), mod, Binding.Kind.VARIABLE);
+                    state.put(name.get(i).id, name.get(i), mod, Binding.Kind.VARIABLE);
                 }
 
                 prev = mod;
@@ -480,9 +480,9 @@ public class Analyzer {
                         return null;
                     }
                     if (prev != null) {
-                        prev.table.insert(name.get(i).id, name.get(i), mod, Binding.Kind.VARIABLE);
+                        prev.table.put(name.get(i).id, name.get(i), mod, Binding.Kind.VARIABLE);
                     } else {
-                        state.insert(name.get(i).id, name.get(i), mod, Binding.Kind.VARIABLE);
+                        state.put(name.get(i).id, name.get(i), mod, Binding.Kind.VARIABLE);
                     }
                     prev = mod;
                 } else {
@@ -549,7 +549,7 @@ public class Analyzer {
                     !b.type.isModuleType()
                     && b.refs.isEmpty())
             {
-                Analyzer.self.putProblem(b.node, "Unused variable: " + b.name);
+                Analyzer.self.putProblem(b.node, "Unused variable: " + b.node.name);
             }
         }
 
@@ -582,7 +582,7 @@ public class Analyzer {
 
             for (FunType cl : uncalledDup) {
                 progress.tick();
-                Call.apply(cl, null, null, null, null, null);
+                Call.apply(cl, null, null, null, null, null, globaltable);
             }
         }
     }

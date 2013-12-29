@@ -23,16 +23,16 @@ public class Import extends Node {
 
     @NotNull
     @Override
-    public Type transform(@NotNull State s) {
+    public List<State> transform(@NotNull State s) {
         for (Alias a : names) {
             Type mod = Analyzer.self.loadModule(a.name, s);
             if (mod == null) {
                 Analyzer.self.putProblem(this, "Cannot load module");
             } else if (a.asname != null) {
-                s.insert(a.asname.id, a.asname, mod, Binding.Kind.VARIABLE);
+                s.put(a.asname.id, a.asname, mod, Binding.Kind.VARIABLE);
             }
         }
-        return Type.CONT;
+        return s.put(this, Type.CONT);
     }
 
 

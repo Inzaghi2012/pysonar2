@@ -26,12 +26,13 @@ public class With extends Node {
 
     @NotNull
     @Override
-    public Type transform(@NotNull State s) {
+    public List<State> transform(@NotNull State s) {
+        List<State> ss = s.single();
         for (Withitem item : items) {
-            Type val = transformExpr(item.context_expr, s);
-            if (item.optional_vars != null) {
-                Binder.bind(s, item.optional_vars, val);
-            }
+            ss = transformExpr(item.context_expr, ss);
+//            if (item.optional_vars != null) {
+//                Binder.bind(s, item.optional_vars, val);
+//            }
         }
         return transformExpr(body, s);
     }

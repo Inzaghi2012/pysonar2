@@ -2,11 +2,8 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.yinwang.pysonar.Analyzer;
-import org.yinwang.pysonar.State;
-import org.yinwang.pysonar._;
+import org.yinwang.pysonar.*;
 import org.yinwang.pysonar.types.Type;
-import org.yinwang.pysonar.types.UnionType;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -113,14 +110,63 @@ public abstract class Node implements java.io.Serializable, Comparable<Object> {
     }
 
 
+    // ---------------------- state transformers ---------------------
     @NotNull
-    public static Type transformExpr(@NotNull Node n, State s) {
+    protected abstract List<State> transform(State s);
+
+
+    @NotNull
+    public static List<State> transformExpr(@NotNull Node n, State s) {
         return n.transform(s);
     }
 
 
     @NotNull
-    protected abstract Type transform(State s);
+    public static List<State> transformExpr(@NotNull Node n, List<State> ss) {
+        List<State> ret = new ArrayList<>();
+        for (State s : ss) {
+            ret.addAll(n.transform(s));
+        }
+        return ret;
+    }
+
+
+    @NotNull
+    static protected List<State> transformList(@NotNull Collection<? extends Node> nodes, State s) {
+        List<State> ret = new ArrayList<>();
+        List<State> ret2 = new ArrayList<>();
+        ret.add(s);
+        for (Node n : nodes) {
+            for (State s1 : ret) {
+                List<State> ss = transformExpr(n, s1);
+                ret2.addAll(ss);
+            }
+            ret = ret2;
+        }
+        return ret;
+    }
+
+
+    @Nullable
+    static protected List<State> transformList(@Nullable Collection<? extends Node> nodes, List<State> ss) {
+        List<State> ret = new ArrayList<>();
+        for (State s : ss) {
+            ret.addAll(transformList(nodes, s));
+        }
+        return ret;
+    }
+
+
+    public static List<State> returnState(Binding b, State s) {
+        s.put(Constants.RETURN_NAME, b);
+        return s.single();
+    }
+
+
+    public static List<State> returnType(Type type, State s) {
+        s.put(Constants.RETURN_NAME, null, type, Binding.Kind.SCOPE);
+        return s.single();
+    }
 
 
     public boolean isCall() {
@@ -223,39 +269,6 @@ public abstract class Node implements java.io.Serializable, Comparable<Object> {
 
     protected void addError(String msg) {
         Analyzer.self.putProblem(this, msg);
-    }
-
-
-    /**
-     * Utility method to resolve every node in {@code nodes} and
-     * return the union of their types.  If {@code nodes} is empty or
-     * {@code null}, returns a new {@link org.yinwang.pysonar.types.UnknownType}.
-     */
-    @NotNull
-    protected Type resolveUnion(@NotNull Collection<? extends Node> nodes, State s) {
-        Type result = Type.UNKNOWN;
-        for (Node node : nodes) {
-            Type nodeType = transformExpr(node, s);
-            result = UnionType.union(result, nodeType);
-        }
-        return result;
-    }
-
-
-    /**
-     * Resolves each element, also construct a result list.
-     */
-    @Nullable
-    static protected List<Type> resolveList(@Nullable Collection<? extends Node> nodes, State s) {
-        if (nodes == null) {
-            return null;
-        } else {
-            List<Type> ret = new ArrayList<>();
-            for (Node n : nodes) {
-                ret.add(transformExpr(n, s));
-            }
-            return ret;
-        }
     }
 
 

@@ -21,9 +21,9 @@ public class Global extends Node {
 
     @NotNull
     @Override
-    public Type transform(State s) {
+    public List<State> transform(State s) {
         // Do nothing here because global names are processed by NBlock
-        return Type.CONT;
+        return s.put(this, Type.CONT);
     }
 
 

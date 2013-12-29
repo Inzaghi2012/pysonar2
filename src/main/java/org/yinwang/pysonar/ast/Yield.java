@@ -2,8 +2,8 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.types.ListType;
-import org.yinwang.pysonar.types.Type;
+
+import java.util.List;
 
 
 public class Yield extends Node {
@@ -20,12 +20,8 @@ public class Yield extends Node {
 
     @NotNull
     @Override
-    public Type transform(State s) {
-        if (value != null) {
-            return new ListType(transformExpr(value, s));
-        } else {
-            return Type.NONE;
-        }
+    public List<State> transform(State s) {
+        return transformExpr(value, s);
     }
 
 

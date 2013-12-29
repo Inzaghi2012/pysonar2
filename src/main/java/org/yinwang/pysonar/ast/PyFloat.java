@@ -3,7 +3,8 @@ package org.yinwang.pysonar.ast;
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.FloatType;
-import org.yinwang.pysonar.types.Type;
+
+import java.util.List;
 
 
 public class PyFloat extends Node {
@@ -26,8 +27,8 @@ public class PyFloat extends Node {
 
     @NotNull
     @Override
-    public Type transform(State s) {
-        return new FloatType(value);
+    public List<State> transform(State s) {
+        return s.put(this, new FloatType(value));
     }
 
 

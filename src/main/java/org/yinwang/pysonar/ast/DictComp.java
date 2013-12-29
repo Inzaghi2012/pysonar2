@@ -32,11 +32,11 @@ public class DictComp extends Node {
      */
     @NotNull
     @Override
-    public Type transform(State s) {
-        resolveList(generators, s);
-        Type keyType = transformExpr(key, s);
-        Type valueType = transformExpr(value, s);
-        return new DictType(keyType, valueType);
+    public List<State> transform(State s) {
+        transformList(generators, s);
+        List<State> ss = transformExpr(key, s);
+        ss = transformExpr(value, ss);
+        return ss;
     }
 
 

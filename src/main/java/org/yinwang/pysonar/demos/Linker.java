@@ -228,39 +228,6 @@ class Linker {
     }
 
 
-    /**
-     * Add additional highlighting styles based on information not evident from
-     * the AST.
-     */
-    private void addSemanticStyles(@NotNull Binding nb) {
-        boolean isConst = CONSTANT.matcher(nb.name).matches();
-        switch (nb.kind) {
-            case SCOPE:
-                if (isConst) {
-                    addSemanticStyle(nb, Style.Type.CONSTANT);
-                }
-                break;
-            case VARIABLE:
-                addSemanticStyle(nb, isConst ? Style.Type.CONSTANT : Style.Type.IDENTIFIER);
-                break;
-            case PARAMETER:
-                addSemanticStyle(nb, Style.Type.PARAMETER);
-                break;
-            case CLASS:
-                addSemanticStyle(nb, Style.Type.TYPE_NAME);
-                break;
-        }
-    }
-
-
-    private void addSemanticStyle(@NotNull Binding binding, Style.Type type) {
-        String path = binding.getFile();
-        if (path != null) {
-            addFileStyle(path, new Style(type, binding.start, binding.end));
-        }
-    }
-
-
     private void processDiagnostic(@NotNull Diagnostic d) {
         Style style = new Style(Style.Type.WARNING, d.start, d.end);
         style.message = d.msg;

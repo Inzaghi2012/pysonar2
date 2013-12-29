@@ -2,7 +2,8 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.types.Type;
+
+import java.util.List;
 
 
 public class Exec extends Node {
@@ -23,17 +24,18 @@ public class Exec extends Node {
 
     @NotNull
     @Override
-    public Type transform(State s) {
+    public List<State> transform(State s) {
+        List<State> ss = s.single();
         if (body != null) {
-            transformExpr(body, s);
+            ss = transformExpr(body, ss);
         }
         if (globals != null) {
-            transformExpr(globals, s);
+            ss = transformExpr(globals, ss);
         }
         if (locals != null) {
-            transformExpr(locals, s);
+            ss = transformExpr(locals, ss);
         }
-        return Type.CONT;
+        return ss;
     }
 
 

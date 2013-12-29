@@ -21,14 +21,14 @@ public class Delete extends Node {
 
     @NotNull
     @Override
-    public Type transform(@NotNull State s) {
-        for (Node n : targets) {
-            transformExpr(n, s);
-            if (n instanceof Name) {
-                s.remove(n.asName().id);
+    public List<State> transform(@NotNull State s) {
+        for (Node target : targets) {
+            transformExpr(target, s);
+            if (target instanceof Name) {
+                s.remove(target.asName().id);
             }
         }
-        return Type.CONT;
+        return s.put(this, Type.CONT);
     }
 
 

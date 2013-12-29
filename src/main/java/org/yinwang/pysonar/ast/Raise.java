@@ -2,7 +2,8 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.types.Type;
+
+import java.util.List;
 
 
 public class Raise extends Node {
@@ -23,17 +24,19 @@ public class Raise extends Node {
 
     @NotNull
     @Override
-    public Type transform(State s) {
+    public List<State> transform(State s) {
+        List<State> ss = s.single();
+
         if (exceptionType != null) {
-            transformExpr(exceptionType, s);
+            ss = transformExpr(exceptionType, ss);
         }
         if (inst != null) {
-            transformExpr(inst, s);
+            ss = transformExpr(inst, ss);
         }
         if (traceback != null) {
-            transformExpr(traceback, s);
+            ss = transformExpr(traceback, ss);
         }
-        return Type.CONT;
+        return ss;
     }
 
 

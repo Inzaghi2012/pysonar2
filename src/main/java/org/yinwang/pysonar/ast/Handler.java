@@ -1,9 +1,7 @@
 package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
-import org.yinwang.pysonar.Binder;
 import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.types.Type;
 
 import java.util.List;
 
@@ -27,19 +25,8 @@ public class Handler extends Node {
 
     @NotNull
     @Override
-    public Type transform(@NotNull State s) {
-        Type typeval = Type.UNKNOWN;
-        if (exceptions != null) {
-            typeval = resolveUnion(exceptions, s);
-        }
-        if (binder != null) {
-            Binder.bind(s, binder, typeval);
-        }
-        if (body != null) {
-            return transformExpr(body, s);
-        } else {
-            return Type.UNKNOWN;
-        }
+    public List<State> transform(@NotNull State s) {
+        return transformExpr(body, s);
     }
 
 

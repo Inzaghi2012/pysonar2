@@ -3,9 +3,9 @@ package org.yinwang.pysonar.ast;
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.IntType;
-import org.yinwang.pysonar.types.Type;
 
 import java.math.BigInteger;
+import java.util.List;
 
 
 public class PyInt extends Node {
@@ -55,8 +55,8 @@ public class PyInt extends Node {
 
     @NotNull
     @Override
-    public Type transform(State s) {
-        return new IntType(value);
+    public List<State> transform(State s) {
+        return s.put(this, new IntType(value));
     }
 
 

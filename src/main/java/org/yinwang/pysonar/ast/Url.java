@@ -4,6 +4,8 @@ import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.Type;
 
+import java.util.List;
+
 
 /**
  * virtual-AST node used to represent virtual source locations for builtins
@@ -19,10 +21,11 @@ public class Url extends Node {
     }
 
 
+    // will not be called
     @NotNull
     @Override
-    public Type transform(State s) {
-        return Type.STR;
+    public List<State> transform(State s) {
+        return s.put(this, Type.STR);
     }
 
 

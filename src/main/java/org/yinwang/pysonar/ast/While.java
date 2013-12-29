@@ -2,8 +2,8 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.types.Type;
-import org.yinwang.pysonar.types.UnionType;
+
+import java.util.List;
 
 
 public class While extends Node {
@@ -24,19 +24,19 @@ public class While extends Node {
 
     @NotNull
     @Override
-    public Type transform(State s) {
+    public List<State> transform(State s) {
         transformExpr(test, s);
-        Type t = Type.UNKNOWN;
+        List<State> ss = s.single();
 
         if (body != null) {
-            t = transformExpr(body, s);
+            ss = transformExpr(body, ss);
         }
 
         if (orelse != null) {
-            t = UnionType.union(t, transformExpr(orelse, s));
+            ss = transformExpr(orelse, ss);
         }
 
-        return t;
+        return ss;
     }
 
 

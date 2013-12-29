@@ -24,14 +24,14 @@ public class Print extends Node {
 
     @NotNull
     @Override
-    public Type transform(State s) {
+    public List<State> transform(State s) {
         if (dest != null) {
             transformExpr(dest, s);
         }
         if (values != null) {
-            resolveList(values, s);
+            transformList(values, s);
         }
-        return Type.CONT;
+        return s.put(this, Type.NONE);
     }
 
 

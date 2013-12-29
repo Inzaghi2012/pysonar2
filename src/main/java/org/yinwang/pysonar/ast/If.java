@@ -2,8 +2,9 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.types.Type;
-import org.yinwang.pysonar.types.UnionType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class If extends Node {
@@ -25,53 +26,20 @@ public class If extends Node {
 
     @NotNull
     @Override
-    public Type transform(@NotNull State s) {
-        Type type1, type2;
+    public List<State> transform(@NotNull State s) {
         State s1 = s.copy();
         State s2 = s.copy();
-
-        Type conditionType = transformExpr(test, s);
-        if (conditionType.isUndecidedBool()) {
-            s1 = conditionType.asBool().s1;
-            s2 = conditionType.asBool().s2;
-        }
+        List<State> ss = new ArrayList<>();
 
         if (body != null) {
-            type1 = transformExpr(body, s1);
-        } else {
-            type1 = Type.CONT;
+            ss = transformExpr(body, s1);
         }
 
         if (orelse != null) {
-            type2 = transformExpr(orelse, s2);
-        } else {
-            type2 = Type.CONT;
+            ss.addAll(transformExpr(orelse, s2));
         }
 
-        boolean cont1 = UnionType.contains(type1, Type.CONT);
-        boolean cont2 = UnionType.contains(type2, Type.CONT);
-
-        // decide which branch affects the downstream state
-        if (conditionType.isTrue() && cont1) {
-            s.overwrite(s1);
-        } else if (conditionType.isFalse() && cont2) {
-            s.overwrite(s2);
-//        } else if (cont1 && cont2) {
-//            s.overwrite(State.merge(s1, s2));
-        } else if (cont1) {
-            s.overwrite(s1);
-        } else if (cont2) {
-            s.overwrite(s2);
-        }
-
-        // determine return type
-        if (conditionType == Type.TRUE) {
-            return type1;
-        } else if (conditionType == Type.FALSE) {
-            return type2;
-        } else {
-            return UnionType.union(type1, type2);
-        }
+        return ss;
     }
 
 

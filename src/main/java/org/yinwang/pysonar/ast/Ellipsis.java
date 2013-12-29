@@ -4,6 +4,8 @@ import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.Type;
 
+import java.util.List;
+
 
 public class Ellipsis extends Node {
 
@@ -21,8 +23,8 @@ public class Ellipsis extends Node {
 
     @NotNull
     @Override
-    public Type transform(State s) {
-        return Type.NONE;
+    public List<State> transform(State s) {
+        return s.put(this, Type.NONE);
     }
 
 }

@@ -62,20 +62,16 @@ public class Name extends Node {
 
     @NotNull
     @Override
-    public Type transform(@NotNull State s) {
-        Binding b = s.lookup(id);
+    public List<State> transform(@NotNull State s) {
+        Binding b = s.lookup(this);
         if (b != null) {
             Analyzer.self.putRef(this, b);
             Analyzer.self.stats.inc("resolved");
-            return b.type;
-        } else if (id.equals("True") || id.equals("False")) {
-            return Type.BOOL;
+            return s.single();
         } else {
             Analyzer.self.putProblem(this, "unbound variable " + id);
             Analyzer.self.stats.inc("unresolved");
-            Type t = Type.UNKNOWN;
-            t.table.setPath(s.extendPath(id));
-            return t;
+            return s.single();
         }
     }
 
@@ -92,11 +88,6 @@ public class Name extends Node {
 
     public boolean isInstanceVar() {
         return type == NameType.INSTANCE;
-    }
-
-
-    public boolean isGlobalVar() {
-        return type == NameType.GLOBAL;
     }
 
 

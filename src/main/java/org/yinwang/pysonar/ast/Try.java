@@ -2,8 +2,6 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.types.Type;
-import org.yinwang.pysonar.types.UnionType;
 
 import java.util.List;
 
@@ -31,31 +29,28 @@ public class Try extends Node {
 
     @NotNull
     @Override
-    public Type transform(State s) {
-        Type tp1 = Type.UNKNOWN;
-        Type tp2 = Type.UNKNOWN;
-        Type tph = Type.UNKNOWN;
-        Type tpFinal = Type.UNKNOWN;
+    public List<State> transform(State s) {
 
+        List<State> ss = s.single();
         if (handlers != null) {
             for (Handler h : handlers) {
-                tph = UnionType.union(tph, transformExpr(h, s));
+                ss = transformExpr(h, ss);
             }
         }
 
         if (body != null) {
-            tp1 = transformExpr(body, s);
+            ss = transformExpr(body, ss);
         }
 
         if (orelse != null) {
-            tp2 = transformExpr(orelse, s);
+            ss = transformExpr(orelse, ss);
         }
 
         if (finalbody != null) {
-            tpFinal = transformExpr(finalbody, s);
+            ss = transformExpr(finalbody, ss);
         }
 
-        return new UnionType(tp1, tp2, tph, tpFinal);
+        return ss;
     }
 
 

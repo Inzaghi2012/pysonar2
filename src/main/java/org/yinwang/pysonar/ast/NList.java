@@ -17,20 +17,29 @@ public class NList extends Sequence {
 
     @NotNull
     @Override
-    public Type transform(State s) {
+    public List<State> transform(State s) {
         if (elts.size() == 0) {
-            return new ListType();  // list<unknown>
+            return s.put(this, new ListType());
         }
 
-        ListType listType = new ListType();
+        List<State> ss = s.single();
         for (Node elt : elts) {
-            listType.add(transformExpr(elt, s));
-            if (elt instanceof Str) {
-                listType.addValue(((Str) elt).value);
-            }
+            ss = transformExpr(elt, ss);
         }
 
-        return listType;
+        for (State s1 : ss) {
+            ListType listType = new ListType();
+            for (Node elt : elts) {
+                Type t = s1.lookupType(elt);
+                listType.add(t);
+                if (elt instanceof Str) {
+                    listType.addValue(((Str) elt).value);
+                }
+            }
+            s1.put(this, listType);
+        }
+
+        return ss;
     }
 
 

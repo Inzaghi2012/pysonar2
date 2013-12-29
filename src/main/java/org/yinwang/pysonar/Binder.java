@@ -25,11 +25,14 @@ public class Binder {
             ((Attribute) target).setAttr(s, rvalue);
         } else if (target instanceof Subscript) {
             Subscript sub = (Subscript) target;
-            Type valueType = Node.transformExpr(sub.value, s);
-            Node.transformExpr(sub.slice, s);
-            if (valueType instanceof ListType) {
-                ListType t = (ListType) valueType;
-                t.setElementType(UnionType.union(t.eltType, rvalue));
+            List<State> ss = Node.transformExpr(sub.value, s);
+            ss = Node.transformExpr(sub.slice, ss);
+            for (State s1 : ss) {
+                Type valueType = s1.lookupType(sub.value);
+                if (valueType instanceof ListType) {
+                    ListType t = (ListType) valueType;
+                    t.setElementType(UnionType.union(t.eltType, rvalue));
+                }
             }
         } else if (target != null) {
             Analyzer.self.putProblem(target, "invalid location for assignment");
@@ -80,37 +83,40 @@ public class Binder {
 
 
     public static void bind(@NotNull State s, @NotNull Name name, @NotNull Type rvalue, Binding.Kind kind) {
-        if (s.isGlobalName(name.id) || name.isGlobalVar()) {
-            Binding b = new Binding(name.id, name, rvalue, kind);
-            s.getGlobalTable().update(name.id, b);
+        if (s.isGlobalName(name.id)) {
+            Binding b = new Binding(name, rvalue, kind);
+            s.getGlobalTable().put(name.id, b);
             Analyzer.self.putRef(name, b);
         } else {
-            s.insert(name.id, name, rvalue, kind);
+            s.put(name.id, name, rvalue, kind);
         }
     }
 
 
     // iterator
     public static void bindIter(@NotNull State s, Node target, @NotNull Node iter, Binding.Kind kind) {
-        Type iterType = Node.transformExpr(iter, s);
+        List<State> ss = Node.transformExpr(iter, s);
 
-        if (iterType.isListType()) {
-            bind(s, target, iterType.asListType().eltType, kind);
-        } else if (iterType.isTupleType()) {
-            bind(s, target, iterType.asTupleType().toListType().eltType, kind);
-        } else {
-            Binding ent = iterType.table.lookupAttr("__iter__");
-            if (ent != null) {
-                if (!ent.type.isFuncType()) {
-                    if (!iterType.isUnknownType()) {
-                        Analyzer.self.putProblem(iter, "not an iterable type: " + iterType);
-                    }
-                    bind(s, target, Type.UNKNOWN, kind);
-                } else {
-                    bind(s, target, ent.type.asFuncType().getReturnType(), kind);
-                }
+        for (State s1 : ss) {
+            Type iterType = s1.lookupType(iter);
+            if (iterType.isListType()) {
+                bind(s, target, iterType.asListType().eltType, kind);
+            } else if (iterType.isTupleType()) {
+                bind(s, target, iterType.asTupleType().toListType().eltType, kind);
             } else {
-                bind(s, target, Type.UNKNOWN, kind);
+                Binding ent = iterType.table.lookupAttr("__iter__");
+                if (ent != null) {
+                    if (!ent.type.isFuncType()) {
+                        if (!iterType.isUnknownType()) {
+                            Analyzer.self.putProblem(iter, "not an iterable type: " + iterType);
+                        }
+                        bind(s, target, Type.UNKNOWN, kind);
+                    } else {
+                        bind(s, target, ent.type.asFuncType().getReturnType(), kind);
+                    }
+                } else {
+                    bind(s, target, Type.UNKNOWN, kind);
+                }
             }
         }
     }

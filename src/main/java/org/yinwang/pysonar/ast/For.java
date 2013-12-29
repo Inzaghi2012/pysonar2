@@ -4,8 +4,9 @@ import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Binder;
 import org.yinwang.pysonar.Binding;
 import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.types.Type;
-import org.yinwang.pysonar.types.UnionType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class For extends Node {
@@ -30,19 +31,17 @@ public class For extends Node {
 
     @NotNull
     @Override
-    public Type transform(@NotNull State s) {
+    public List<State> transform(@NotNull State s) {
         Binder.bindIter(s, target, iter, Binding.Kind.SCOPE);
 
-        Type ret;
-        if (body == null) {
-            ret = Type.UNKNOWN;
-        } else {
-            ret = transformExpr(body, s);
-        }
+        List<State> ss = new ArrayList<>();
+        ss.addAll(transformExpr(body, s));
+
         if (orelse != null) {
-            ret = UnionType.union(ret, transformExpr(orelse, s));
+            ss.addAll(transformExpr(orelse, s));
         }
-        return ret;
+
+        return ss;
     }
 
 

@@ -2,8 +2,9 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.types.Type;
-import org.yinwang.pysonar.types.UnionType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class IfExp extends Node {
@@ -24,21 +25,20 @@ public class IfExp extends Node {
 
     @NotNull
     @Override
-    public Type transform(State s) {
-        Type type1, type2;
-        transformExpr(test, s);
+    public List<State> transform(@NotNull State s) {
+        State s1 = s.copy();
+        State s2 = s.copy();
+        List<State> ss = new ArrayList<>();
 
         if (body != null) {
-            type1 = transformExpr(body, s);
-        } else {
-            type1 = Type.CONT;
+            ss = transformExpr(body, s1);
         }
+
         if (orelse != null) {
-            type2 = transformExpr(orelse, s);
-        } else {
-            type2 = Type.CONT;
+            ss.addAll(transformExpr(orelse, s2));
         }
-        return UnionType.union(type1, type2);
+
+        return ss;
     }
 
 

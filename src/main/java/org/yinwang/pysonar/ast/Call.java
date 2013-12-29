@@ -5,8 +5,10 @@ import org.jetbrains.annotations.Nullable;
 import org.yinwang.pysonar.*;
 import org.yinwang.pysonar.types.*;
 
-import java.util.*;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.yinwang.pysonar.Binding.Kind.ATTRIBUTE;
 import static org.yinwang.pysonar.Binding.Kind.CLASS;
@@ -37,76 +39,60 @@ public class Call extends Node {
     }
 
 
-    /**
-     * Most of the work here is done by the static method invoke, which is also
-     * used by Analyzer.applyUncalled. By using a static method we avoid building
-     * a NCall node for those dummy calls.
-     */
     @NotNull
     @Override
-    public Type transform(State s) {
-
-        // Ruby's Class.new
-        if (func instanceof Attribute) {
-            Attribute afun = (Attribute) func;
-            if (afun.attr.id.equals("new")) {
-                func = afun.target;
-            }
-        }
-
-        Type fun = transformExpr(func, s);
-        List<Type> pos = resolveList(args, s);
-        Map<String, Type> hash = new HashMap<>();
+    public List<State> transform(State s) {
+        List<State> ss = transformExpr(func, s);
+        ss = transformList(args, ss);
 
         if (keywords != null) {
             for (Keyword kw : keywords) {
-                hash.put(kw.arg, transformExpr(kw.value, s));
+                ss = transformExpr(kw.value, ss);
             }
         }
 
-        Type kw = kwargs == null ? null : transformExpr(kwargs, s);
-        Type star = starargs == null ? null : transformExpr(starargs, s);
-
-        if (fun.isUnionType()) {
-            Set<Type> types = fun.asUnionType().types;
-            Type retType = Type.UNKNOWN;
-            for (Type ft : types) {
-                Type t = resolveCall(ft, pos, hash, kw, star);
-                retType = UnionType.union(retType, t);
-            }
-            return retType;
-        } else {
-            return resolveCall(fun, pos, hash, kw, star);
+        if (kwargs != null) {
+            ss = transformExpr(kwargs, ss);
         }
+        if (starargs != null) {
+            ss = transformExpr(starargs, ss);
+        }
+
+        for (State s1 : ss) {
+            Type fun = s1.lookupType(func);
+            if (fun instanceof FunType) {
+                List<Type> pos = new ArrayList<>();
+                for (Node arg : args) {
+                    pos.add(s1.lookupType(arg));
+                }
+
+                Map<String, Type> hash = new HashMap<>();
+                if (keywords != null) {
+                    for (Keyword kw : keywords) {
+                        hash.put(kw.arg, s1.lookupType(kw.value));
+                    }
+                }
+
+                Type kw = kwargs == null ? null : s1.lookupType(kwargs);
+                Type star = starargs == null ? null : s1.lookupType(starargs);
+
+                apply((FunType) fun, pos, hash, kw, star, this, s1);
+            } else {
+                Analyzer.self.putProblem(this, "calling non-function: " + func);
+            }
+        }
+        return ss;
     }
 
 
     @NotNull
-    private Type resolveCall(@NotNull Type fun,
-                             List<Type> pos,
-                             Map<String, Type> hash,
-                             Type kw,
-                             Type star)
-    {
-        if (fun.isFuncType()) {
-            FunType ft = fun.asFuncType();
-            return apply(ft, pos, hash, kw, star, this);
-        } else if (fun.isClassType()) {
-            return new InstanceType(fun, this, pos);
-        } else {
-            addWarning("calling non-function and non-class: " + fun);
-            return Type.UNKNOWN;
-        }
-    }
-
-
-    @NotNull
-    public static Type apply(@NotNull FunType func,
+    public static void apply(@NotNull FunType func,
                              @Nullable List<Type> pos,
                              Map<String, Type> hash,
                              Type kw,
                              Type star,
-                             @Nullable Node call)
+                             @Nullable Node call,
+                             State s)
     {
         Analyzer.self.removeUncalled(func);
 
@@ -117,10 +103,10 @@ public class Call extends Node {
 
         if (func.func == null) {
             // func without definition (possibly builtins)
-            return func.getReturnType();
+            s.put(call, func.getReturnType());
         } else if (call != null && Analyzer.self.inStack(call)) {
             func.setSelfType(null);
-            return Type.UNKNOWN;
+            s.put(call, Type.UNKNOWN);
         }
 
         if (call != null) {
@@ -159,20 +145,20 @@ public class Call extends Node {
         Type cachedTo = func.getMapping(fromType);
         if (cachedTo != null) {
             func.setSelfType(null);
-            return cachedTo;
+            s.put(call, cachedTo);
         } else {
-            Type toType = transformExpr(func.func.body, funcTable);
-            if (missingReturn(toType)) {
-                Analyzer.self.putProblem(func.func.name, "Function not always return a value");
-
-                if (call != null) {
-                    Analyzer.self.putProblem(call, "Call not always return a value");
+            List<State> outStates = transformExpr(func.func.body, funcTable);
+            for (State os : outStates) {
+                Binding b = os.lookup(func.func.body);
+                if (b != null) {
+                    Type toType = b.type;
+                    func.addMapping(fromType, toType);
+                    s.put(call, b);
                 }
             }
 
-            func.addMapping(fromType, toType);
             func.setSelfType(null);
-            return toType;
+            return;
         }
     }
 
@@ -293,8 +279,8 @@ public class Call extends Node {
                                 Binding.Kind kind)
     {
         Node loc = Builtins.newDataModelUrl("the-standard-type-hierarchy");
-        Binding b = new Binding(name, loc, type, kind);
-        fun.table.update(name, b);
+        Binding b = new Binding(loc, type, kind);
+        fun.table.put(name, b);
         b.markSynthetic();
         b.markStatic();
     }

@@ -53,18 +53,18 @@ public class Function extends Node {
 
     @NotNull
     @Override
-    public Type transform(@NotNull State s) {
-        resolveList(decoratorList, s);
+    public List<State> transform(@NotNull State s) {
+        transformList(decoratorList, s);
         State env = s.getForwarding();
         FunType fun = new FunType(this, env);
         fun.table.setParent(s);
         fun.table.setPath(s.extendPath(name.id));
-        fun.setDefaultTypes(resolveList(defaults, s));
+        transformList(defaults, s);        // TODO: ignore defaults for now
         Analyzer.self.addUncalled(fun);
         Binding.Kind funkind;
 
         if (isLamba) {
-            return fun;
+            return returnType(fun, s);
         } else {
             if (s.stateType == State.StateType.CLASS) {
                 if ("__init__".equals(name.id)) {
@@ -82,7 +82,7 @@ public class Function extends Node {
             }
 
             Binder.bind(s, name, fun, funkind);
-            return Type.CONT;
+            return s.single();
         }
     }
 

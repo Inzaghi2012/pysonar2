@@ -5,7 +5,8 @@ import org.jetbrains.annotations.Nullable;
 import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.DictType;
 import org.yinwang.pysonar.types.Type;
-import org.yinwang.pysonar.types.UnionType;
+
+import java.util.List;
 
 
 public class Subscript extends Node {
@@ -26,70 +27,66 @@ public class Subscript extends Node {
 
     @NotNull
     @Override
-    public Type transform(State s) {
-        Type vt = transformExpr(value, s);
-        Type st = slice == null ? null : transformExpr(slice, s);
-
-        if (vt.isUnionType()) {
-            Type retType = Type.UNKNOWN;
-            for (Type t : vt.asUnionType().types) {
-                retType = UnionType.union(retType, getSubscript(t, st, s));
-            }
-            return retType;
-        } else {
-            return getSubscript(vt, st, s);
+    public List<State> transform(State s) {
+        List<State> ss = transformExpr(value, s);
+        ss = slice == null ? ss : transformExpr(slice, ss);
+        for (State s1 : ss) {
+            Type vt = s1.lookupType(value);
+            Type st = s1.lookupType(slice);
+            getSubscript(vt, st, s1);
         }
+        return ss;
     }
 
 
     @NotNull
-    private Type getSubscript(@NotNull Type vt, @Nullable Type st, State s) {
+    private void getSubscript(@NotNull Type vt, @Nullable Type st, State s) {
         if (vt.isUnknownType()) {
-            return Type.UNKNOWN;
+            s.put(this, Type.UNKNOWN);
         } else if (vt.isListType()) {
-            return getListSubscript(vt, st, s);
+            getListSubscript(vt, st, s);
         } else if (vt.isTupleType()) {
-            return getListSubscript(vt.asTupleType().toListType(), st, s);
+            getListSubscript(vt.asTupleType().toListType(), st, s);
         } else if (vt.isDictType()) {
             DictType dt = vt.asDictType();
             if (!dt.keyType.equals(st)) {
                 addWarning("Possible KeyError (wrong type for subscript)");
             }
-            return vt.asDictType().valueType;
+            s.put(this, vt.asDictType().valueType);
         } else if (vt.isStrType()) {
             if (st != null && (st.isListType() || st.isNumType())) {
-                return vt;
+                s.put(this, vt);
             } else {
                 addWarning("Possible KeyError (wrong type for subscript)");
-                return Type.UNKNOWN;
+                s.put(this, Type.UNKNOWN);
             }
         } else {
-            return Type.UNKNOWN;
+            s.put(this, Type.UNKNOWN);
         }
     }
 
 
     @NotNull
-    private Type getListSubscript(@NotNull Type vt, @Nullable Type st, State s) {
+    private void getListSubscript(@NotNull Type vt, @Nullable Type st, State s) {
         if (vt.isListType()) {
             if (st != null && st.isListType()) {
-                return vt;
+                s.put(this, vt);
             } else if (st == null || st.isNumType()) {
-                return vt.asListType().eltType;
+                s.put(this, vt.asListType().eltType);
             } else {
                 Type sliceFunc = vt.table.lookupAttrType("__getslice__");
                 if (sliceFunc == null) {
                     addError("The type can't be sliced: " + vt);
-                    return Type.UNKNOWN;
+                    s.put(this, Type.UNKNOWN);
                 } else if (sliceFunc.isFuncType()) {
-                    return Call.apply(sliceFunc.asFuncType(), null, null, null, null, this);
+                    Call.apply(sliceFunc.asFuncType(), null, null, null, null, this, s);
                 } else {
                     addError("The type's __getslice__ method is not a function: " + sliceFunc);
-                    return Type.UNKNOWN;
+                    s.put(this, Type.UNKNOWN);
                 }
             }
         } else {
-            return Type.UNKNOWN;
+            s.put(this, Type.UNKNOWN);
         }
     }
 

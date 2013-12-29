@@ -1,11 +1,11 @@
 package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
-import org.yinwang.pysonar.Analyzer;
 import org.yinwang.pysonar.Binder;
-import org.yinwang.pysonar.Constants;
 import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.Type;
+
+import java.util.List;
 
 
 public class Assign extends Node {
@@ -27,19 +27,15 @@ public class Assign extends Node {
 
     @NotNull
     @Override
-    public Type transform(@NotNull State s) {
-        Type valueType = transformExpr(value, s);
-        if (target.isName() && target.asName().isInstanceVar()) {
-            Type thisType = s.lookupType(Constants.rbSelfName);
-            if (thisType == null) {
-                Analyzer.self.putProblem(this, "Instance variable assignment not within class");
-            } else {
-                Binder.bind(thisType.table, target, valueType);
-            }
-        } else {
-            Binder.bind(s, target, valueType);
+    public List<State> transform(@NotNull State s) {
+        List<State> states = transformExpr(value, s);
+
+        for (State s1 : states) {
+            Type t1 = s1.lookupType("#return");
+            Binder.bind(s1, target, t1);
         }
-        return Type.CONT;
+
+        return states;
     }
 
 

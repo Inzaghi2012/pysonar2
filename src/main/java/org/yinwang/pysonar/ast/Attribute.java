@@ -6,9 +6,8 @@ import org.yinwang.pysonar.Analyzer;
 import org.yinwang.pysonar.Binding;
 import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.Type;
-import org.yinwang.pysonar.types.UnionType;
 
-import java.util.Set;
+import java.util.List;
 
 import static org.yinwang.pysonar.Binding.Kind.ATTRIBUTE;
 
@@ -29,15 +28,10 @@ public class Attribute extends Node {
     }
 
 
-    public void setAttr(State s, @NotNull Type v) {
-        Type targetType = transformExpr(target, s);
-        if (targetType.isUnionType()) {
-            Set<Type> types = targetType.asUnionType().types;
-            for (Type tp : types) {
-                setAttrType(tp, v);
-            }
-        } else {
-            setAttrType(targetType, v);
+    public void setAttr(State s, @NotNull Type type) {
+        List<State> states = transformExpr(target, s);
+        for (State s1 : states) {
+            s1.put(attr, type);
         }
     }
 
@@ -53,48 +47,31 @@ public class Attribute extends Node {
         {
             targetType.setMutated(true);
         }
-        targetType.table.insert(attr.id, attr, v, ATTRIBUTE);
+        targetType.table.put(attr.id, attr, v, ATTRIBUTE);
     }
 
 
     @NotNull
     @Override
-    public Type transform(State s) {
-        // the form of ::A in ruby
-        if (target == null) {
-            return transformExpr(attr, s);
-        }
-
-        Type targetType = transformExpr(target, s);
-        if (targetType.isUnionType()) {
-            Set<Type> types = targetType.asUnionType().types;
-            Type retType = Type.UNKNOWN;
-            for (Type tt : types) {
-                retType = UnionType.union(retType, getAttrType(tt));
+    public List<State> transform(State s) {
+        List<State> ss = transformExpr(target, s);
+        for (State s1 : ss) {
+            Type targetType = s1.lookupType(target);
+            Binding b = targetType.table.lookupAttr(attr.id);
+            if (b == null) {
+                Analyzer.self.putProblem(attr, "attribute not found in type: " + targetType);
+                s1.put(this, Type.UNKNOWN);
+            } else {
+                Analyzer.self.putRef(attr, b);
+                if (parent != null && parent.isCall() &&
+                        b.type.isFuncType() && targetType.isInstanceType())
+                {  // method call
+                    b.type.asFuncType().setSelfType(targetType);
+                }
+                s1.put(this, b);
             }
-            return retType;
-        } else {
-            return getAttrType(targetType);
         }
-    }
-
-
-    private Type getAttrType(@NotNull Type targetType) {
-        Binding b = targetType.table.lookupAttr(attr.id);
-        if (b == null) {
-            Analyzer.self.putProblem(attr, "attribute not found in type: " + targetType);
-            Type t = Type.UNKNOWN;
-            t.table.setPath(targetType.table.extendPath(attr.id));
-            return t;
-        } else {
-            Analyzer.self.putRef(attr, b);
-            if (parent != null && parent.isCall() &&
-                    b.type.isFuncType() && targetType.isInstanceType())
-            {  // method call
-                b.type.asFuncType().setSelfType(targetType);
-            }
-            return b.type;
-        }
+        return ss;
     }
 
 

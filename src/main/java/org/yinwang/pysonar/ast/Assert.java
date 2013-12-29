@@ -2,7 +2,9 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.types.Type;
+
+import java.util.Collections;
+import java.util.List;
 
 
 public class Assert extends Node {
@@ -21,14 +23,15 @@ public class Assert extends Node {
 
     @NotNull
     @Override
-    public Type transform(State s) {
-        if (test != null) {
-            transformExpr(test, s);
-        }
+    public List<State> transform(State s) {
         if (msg != null) {
             transformExpr(msg, s);
         }
-        return Type.CONT;
+        if (test != null) {
+            return transformExpr(test, s);
+        } else {
+            return Collections.emptyList();
+        }
     }
 
 

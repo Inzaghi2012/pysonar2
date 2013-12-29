@@ -1,6 +1,7 @@
 package org.yinwang.pysonar.types;
 
 import org.jetbrains.annotations.NotNull;
+import org.yinwang.pysonar.Analyzer;
 import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.ast.Call;
 
@@ -26,7 +27,7 @@ public class InstanceType extends Type {
 
         if (initFunc != null && initFunc.isFuncType() && initFunc.asFuncType().func != null) {
             initFunc.asFuncType().setSelfType(this);
-            Call.apply(initFunc.asFuncType(), args, null, null, null, call);
+            Call.apply(initFunc.asFuncType(), args, null, null, null, call, Analyzer.self.globaltable);
             initFunc.asFuncType().setSelfType(null);
         }
     }

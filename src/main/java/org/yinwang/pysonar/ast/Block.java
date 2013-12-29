@@ -4,8 +4,6 @@ import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
 import org.yinwang.pysonar.Binding;
 import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.types.Type;
-import org.yinwang.pysonar.types.UnionType;
 
 import java.util.List;
 
@@ -25,13 +23,13 @@ public class Block extends Node {
 
     @NotNull
     @Override
-    public Type transform(@NotNull State state) {
+    public List<State> transform(@NotNull State s) {
         // find global names and mark them
         for (Node n : seq) {
             if (n.isGlobal()) {
                 for (Name name : n.asGlobal().names) {
-                    state.addGlobalName(name.id);
-                    Binding b = state.lookup(name.id);
+                    s.addGlobalName(name.id);
+                    Binding b = s.lookup(name.id);
                     if (b != null) {
                         Analyzer.self.putRef(name, b);
                     }
@@ -39,25 +37,13 @@ public class Block extends Node {
             }
         }
 
-        boolean returned = false;
-        Type retType = Type.UNKNOWN;
+        List<State> ss = s.single();
 
         for (Node n : seq) {
-            Type t = transformExpr(n, state);
-            if (!returned) {
-                retType = UnionType.union(retType, t);
-                if (!UnionType.contains(t, Type.CONT)) {
-                    returned = true;
-                    retType = UnionType.remove(retType, Type.CONT);
-                }
-            } else if (state.stateType != State.StateType.GLOBAL &&
-                    state.stateType != State.StateType.MODULE)
-            {
-                Analyzer.self.putProblem(n, "unreachable code");
-            }
+            ss = transformExpr(n, ss);
         }
 
-        return retType;
+        return ss;
     }
 
 

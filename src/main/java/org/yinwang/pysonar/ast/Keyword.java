@@ -2,7 +2,8 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.types.Type;
+
+import java.util.List;
 
 
 /**
@@ -25,7 +26,7 @@ public class Keyword extends Node {
 
     @NotNull
     @Override
-    public Type transform(State s) {
+    public List<State> transform(State s) {
         return transformExpr(value, s);
     }
 

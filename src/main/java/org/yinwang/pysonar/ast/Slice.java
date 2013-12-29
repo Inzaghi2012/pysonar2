@@ -3,7 +3,8 @@ package org.yinwang.pysonar.ast;
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.ListType;
-import org.yinwang.pysonar.types.Type;
+
+import java.util.List;
 
 
 public class Slice extends Node {
@@ -24,7 +25,7 @@ public class Slice extends Node {
 
     @NotNull
     @Override
-    public Type transform(State s) {
+    public List<State> transform(State s) {
         if (lower != null) {
             transformExpr(lower, s);
         }
@@ -34,7 +35,7 @@ public class Slice extends Node {
         if (upper != null) {
             transformExpr(upper, s);
         }
-        return new ListType();
+        return s.put(this, new ListType());
     }
 
 

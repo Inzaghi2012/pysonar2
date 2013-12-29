@@ -4,6 +4,8 @@ import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.Type;
 
+import java.util.List;
+
 
 public class Str extends Node {
 
@@ -18,8 +20,8 @@ public class Str extends Node {
 
     @NotNull
     @Override
-    public Type transform(State s) {
-        return Type.STR;
+    public List<State> transform(State s) {
+        return s.put(this, Type.STR);
     }
 
 

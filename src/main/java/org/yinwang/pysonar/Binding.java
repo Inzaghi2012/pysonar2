@@ -31,8 +31,6 @@ public class Binding implements Comparable<Object> {
     private boolean isBuiltin = false;        // not from a source file
 
     @NotNull
-    public String name;     // unqualified name
-    @NotNull
     public Node node;
     @NotNull
     public String qname;    // qualified name
@@ -51,8 +49,7 @@ public class Binding implements Comparable<Object> {
     public String fileOrUrl;
 
 
-    public Binding(@NotNull String id, @NotNull Node node, @NotNull Type type, @NotNull Kind kind) {
-        this.name = id;
+    public Binding(@NotNull Node node, @NotNull Type type, @NotNull Kind kind) {
         this.qname = type.table.path;
         this.type = type;
         this.kind = kind;
@@ -67,9 +64,6 @@ public class Binding implements Comparable<Object> {
             }
         } else {
             fileOrUrl = node.file;
-            if (node instanceof Name) {
-                name = node.asName().id;
-            }
         }
 
         initLocationInfo(node);
@@ -88,7 +82,6 @@ public class Binding implements Comparable<Object> {
             bodyStart = parent.start;
             bodyEnd = parent.end;
         } else if (node instanceof Module) {
-            name = ((Module) node).name;
             start = 0;
             end = 0;
             bodyStart = node.start;
