@@ -2,6 +2,238 @@
   {
     "ref": {
       "name": "x",
+      "file": "complex-segmentation.py",
+      "start": 296,
+      "end": 297
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "complex-segmentation.py",
+        "start": 278,
+        "end": 279
+      },
+      {
+        "name": "x",
+        "file": "complex-segmentation.py",
+        "start": 278,
+        "end": 279
+      },
+      {
+        "name": "x",
+        "file": "complex-segmentation.py",
+        "start": 278,
+        "end": 279
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "complex-segmentation.py",
+      "start": 311,
+      "end": 312
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "complex-segmentation.py",
+        "start": 278,
+        "end": 279
+      },
+      {
+        "name": "x",
+        "file": "complex-segmentation.py",
+        "start": 278,
+        "end": 279
+      },
+      {
+        "name": "x",
+        "file": "complex-segmentation.py",
+        "start": 278,
+        "end": 279
+      },
+      {
+        "name": "x",
+        "file": "complex-segmentation.py",
+        "start": 278,
+        "end": 279
+      },
+      {
+        "name": "x",
+        "file": "complex-segmentation.py",
+        "start": 278,
+        "end": 279
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "complex-segmentation.py",
+      "start": 330,
+      "end": 331
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "complex-segmentation.py",
+        "start": 278,
+        "end": 279
+      },
+      {
+        "name": "x",
+        "file": "complex-segmentation.py",
+        "start": 278,
+        "end": 279
+      },
+      {
+        "name": "x",
+        "file": "complex-segmentation.py",
+        "start": 278,
+        "end": 279
+      },
+      {
+        "name": "x",
+        "file": "complex-segmentation.py",
+        "start": 278,
+        "end": 279
+      },
+      {
+        "name": "x",
+        "file": "complex-segmentation.py",
+        "start": 278,
+        "end": 279
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "complex-segmentation.py",
+      "start": 350,
+      "end": 351
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "complex-segmentation.py",
+        "start": 278,
+        "end": 279
+      },
+      {
+        "name": "x",
+        "file": "complex-segmentation.py",
+        "start": 278,
+        "end": 279
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "complex-segmentation.py",
+      "start": 399,
+      "end": 400
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "complex-segmentation.py",
+        "start": 278,
+        "end": 279
+      },
+      {
+        "name": "x",
+        "file": "complex-segmentation.py",
+        "start": 278,
+        "end": 279
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "complex-segmentation.py",
+      "start": 439,
+      "end": 440
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "complex-segmentation.py",
+        "start": 278,
+        "end": 279
+      },
+      {
+        "name": "x",
+        "file": "complex-segmentation.py",
+        "start": 278,
+        "end": 279
+      },
+      {
+        "name": "x",
+        "file": "complex-segmentation.py",
+        "start": 278,
+        "end": 279
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "complex-segmentation.py",
+      "start": 484,
+      "end": 485
+    },
+    "dests": [
+      {
+        "name": "y",
+        "file": "complex-segmentation.py",
+        "start": 346,
+        "end": 347
+      },
+      {
+        "name": "y",
+        "file": "complex-segmentation.py",
+        "start": 395,
+        "end": 396
+      },
+      {
+        "name": "y",
+        "file": "complex-segmentation.py",
+        "start": 346,
+        "end": 347
+      },
+      {
+        "name": "y",
+        "file": "complex-segmentation.py",
+        "start": 395,
+        "end": 396
+      },
+      {
+        "name": "y",
+        "file": "complex-segmentation.py",
+        "start": 435,
+        "end": 436
+      },
+      {
+        "name": "y",
+        "file": "complex-segmentation.py",
+        "start": 435,
+        "end": 436
+      },
+      {
+        "name": "y",
+        "file": "complex-segmentation.py",
+        "start": 435,
+        "end": 436
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
       "file": "conjunction-infeasible.py",
       "start": 14,
       "end": 15
