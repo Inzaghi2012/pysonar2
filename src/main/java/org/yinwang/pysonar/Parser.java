@@ -198,7 +198,7 @@ public class Parser {
             Op op = convertOp(map.get("op"));
             BinOp ret = new BinOp(op, values.get(0), values.get(1), file, start, end);
             for (int i = 2; i < values.size(); i++) {
-                ret = new BinOp(op, ret, values.get(i), file, start, end);
+                ret = new BinOp(op, ret, values.get(i), file, start+i, end);
             }
             return ret;
         }
@@ -235,8 +235,8 @@ public class Parser {
             List<Node> comparators = convertList(map.get("comparators"));
             Node result = new BinOp(ops.get(0), left, comparators.get(0), file, start, end);
             for (int i = 1; i < comparators.size(); i++) {
-                Node compNext = new BinOp(ops.get(i), comparators.get(i - 1), comparators.get(i), file, start, end);
-                result = new BinOp(Op.And, result, compNext, file, start, end);
+                Node compNext = new BinOp(ops.get(i), comparators.get(i - 1), comparators.get(i), file, start+i, end);
+                result = new BinOp(Op.And, result, compNext, file, start+i, end);
             }
             return result;
         }
