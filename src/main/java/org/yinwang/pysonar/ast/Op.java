@@ -56,6 +56,14 @@ public enum Op {
             return Op.Lt;
         }
 
+        if (op == Op.LtE) {
+            return Op.GtE;
+        }
+
+        if (op == Op.GtE) {
+            return Op.LtE;
+        }
+
         if (op == Op.Eq) {
             return Op.Eq;
         }

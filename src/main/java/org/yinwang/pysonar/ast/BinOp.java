@@ -121,7 +121,7 @@ public class BinOp extends Node {
                 }
 
                 // comparison
-                if (op == Op.Lt || op == Op.Gt) {
+                if (op == Op.Lt || op == Op.LtE || op == Op.Gt || op == Op.GtE) {
                     Node leftNode = left;
                     IntType trueType, falseType;
                     Op op1 = op;
@@ -136,7 +136,7 @@ public class BinOp extends Node {
                         op1 = Op.invert(op1);
                     }
 
-                    if (op1 == Op.Lt) {
+                    if (op1 == Op.Lt || op1 == Op.LtE) {
                         if (leftNum.lt(rightNum)) {
                             s1.put(this, Type.TRUE);
                             ret.add(s1);
@@ -148,11 +148,22 @@ public class BinOp extends Node {
                             if (leftNode.isName()) {
                                 // true branch: if l < r, then l's upper bound is r's upper bound
                                 trueType = new IntType(leftNum);
-                                trueType.setUpper(rightNum.upper);
 
-                                // false branch: if l > r, then l's lower bound is r's lower bound
+                                if (op1 == Op.Lt) { // l < r
+                                    trueType.setUpperExclusive(rightNum.upper);
+                                } else { // l <= r
+                                    trueType.setUpperInclusive(rightNum.upper);
+                                }
+
+                                // false branch: if l >= r, then l's lower bound is r's lower bound
                                 falseType = new IntType(leftNum);
-                                falseType.setLower(rightNum.lower);
+
+                                if (op1 == Op.Lt) { // l >= r
+                                    falseType.setLowerInclusive(rightNum.lower);
+                                } else if (op1 == Op.LtE) { // l > r
+                                    falseType.setLowerExclusive(rightNum.lower);
+                                }
+
                                 String id = leftNode.asName().id;
 
                                 Binding b = s1.lookup(id);
@@ -169,7 +180,7 @@ public class BinOp extends Node {
                         }
                     }
 
-                    if (op1 == Op.Gt) {
+                    if (op1 == Op.Gt || op1 == Op.GtE) {
                         if (leftNum.gt(rightNum)) {
                             s1.put(this, Type.TRUE);
                             ret.add(s1);
@@ -180,13 +191,23 @@ public class BinOp extends Node {
                             if (leftNode.isName()) {
                                 // true branch: if l > r, then l's lower bound is r's lower bound
                                 trueType = new IntType(leftNum);
-                                trueType.setLower(rightNum.lower);
+
+                                if (op1 == Op.Gt) {  // l > r
+                                    trueType.setLowerExclusive(rightNum.lower);
+                                } else {  // l >= r
+                                    trueType.setLowerInclusive(rightNum.lower);
+                                }
 
                                 // false branch: if l < r, then l's upper bound is r's upper bound
                                 falseType = new IntType(leftNum);
-                                falseType.setUpper(rightNum.upper);
-                                String id = leftNode.asName().id;
 
+                                if (op1 == Op.Gt) {  // l <= r
+                                    falseType.setUpperInclusive(rightNum.upper);
+                                } else { // l < r
+                                    falseType.setUpperExclusive(rightNum.upper);
+                                }
+
+                                String id = leftNode.asName().id;
                                 Binding b = s1.lookup(id);
                                 State s1true = s1.copy();
                                 State s1false = s1.copy();
@@ -202,8 +223,6 @@ public class BinOp extends Node {
                     }
                 }
             }
-
-
         }
 
         return ret;

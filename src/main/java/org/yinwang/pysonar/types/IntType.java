@@ -159,14 +159,23 @@ public class IntType extends Type {
     }
 
 
-    public void setLower(BigInteger lower) {
+    public void setLowerInclusive(BigInteger lower) {
         this.lower = lower;
         this.lowerBounded = true;
     }
 
+    public void setLowerExclusive(BigInteger lower) {
+        this.lower = lower.add(BigInteger.ONE);
+        this.lowerBounded = true;
+    }
 
-    public void setUpper(BigInteger upper) {
+    public void setUpperInclusive(BigInteger upper) {
         this.upper = upper;
+        this.upperBounded = true;
+    }
+
+    public void setUpperExclusive(BigInteger upper) {
+        this.upper = upper.subtract(BigInteger.ONE);
         this.upperBounded = true;
     }
 

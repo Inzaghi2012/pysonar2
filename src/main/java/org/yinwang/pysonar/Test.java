@@ -168,11 +168,7 @@ public class Test {
             _.writeFile(extraRefsFile, extraJson);
         }
 
-        if (!failedRefs.isEmpty() || !extraRefs.isEmpty()) {
-            return false;
-        } else {
-            return true;
-        }
+        return failedRefs.isEmpty() && extraRefs.isEmpty();
     }
 
 

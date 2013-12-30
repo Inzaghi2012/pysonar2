@@ -1,10 +1,9 @@
 x = int()
-y = int()
 
-if x < 3 or y > 10:
-    if x > 4 and y < 8:
+if x < 0 or x > 15:
+    if x > 5 and x < 10:
         u = x
     else:
-        u = x      # here
+        u = x      # [..-1] [16..]
 
 print u

@@ -1,10 +1,10 @@
 x = int()
 y = int()
 
-if x < 3 or y > 10:
-    if x < 4:
-        w = x      # here
+if x < 0 or x > 10:
+    if x < 5:
+        w = x      # [..-1]
     else:
-        w = x    # and here
+        w = x      # [11..]
 
-print w
+print w            # [..-1] [11..]

@@ -1,8 +1,8 @@
 x = int()
 
 if x < 2:
-    y = x         # here
+    y = x         # [..1]
 else:
-    y = x         # and here
+    y = x         # [2..]
 
 print y
