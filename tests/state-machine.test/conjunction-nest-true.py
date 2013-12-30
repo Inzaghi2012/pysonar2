@@ -1,9 +1,11 @@
 x = int()
 
-if 2 < x < 5:
+if 2 < x and x < 5:
     if x < 6:
-        y = 42      # here
+        y = x      # [2..5]
     else:
-        y = 'hi'
+        y = x
+else:
+    y = x          # [..2] | [5..]
 
 print y

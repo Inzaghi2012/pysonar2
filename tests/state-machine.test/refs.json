@@ -28,6 +28,40 @@
         "file": "conjunction-infeasible.py",
         "start": 0,
         "end": 1
+      },
+      {
+        "name": "x",
+        "file": "conjunction-infeasible.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "conjunction-infeasible.py",
+      "start": 56,
+      "end": 57
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "conjunction-infeasible.py",
+        "start": 0,
+        "end": 1
+      },
+      {
+        "name": "x",
+        "file": "conjunction-infeasible.py",
+        "start": 0,
+        "end": 1
+      },
+      {
+        "name": "x",
+        "file": "conjunction-infeasible.py",
+        "start": 0,
+        "end": 1
       }
     ]
   },
@@ -35,10 +69,22 @@
     "ref": {
       "name": "y",
       "file": "conjunction-infeasible.py",
-      "start": 79,
-      "end": 80
+      "start": 76,
+      "end": 77
     },
     "dests": [
+      {
+        "name": "y",
+        "file": "conjunction-infeasible.py",
+        "start": 52,
+        "end": 53
+      },
+      {
+        "name": "y",
+        "file": "conjunction-infeasible.py",
+        "start": 52,
+        "end": 53
+      },
       {
         "name": "y",
         "file": "conjunction-infeasible.py",
@@ -67,8 +113,30 @@
     "ref": {
       "name": "x",
       "file": "conjunction-nest-both.py",
-      "start": 32,
-      "end": 33
+      "start": 24,
+      "end": 25
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "conjunction-nest-both.py",
+        "start": 0,
+        "end": 1
+      },
+      {
+        "name": "x",
+        "file": "conjunction-nest-both.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "conjunction-nest-both.py",
+      "start": 38,
+      "end": 39
     },
     "dests": [
       {
@@ -83,8 +151,8 @@
     "ref": {
       "name": "x",
       "file": "conjunction-nest-both.py",
-      "start": 100,
-      "end": 101
+      "start": 57,
+      "end": 58
     },
     "dests": [
       {
@@ -97,17 +165,105 @@
   },
   {
     "ref": {
+      "name": "x",
+      "file": "conjunction-nest-both.py",
+      "start": 104,
+      "end": 105
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "conjunction-nest-both.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "conjunction-nest-both.py",
+      "start": 147,
+      "end": 148
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "conjunction-nest-both.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "conjunction-nest-both.py",
+      "start": 177,
+      "end": 178
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "conjunction-nest-both.py",
+        "start": 0,
+        "end": 1
+      },
+      {
+        "name": "x",
+        "file": "conjunction-nest-both.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "conjunction-nest-both.py",
+      "start": 211,
+      "end": 212
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "conjunction-nest-both.py",
+        "start": 0,
+        "end": 1
+      },
+      {
+        "name": "x",
+        "file": "conjunction-nest-both.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
       "name": "y",
       "file": "conjunction-nest-both.py",
-      "start": 166,
-      "end": 167
+      "start": 244,
+      "end": 245
     },
     "dests": [
       {
         "name": "y",
         "file": "conjunction-nest-both.py",
-        "start": 47,
-        "end": 48
+        "start": 53,
+        "end": 54
+      },
+      {
+        "name": "y",
+        "file": "conjunction-nest-both.py",
+        "start": 173,
+        "end": 174
+      },
+      {
+        "name": "y",
+        "file": "conjunction-nest-both.py",
+        "start": 173,
+        "end": 174
       }
     ]
   },
@@ -115,15 +271,27 @@
     "ref": {
       "name": "z",
       "file": "conjunction-nest-both.py",
-      "start": 168,
-      "end": 169
+      "start": 247,
+      "end": 248
     },
     "dests": [
       {
         "name": "z",
         "file": "conjunction-nest-both.py",
-        "start": 140,
-        "end": 141
+        "start": 143,
+        "end": 144
+      },
+      {
+        "name": "z",
+        "file": "conjunction-nest-both.py",
+        "start": 207,
+        "end": 208
+      },
+      {
+        "name": "z",
+        "file": "conjunction-nest-both.py",
+        "start": 207,
+        "end": 208
       }
     ]
   },
@@ -147,10 +315,70 @@
     "ref": {
       "name": "x",
       "file": "conjunction-nest-false.py",
-      "start": 32,
-      "end": 33
+      "start": 24,
+      "end": 25
     },
     "dests": [
+      {
+        "name": "x",
+        "file": "conjunction-nest-false.py",
+        "start": 0,
+        "end": 1
+      },
+      {
+        "name": "x",
+        "file": "conjunction-nest-false.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "conjunction-nest-false.py",
+      "start": 38,
+      "end": 39
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "conjunction-nest-false.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "conjunction-nest-false.py",
+      "start": 81,
+      "end": 82
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "conjunction-nest-false.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "conjunction-nest-false.py",
+      "start": 111,
+      "end": 112
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "conjunction-nest-false.py",
+        "start": 0,
+        "end": 1
+      },
       {
         "name": "x",
         "file": "conjunction-nest-false.py",
@@ -163,99 +391,41 @@
     "ref": {
       "name": "y",
       "file": "conjunction-nest-false.py",
-      "start": 99,
-      "end": 100
+      "start": 144,
+      "end": 145
     },
     "dests": [
       {
         "name": "y",
         "file": "conjunction-nest-false.py",
-        "start": 72,
-        "end": 73
-      }
-    ]
-  },
-  {
-    "ref": {
-      "name": "x",
-      "file": "conjunction-nest-seq2-both.py",
-      "start": 18,
-      "end": 19
-    },
-    "dests": [
-      {
-        "name": "x",
-        "file": "conjunction-nest-seq2-both.py",
-        "start": 0,
-        "end": 1
-      }
-    ]
-  },
-  {
-    "ref": {
-      "name": "x",
-      "file": "conjunction-nest-seq2-both.py",
-      "start": 32,
-      "end": 33
-    },
-    "dests": [
-      {
-        "name": "x",
-        "file": "conjunction-nest-seq2-both.py",
-        "start": 0,
-        "end": 1
-      }
-    ]
-  },
-  {
-    "ref": {
-      "name": "x",
-      "file": "conjunction-nest-seq2-both.py",
-      "start": 89,
-      "end": 90
-    },
-    "dests": [
-      {
-        "name": "x",
-        "file": "conjunction-nest-seq2-both.py",
-        "start": 0,
-        "end": 1
-      }
-    ]
-  },
-  {
-    "ref": {
-      "name": "y",
-      "file": "conjunction-nest-seq2-both.py",
-      "start": 179,
-      "end": 180
-    },
-    "dests": [
-      {
-        "name": "y",
-        "file": "conjunction-nest-seq2-both.py",
-        "start": 104,
-        "end": 105
+        "start": 77,
+        "end": 78
       },
       {
         "name": "y",
-        "file": "conjunction-nest-seq2-both.py",
-        "start": 145,
-        "end": 146
+        "file": "conjunction-nest-false.py",
+        "start": 107,
+        "end": 108
+      },
+      {
+        "name": "y",
+        "file": "conjunction-nest-false.py",
+        "start": 107,
+        "end": 108
       }
     ]
   },
   {
     "ref": {
       "name": "x",
-      "file": "conjunction-nest-seq2-false.py",
+      "file": "conjunction-nest-seq2-both.py",
       "start": 18,
       "end": 19
     },
     "dests": [
       {
         "name": "x",
-        "file": "conjunction-nest-seq2-false.py",
+        "file": "conjunction-nest-seq2-both.py",
         "start": 0,
         "end": 1
       }
@@ -264,14 +434,20 @@
   {
     "ref": {
       "name": "x",
-      "file": "conjunction-nest-seq2-false.py",
-      "start": 32,
-      "end": 33
+      "file": "conjunction-nest-seq2-both.py",
+      "start": 24,
+      "end": 25
     },
     "dests": [
       {
         "name": "x",
-        "file": "conjunction-nest-seq2-false.py",
+        "file": "conjunction-nest-seq2-both.py",
+        "start": 0,
+        "end": 1
+      },
+      {
+        "name": "x",
+        "file": "conjunction-nest-seq2-both.py",
         "start": 0,
         "end": 1
       }
@@ -280,14 +456,78 @@
   {
     "ref": {
       "name": "x",
-      "file": "conjunction-nest-seq2-false.py",
-      "start": 89,
-      "end": 90
+      "file": "conjunction-nest-seq2-both.py",
+      "start": 38,
+      "end": 39
     },
     "dests": [
       {
         "name": "x",
-        "file": "conjunction-nest-seq2-false.py",
+        "file": "conjunction-nest-seq2-both.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "conjunction-nest-seq2-both.py",
+      "start": 57,
+      "end": 58
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "conjunction-nest-seq2-both.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "conjunction-nest-seq2-both.py",
+      "start": 91,
+      "end": 92
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "conjunction-nest-seq2-both.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "conjunction-nest-seq2-both.py",
+      "start": 110,
+      "end": 111
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "conjunction-nest-seq2-both.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "conjunction-nest-seq2-both.py",
+      "start": 150,
+      "end": 151
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "conjunction-nest-seq2-both.py",
         "start": 0,
         "end": 1
       }
@@ -296,16 +536,140 @@
   {
     "ref": {
       "name": "y",
-      "file": "conjunction-nest-seq2-false.py",
+      "file": "conjunction-nest-seq2-both.py",
       "start": 175,
       "end": 176
     },
     "dests": [
       {
         "name": "y",
+        "file": "conjunction-nest-seq2-both.py",
+        "start": 106,
+        "end": 107
+      },
+      {
+        "name": "y",
+        "file": "conjunction-nest-seq2-both.py",
+        "start": 146,
+        "end": 147
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "conjunction-nest-seq2-false.py",
+      "start": 18,
+      "end": 19
+    },
+    "dests": [
+      {
+        "name": "x",
         "file": "conjunction-nest-seq2-false.py",
-        "start": 129,
-        "end": 130
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "conjunction-nest-seq2-false.py",
+      "start": 24,
+      "end": 25
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "conjunction-nest-seq2-false.py",
+        "start": 0,
+        "end": 1
+      },
+      {
+        "name": "x",
+        "file": "conjunction-nest-seq2-false.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "conjunction-nest-seq2-false.py",
+      "start": 38,
+      "end": 39
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "conjunction-nest-seq2-false.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "conjunction-nest-seq2-false.py",
+      "start": 57,
+      "end": 58
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "conjunction-nest-seq2-false.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "conjunction-nest-seq2-false.py",
+      "start": 91,
+      "end": 92
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "conjunction-nest-seq2-false.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "conjunction-nest-seq2-false.py",
+      "start": 134,
+      "end": 135
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "conjunction-nest-seq2-false.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "conjunction-nest-seq2-false.py",
+      "start": 150,
+      "end": 151
+    },
+    "dests": [
+      {
+        "name": "y",
+        "file": "conjunction-nest-seq2-false.py",
+        "start": 130,
+        "end": 131
       }
     ]
   },
@@ -329,8 +693,30 @@
     "ref": {
       "name": "x",
       "file": "conjunction-nest-seq2-true.py",
-      "start": 32,
-      "end": 33
+      "start": 24,
+      "end": 25
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "conjunction-nest-seq2-true.py",
+        "start": 0,
+        "end": 1
+      },
+      {
+        "name": "x",
+        "file": "conjunction-nest-seq2-true.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "conjunction-nest-seq2-true.py",
+      "start": 38,
+      "end": 39
     },
     "dests": [
       {
@@ -345,8 +731,40 @@
     "ref": {
       "name": "x",
       "file": "conjunction-nest-seq2-true.py",
-      "start": 89,
-      "end": 90
+      "start": 57,
+      "end": 58
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "conjunction-nest-seq2-true.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "conjunction-nest-seq2-true.py",
+      "start": 91,
+      "end": 92
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "conjunction-nest-seq2-true.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "conjunction-nest-seq2-true.py",
+      "start": 110,
+      "end": 111
     },
     "dests": [
       {
@@ -361,15 +779,15 @@
     "ref": {
       "name": "y",
       "file": "conjunction-nest-seq2-true.py",
-      "start": 185,
-      "end": 186
+      "start": 169,
+      "end": 170
     },
     "dests": [
       {
         "name": "y",
         "file": "conjunction-nest-seq2-true.py",
-        "start": 104,
-        "end": 105
+        "start": 106,
+        "end": 107
       }
     ]
   },
@@ -393,8 +811,30 @@
     "ref": {
       "name": "x",
       "file": "conjunction-nest-true.py",
-      "start": 32,
-      "end": 33
+      "start": 24,
+      "end": 25
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "conjunction-nest-true.py",
+        "start": 0,
+        "end": 1
+      },
+      {
+        "name": "x",
+        "file": "conjunction-nest-true.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "conjunction-nest-true.py",
+      "start": 38,
+      "end": 39
     },
     "dests": [
       {
@@ -407,17 +847,67 @@
   },
   {
     "ref": {
+      "name": "x",
+      "file": "conjunction-nest-true.py",
+      "start": 57,
+      "end": 58
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "conjunction-nest-true.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "conjunction-nest-true.py",
+      "start": 111,
+      "end": 112
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "conjunction-nest-true.py",
+        "start": 0,
+        "end": 1
+      },
+      {
+        "name": "x",
+        "file": "conjunction-nest-true.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
       "name": "y",
       "file": "conjunction-nest-true.py",
-      "start": 100,
-      "end": 101
+      "start": 145,
+      "end": 146
     },
     "dests": [
       {
         "name": "y",
         "file": "conjunction-nest-true.py",
-        "start": 47,
-        "end": 48
+        "start": 53,
+        "end": 54
+      },
+      {
+        "name": "y",
+        "file": "conjunction-nest-true.py",
+        "start": 107,
+        "end": 108
+      },
+      {
+        "name": "y",
+        "file": "conjunction-nest-true.py",
+        "start": 107,
+        "end": 108
       }
     ]
   },
@@ -459,6 +949,50 @@
       "file": "disjunction-both.py",
       "start": 48,
       "end": 49
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "disjunction-both.py",
+        "start": 0,
+        "end": 1
+      },
+      {
+        "name": "x",
+        "file": "disjunction-both.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "disjunction-both.py",
+      "start": 67,
+      "end": 68
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "disjunction-both.py",
+        "start": 0,
+        "end": 1
+      },
+      {
+        "name": "x",
+        "file": "disjunction-both.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "disjunction-both.py",
+      "start": 103,
+      "end": 104
     },
     "dests": [
       {
@@ -473,8 +1007,8 @@
     "ref": {
       "name": "w",
       "file": "disjunction-both.py",
-      "start": 130,
-      "end": 131
+      "start": 126,
+      "end": 127
     },
     "dests": [
       {
@@ -486,8 +1020,14 @@
       {
         "name": "w",
         "file": "disjunction-both.py",
-        "start": 100,
-        "end": 101
+        "start": 63,
+        "end": 64
+      },
+      {
+        "name": "w",
+        "file": "disjunction-both.py",
+        "start": 99,
+        "end": 100
       }
     ]
   },
@@ -531,6 +1071,12 @@
       "end": 49
     },
     "dests": [
+      {
+        "name": "x",
+        "file": "disjunction-false.py",
+        "start": 0,
+        "end": 1
+      },
       {
         "name": "x",
         "file": "disjunction-false.py",
@@ -552,22 +1098,206 @@
         "file": "disjunction-false.py",
         "start": 10,
         "end": 11
+      },
+      {
+        "name": "y",
+        "file": "disjunction-false.py",
+        "start": 10,
+        "end": 11
+      },
+      {
+        "name": "y",
+        "file": "disjunction-false.py",
+        "start": 10,
+        "end": 11
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "disjunction-false.py",
+      "start": 101,
+      "end": 102
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "disjunction-false.py",
+        "start": 0,
+        "end": 1
+      },
+      {
+        "name": "x",
+        "file": "disjunction-false.py",
+        "start": 0,
+        "end": 1
+      },
+      {
+        "name": "x",
+        "file": "disjunction-false.py",
+        "start": 0,
+        "end": 1
+      },
+      {
+        "name": "x",
+        "file": "disjunction-false.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "u",
+      "file": "disjunction-false.py",
+      "start": 122,
+      "end": 123
+    },
+    "dests": [
+      {
+        "name": "u",
+        "file": "disjunction-false.py",
+        "start": 97,
+        "end": 98
+      },
+      {
+        "name": "u",
+        "file": "disjunction-false.py",
+        "start": 97,
+        "end": 98
+      },
+      {
+        "name": "u",
+        "file": "disjunction-false.py",
+        "start": 97,
+        "end": 98
+      },
+      {
+        "name": "u",
+        "file": "disjunction-false.py",
+        "start": 97,
+        "end": 98
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "disjunction-samevar-true.py",
+      "start": 14,
+      "end": 15
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "disjunction-samevar-true.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "disjunction-samevar-true.py",
+      "start": 23,
+      "end": 24
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "disjunction-samevar-true.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "disjunction-samevar-true.py",
+      "start": 38,
+      "end": 39
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "disjunction-samevar-true.py",
+        "start": 0,
+        "end": 1
+      },
+      {
+        "name": "x",
+        "file": "disjunction-samevar-true.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "disjunction-samevar-true.py",
+      "start": 57,
+      "end": 58
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "disjunction-samevar-true.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "disjunction-samevar-true.py",
+      "start": 93,
+      "end": 94
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "disjunction-samevar-true.py",
+        "start": 0,
+        "end": 1
+      },
+      {
+        "name": "x",
+        "file": "disjunction-samevar-true.py",
+        "start": 0,
+        "end": 1
       }
     ]
   },
   {
     "ref": {
       "name": "w",
-      "file": "disjunction-false.py",
-      "start": 126,
-      "end": 127
+      "file": "disjunction-samevar-true.py",
+      "start": 124,
+      "end": 125
     },
     "dests": [
       {
         "name": "w",
-        "file": "disjunction-false.py",
-        "start": 98,
-        "end": 99
+        "file": "disjunction-samevar-true.py",
+        "start": 53,
+        "end": 54
+      },
+      {
+        "name": "w",
+        "file": "disjunction-samevar-true.py",
+        "start": 89,
+        "end": 90
+      },
+      {
+        "name": "w",
+        "file": "disjunction-samevar-true.py",
+        "start": 89,
+        "end": 90
       }
     ]
   },
@@ -611,6 +1341,40 @@
       "end": 49
     },
     "dests": [
+      {
+        "name": "x",
+        "file": "disjunction-true.py",
+        "start": 0,
+        "end": 1
+      },
+      {
+        "name": "x",
+        "file": "disjunction-true.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "disjunction-true.py",
+      "start": 76,
+      "end": 77
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "disjunction-true.py",
+        "start": 0,
+        "end": 1
+      },
+      {
+        "name": "x",
+        "file": "disjunction-true.py",
+        "start": 0,
+        "end": 1
+      },
       {
         "name": "x",
         "file": "disjunction-true.py",
@@ -637,23 +1401,29 @@
   },
   {
     "ref": {
-      "name": "y",
+      "name": "u",
       "file": "disjunction-true.py",
-      "start": 125,
-      "end": 126
+      "start": 121,
+      "end": 122
     },
     "dests": [
       {
-        "name": "y",
+        "name": "u",
         "file": "disjunction-true.py",
         "start": 72,
         "end": 73
       },
       {
-        "name": "y",
+        "name": "u",
         "file": "disjunction-true.py",
-        "start": 10,
-        "end": 11
+        "start": 72,
+        "end": 73
+      },
+      {
+        "name": "u",
+        "file": "disjunction-true.py",
+        "start": 72,
+        "end": 73
       }
     ]
   },
@@ -691,23 +1461,55 @@
   },
   {
     "ref": {
+      "name": "x",
+      "file": "nested-false.py",
+      "start": 71,
+      "end": 72
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "nested-false.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "nested-false.py",
+      "start": 98,
+      "end": 99
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "nested-false.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
       "name": "y",
       "file": "nested-false.py",
-      "start": 104,
-      "end": 105
+      "start": 122,
+      "end": 123
     },
     "dests": [
       {
         "name": "y",
         "file": "nested-false.py",
-        "start": 68,
-        "end": 69
+        "start": 67,
+        "end": 68
       },
       {
         "name": "y",
         "file": "nested-false.py",
-        "start": 87,
-        "end": 88
+        "start": 94,
+        "end": 95
       }
     ]
   },
@@ -745,10 +1547,42 @@
   },
   {
     "ref": {
+      "name": "x",
+      "file": "nested-true.py",
+      "start": 47,
+      "end": 48
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "nested-true.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "nested-true.py",
+      "start": 98,
+      "end": 99
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "nested-true.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
       "name": "y",
       "file": "nested-true.py",
-      "start": 104,
-      "end": 105
+      "start": 122,
+      "end": 123
     },
     "dests": [
       {
@@ -760,8 +1594,8 @@
       {
         "name": "y",
         "file": "nested-true.py",
-        "start": 87,
-        "end": 88
+        "start": 94,
+        "end": 95
       }
     ]
   },
@@ -783,10 +1617,42 @@
   },
   {
     "ref": {
+      "name": "x",
+      "file": "simple_ambiguous.py",
+      "start": 29,
+      "end": 30
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "simple_ambiguous.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "simple_ambiguous.py",
+      "start": 60,
+      "end": 61
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "simple_ambiguous.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
       "name": "y",
       "file": "simple_ambiguous.py",
-      "start": 90,
-      "end": 91
+      "start": 88,
+      "end": 89
     },
     "dests": [
       {
@@ -798,8 +1664,8 @@
       {
         "name": "y",
         "file": "simple_ambiguous.py",
-        "start": 57,
-        "end": 58
+        "start": 56,
+        "end": 57
       }
     ]
   },
@@ -821,17 +1687,33 @@
   },
   {
     "ref": {
+      "name": "x",
+      "file": "simple_false.py",
+      "start": 41,
+      "end": 42
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "simple_false.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
       "name": "y",
       "file": "simple_false.py",
-      "start": 66,
-      "end": 67
+      "start": 62,
+      "end": 63
     },
     "dests": [
       {
         "name": "y",
         "file": "simple_false.py",
-        "start": 38,
-        "end": 39
+        "start": 37,
+        "end": 38
       }
     ]
   },
@@ -853,10 +1735,26 @@
   },
   {
     "ref": {
+      "name": "x",
+      "file": "simple_true.py",
+      "start": 25,
+      "end": 26
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "simple_true.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
       "name": "y",
       "file": "simple_true.py",
-      "start": 64,
-      "end": 65
+      "start": 60,
+      "end": 61
     },
     "dests": [
       {

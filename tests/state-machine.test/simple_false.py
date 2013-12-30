@@ -1,8 +1,8 @@
 x = 3
 
 if x < 2:
-    y = 42
+    y = x
 else:
-    y = 'hi'      # here
+    y = x      # here
 
 print y

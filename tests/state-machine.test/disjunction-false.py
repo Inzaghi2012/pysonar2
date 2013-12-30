@@ -3,8 +3,8 @@ y = int()
 
 if x < 3 or y > 10:
     if x > 4 and y < 8:
-        w = 42
+        u = x
     else:
-        w = 'hi'      # here
+        u = x      # here
 
-print w
+print u

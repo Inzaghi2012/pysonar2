@@ -2,10 +2,10 @@ x = int()
 
 if x < 2:
     if x < 5:
-        y = 42
+        y = x     # here
     else:
-        y = 'hi'
+        y = x
 else:
-    y = False
+    y = x         # here
 
 print y

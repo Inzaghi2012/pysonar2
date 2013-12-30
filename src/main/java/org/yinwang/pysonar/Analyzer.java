@@ -26,7 +26,7 @@ public class Analyzer {
     public List<String> loadedFiles = new ArrayList<>();
     public State globaltable = new State(null, State.StateType.GLOBAL);
     public List<Binding> allBindings = new ArrayList<>();
-    private Map<Node, List<Binding>> references = new LinkedHashMap<>();
+    public Map<Node, List<Binding>> references = new LinkedHashMap<>();
     public Map<String, List<Diagnostic>> semanticErrors = new HashMap<>();
     public Map<String, List<Diagnostic>> parseErrors = new HashMap<>();
     public String cwd = null;
@@ -228,33 +228,13 @@ public class Analyzer {
     }
 
 
-    public void putRef(@NotNull Node node, @NotNull List<Binding> bs) {
-        if (!(node instanceof Url)) {
-            List<Binding> bindings = references.get(node);
-            if (bindings == null) {
-                bindings = new ArrayList<>(1);
-                references.put(node, bindings);
-            }
-            for (Binding b : bs) {
-                if (!bindings.contains(b)) {
-                    bindings.add(b);
-                }
-                b.addRef(node);
-            }
-        }
-    }
-
-
     public void putRef(@NotNull Node node, @NotNull Binding b) {
-        List<Binding> bs = new ArrayList<>();
+        List<Binding> bs = references.get(node);
+        if (bs == null) {
+            bs = new ArrayList<>();
+            references.put(node, bs);
+        }
         bs.add(b);
-        putRef(node, bs);
-    }
-
-
-    @NotNull
-    public Map<Node, List<Binding>> getReferences() {
-        return references;
     }
 
 
@@ -608,7 +588,7 @@ public class Analyzer {
 
         sb.append("\n- number of definitions: " + nDef);
         sb.append("\n- number of cross references: " + nXRef);
-        sb.append("\n- number of references: " + getReferences().size());
+        sb.append("\n- number of references: " + references.size());
 
         long resolved = stats.getInt("resolved");
         long unresolved = stats.getInt("unresolved");

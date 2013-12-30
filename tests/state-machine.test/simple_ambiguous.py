@@ -1,8 +1,8 @@
 x = int()
 
 if x < 2:
-    y = 42         # here
+    y = x         # here
 else:
-    y = 'hi'       # and here
+    y = x         # and here
 
 print y

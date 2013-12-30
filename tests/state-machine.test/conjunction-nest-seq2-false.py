@@ -1,14 +1,14 @@
 x = int()
 
-if 2 < x < 5:
+if 2 < x and x < 5:
     if x < 6:
-        y = 42
+        y = x
     else:
-        y = 'hi'
+        y = x
 
     if x > 6:
-        y = 42
+        y = x
     else:
-        y = 'hi'        # refers only this one
+        y = x      #
 
 print y

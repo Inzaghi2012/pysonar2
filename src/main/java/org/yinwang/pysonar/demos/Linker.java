@@ -57,9 +57,9 @@ class Linker {
 
         // highlight definitions
         _.msg("\nAdding ref links");
-        progress = new Progress(analyzer.getReferences().size(), 50);
+        progress = new Progress(analyzer.references.size(), 50);
 
-        for (Entry<Node, List<Binding>> e : analyzer.getReferences().entrySet()) {
+        for (Entry<Node, List<Binding>> e : analyzer.references.entrySet()) {
             if (Analyzer.self.hasOption("debug")) {
                 processRefDebug(e.getKey(), e.getValue());
             } else {

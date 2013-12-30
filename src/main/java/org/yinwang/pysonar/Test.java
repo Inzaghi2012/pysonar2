@@ -49,7 +49,7 @@ public class Test {
     public void generateRefs() {
 
         List<Map<String, Object>> refs = new ArrayList<>();
-        for (Map.Entry<Node, List<Binding>> e : analyzer.getReferences().entrySet()) {
+        for (Map.Entry<Node, List<Binding>> e : analyzer.references.entrySet()) {
 
             String file = e.getKey().file;
 
@@ -104,7 +104,7 @@ public class Test {
             Dummy dummy = makeDummy(refMap);
 
             List<Map<String, Object>> dests = (List<Map<String, Object>>) r.get("dests");
-            List<Binding> actualDests = analyzer.getReferences().get(dummy);
+            List<Binding> actualDests = analyzer.references.get(dummy);
             List<Map<String, Object>> failedDests = new ArrayList<>();
 
             for (Map<String, Object> d : dests) {

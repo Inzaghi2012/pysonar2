@@ -1,14 +1,14 @@
 x = int()
 
-if 2 < x < 5:
+if 2 < x and x < 5:
     if x < 6:
-        y = 42
+        y = x
     else:
-        y = 'hi'
+        y = x
 
     if x < 4:
-        y = 42          # here
+        y = x        # [2..4]
     else:
-        y = 'hi'        # and here
+        y = x        # [4..5]
 
 print y
