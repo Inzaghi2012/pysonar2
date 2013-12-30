@@ -167,6 +167,16 @@ public class State {
     }
 
 
+    public void updateType(@NotNull Node node, Type type) {
+        Binding b = lookup(node);
+        if (b != null) {
+            put(b.node, new Binding(b.node, type, b.kind));
+        } else {
+            put(node, type);
+        }
+    }
+
+
     public void setPath(@NotNull String path) {
         this.path = path;
     }

@@ -111,8 +111,20 @@ public class IntType extends Type {
     }
 
 
+    public boolean lte(IntType other) {
+        return this.isUpperBounded() &&
+                other.isLowerBounded() &&
+                this.upper.compareTo(other.lower) <= 0;
+    }
+
+
     public boolean lt(BigInteger other) {
         return this.isUpperBounded() && this.upper.compareTo(other) < 0;
+    }
+
+
+    public boolean lte(BigInteger other) {
+        return this.isUpperBounded() && this.upper.compareTo(other) <= 0;
     }
 
 
@@ -123,8 +135,20 @@ public class IntType extends Type {
     }
 
 
+    public boolean gte(IntType other) {
+        return this.isLowerBounded() &&
+                other.isUpperBounded() &&
+                this.lower.compareTo(other.upper) >= 0;
+    }
+
+
     public boolean gt(BigInteger other) {
         return this.isLowerBounded() && this.lower.compareTo(other) > 0;
+    }
+
+
+    public boolean gte(BigInteger other) {
+        return this.isLowerBounded() && this.lower.compareTo(other) >= 0;
     }
 
 
@@ -164,15 +188,18 @@ public class IntType extends Type {
         this.lowerBounded = true;
     }
 
+
     public void setLowerExclusive(BigInteger lower) {
         this.lower = lower.add(BigInteger.ONE);
         this.lowerBounded = true;
     }
 
+
     public void setUpperInclusive(BigInteger upper) {
         this.upper = upper;
         this.upperBounded = true;
     }
+
 
     public void setUpperExclusive(BigInteger upper) {
         this.upper = upper.subtract(BigInteger.ONE);

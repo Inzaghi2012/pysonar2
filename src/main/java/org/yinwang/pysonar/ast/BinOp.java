@@ -1,7 +1,6 @@
 package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
-import org.yinwang.pysonar.Binding;
 import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.IntType;
 import org.yinwang.pysonar.types.Type;
@@ -121,9 +120,8 @@ public class BinOp extends Node {
                 }
 
                 // comparison
-                if (op == Op.Lt || op == Op.LtE || op == Op.Gt || op == Op.GtE) {
+                if (op == Op.Lt || op == Op.LtE || op == Op.Gt || op == Op.GtE || op == Op.Equal) {
                     Node leftNode = left;
-                    IntType trueType, falseType;
                     Op op1 = op;
 
                     if (!left.isName()) {
@@ -136,88 +134,163 @@ public class BinOp extends Node {
                         op1 = Op.invert(op1);
                     }
 
-                    if (op1 == Op.Lt || op1 == Op.LtE) {
+                    if (op1 == Op.Lt) {
                         if (leftNum.lt(rightNum)) {
                             s1.put(this, Type.TRUE);
                             ret.add(s1);
-                        } else if (leftNum.gt(rightNum) || leftNum.eq(rightNum)) {
+                        } else if (leftNum.gte(rightNum)) {
                             s1.put(this, Type.FALSE);
                             ret.add(s1);
                         } else {
                             // transfer bound information
                             if (leftNode.isName()) {
-                                // true branch: if l < r, then l's upper bound is r's upper bound
-                                trueType = new IntType(leftNum);
+                                // true branch: if l < r, then l's upper bound is r's upper bound (exclusive)
+                                IntType trueType = new IntType(leftNum);
+                                trueType.setUpperExclusive(rightNum.upper);
 
-                                if (op1 == Op.Lt) { // l < r
-                                    trueType.setUpperExclusive(rightNum.upper);
-                                } else { // l <= r
-                                    trueType.setUpperInclusive(rightNum.upper);
-                                }
+                                // false branch: if l >= r, then l's lower bound is r's lower bound (inclusive)
+                                IntType falseType = new IntType(leftNum);
+                                falseType.setLowerInclusive(rightNum.lower);
 
-                                // false branch: if l >= r, then l's lower bound is r's lower bound
-                                falseType = new IntType(leftNum);
-
-                                if (op1 == Op.Lt) { // l >= r
-                                    falseType.setLowerInclusive(rightNum.lower);
-                                } else if (op1 == Op.LtE) { // l > r
-                                    falseType.setLowerExclusive(rightNum.lower);
-                                }
-
-                                String id = leftNode.asName().id;
-
-                                Binding b = s1.lookup(id);
                                 State s1true = s1.copy();
-                                State s1false = s1.copy();
                                 s1true.put(this, Type.TRUE);
-                                s1true.put(id, new Binding(b.node, trueType, b.kind));
+                                s1true.updateType(leftNode, trueType);
                                 ret.add(s1true);
 
+                                State s1false = s1.copy();
                                 s1false.put(this, Type.FALSE);
-                                s1false.put(id, new Binding(b.node, falseType, b.kind));
+                                s1false.updateType(leftNode, falseType);
                                 ret.add(s1false);
                             }
                         }
                     }
 
-                    if (op1 == Op.Gt || op1 == Op.GtE) {
+                    if (op1 == Op.LtE) {
+                        if (leftNum.lte(rightNum)) {
+                            s1.put(this, Type.TRUE);
+                            ret.add(s1);
+                        } else if (leftNum.gt(rightNum)) {
+                            s1.put(this, Type.FALSE);
+                            ret.add(s1);
+                        } else {
+                            // transfer bound information
+                            if (leftNode.isName()) {
+                                // true branch: if l <= r, then l's upper bound is r's upper bound (inclusive)
+                                IntType trueType = new IntType(leftNum);
+                                trueType.setUpperInclusive(rightNum.upper);
+
+                                // false branch: if l >= r, then l's lower bound is r's lower bound (exclusive)
+                                IntType falseType = new IntType(leftNum);
+                                falseType.setLowerExclusive(rightNum.lower);
+
+                                State s1true = s1.copy();
+                                s1true.put(this, Type.TRUE);
+                                s1true.updateType(leftNode, trueType);
+                                ret.add(s1true);
+
+                                State s1false = s1.copy();
+                                s1false.put(this, Type.FALSE);
+                                s1false.updateType(leftNode, falseType);
+                                ret.add(s1false);
+                            }
+                        }
+                    }
+
+                    if (op1 == Op.Gt) {
                         if (leftNum.gt(rightNum)) {
                             s1.put(this, Type.TRUE);
                             ret.add(s1);
-                        } else if (leftNum.lt(rightNum) || leftNum.eq(rightNum)) {
+                        } else if (leftNum.lte(rightNum)) {
                             s1.put(this, Type.FALSE);
                             ret.add(s1);
                         } else {
                             if (leftNode.isName()) {
                                 // true branch: if l > r, then l's lower bound is r's lower bound
-                                trueType = new IntType(leftNum);
-
-                                if (op1 == Op.Gt) {  // l > r
-                                    trueType.setLowerExclusive(rightNum.lower);
-                                } else {  // l >= r
-                                    trueType.setLowerInclusive(rightNum.lower);
-                                }
+                                IntType trueType = new IntType(leftNum);
+                                trueType.setLowerExclusive(rightNum.lower);
 
                                 // false branch: if l < r, then l's upper bound is r's upper bound
-                                falseType = new IntType(leftNum);
+                                IntType falseType = new IntType(leftNum);
+                                falseType.setUpperInclusive(rightNum.upper);
 
-                                if (op1 == Op.Gt) {  // l <= r
-                                    falseType.setUpperInclusive(rightNum.upper);
-                                } else { // l < r
-                                    falseType.setUpperExclusive(rightNum.upper);
-                                }
-
-                                String id = leftNode.asName().id;
-                                Binding b = s1.lookup(id);
                                 State s1true = s1.copy();
-                                State s1false = s1.copy();
                                 s1true.put(this, Type.TRUE);
-                                s1true.put(id, new Binding(b.node, trueType, b.kind));
+                                s1true.updateType(leftNode, trueType);
                                 ret.add(s1true);
 
+                                State s1false = s1.copy();
                                 s1false.put(this, Type.FALSE);
-                                s1false.put(id, new Binding(b.node, falseType, b.kind));
+                                s1false.updateType(leftNode, falseType);
                                 ret.add(s1false);
+                            }
+                        }
+                    }
+
+                    if (op1 == Op.GtE) {
+                        if (leftNum.gte(rightNum)) {
+                            s1.put(this, Type.TRUE);
+                            ret.add(s1);
+                        } else if (leftNum.lt(rightNum)) {
+                            s1.put(this, Type.FALSE);
+                            ret.add(s1);
+                        } else {
+                            if (leftNode.isName()) {
+                                // true branch: if l >= r, then l's lower bound is r's lower bound
+                                IntType trueType = new IntType(leftNum);
+                                trueType.setLowerInclusive(rightNum.lower);
+
+                                // false branch: if l < r, then l's upper bound is r's upper bound
+                                IntType falseType = new IntType(leftNum);
+                                falseType.setUpperExclusive(rightNum.upper);
+
+                                State s1true = s1.copy();
+                                s1true.put(this, Type.TRUE);
+                                s1true.updateType(leftNode, trueType);
+                                ret.add(s1true);
+
+                                State s1false = s1.copy();
+                                s1false.put(this, Type.FALSE);
+                                s1false.updateType(leftNode, falseType);
+                                ret.add(s1false);
+                            }
+                        }
+                    }
+
+                    if (op1 == Op.Equal) {
+                        if (leftNum.eq(rightNum)) {
+                            s1.put(this, Type.TRUE);
+                            ret.add(s1);
+                        } else if (leftNum.lt(rightNum) || leftNum.gt(rightNum)) {
+                            s1.put(this, Type.FALSE);
+                            ret.add(s1);
+                        } else {
+                            // transfer bound information
+                            if (leftNode.isName()) {
+                                // true branch: if l == r, then l is r
+                                IntType trueType = new IntType(rightNum);
+
+                                // false branch: if l != r, then l < r or l > r
+                                IntType falseType1 = new IntType(leftNum);
+                                falseType1.setLowerExclusive(rightNum.lower);
+
+                                IntType falseType2 = new IntType(leftNum);
+                                falseType2.setUpperExclusive(rightNum.upper);
+
+                                State s1true = s1.copy();
+                                State s1false1 = s1.copy();
+                                State s1false2 = s1.copy();
+
+                                s1true.put(this, Type.TRUE);
+                                s1true.updateType(leftNode, trueType);
+                                ret.add(s1true);
+
+                                s1false1.put(this, Type.FALSE);
+                                s1false1.updateType(leftNode, falseType1);
+                                ret.add(s1false1);
+
+                                s1false2.put(this, Type.FALSE);
+                                s1false2.updateType(leftNode, falseType2);
+                                ret.add(s1false2);
                             }
                         }
                     }
