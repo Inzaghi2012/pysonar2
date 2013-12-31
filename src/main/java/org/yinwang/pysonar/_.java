@@ -177,14 +177,18 @@ public class _ {
     }
 
 
-    public static void copyResourcesRecursively(URL originUrl, File destination) throws Exception {
-        URLConnection urlConnection = originUrl.openConnection();
-        if (urlConnection instanceof JarURLConnection) {
-            copyJarResourcesRecursively(destination, (JarURLConnection) urlConnection);
-        } else if (urlConnection instanceof FileURLConnection) {
-            FileUtils.copyDirectory(new File(originUrl.getPath()), destination);
-        } else {
-            die("Unsupported URL type: " + urlConnection);
+    public static void copyResourcesRecursively(URL originUrl, File destination) {
+        try {
+            URLConnection urlConnection = originUrl.openConnection();
+            if (urlConnection instanceof JarURLConnection) {
+                copyJarResourcesRecursively(destination, (JarURLConnection) urlConnection);
+            } else if (urlConnection instanceof FileURLConnection) {
+                FileUtils.copyDirectory(new File(originUrl.getPath()), destination);
+            } else {
+                die("Unsupported URL type: " + urlConnection);
+            }
+        } catch (Exception e) {
+            _.die("failed to copy resources: " + destination);
         }
     }
 

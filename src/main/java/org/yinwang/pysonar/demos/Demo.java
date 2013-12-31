@@ -37,7 +37,7 @@ public class Demo {
     }
 
 
-    private void start(@NotNull String fileOrDir, Map<String, Object> options) throws Exception {
+    private void start(@NotNull String fileOrDir, Map<String, Object> options) {
         File f = new File(fileOrDir);
         File rootDir = f.isFile() ? f.getParentFile() : f;
         try {
@@ -165,13 +165,20 @@ public class Demo {
     }
 
 
-    public static void main(@NotNull String[] args) throws Exception {
+    public static void main(@NotNull String[] args) {
         Options options = new Options();
         options.addOption("d", "debug", false, "display debug information");
         options.addOption("q", "quiet", false, "quiet");
         options.addOption("E", "semantic-errors", false, "report semantic errors");
         CommandLineParser parser = new BasicParser();
-        CommandLine cmd = parser.parse(options, args);
+
+        CommandLine cmd;
+        try {
+            cmd = parser.parse(options, args);
+        } catch (Exception e) {
+            _.die("failed to parse args: " + args);
+            return;
+        }
 
         args = cmd.getArgs();
         String fileOrDir = args[0];

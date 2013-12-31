@@ -259,11 +259,18 @@ public class Test {
     }
 
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         Options options = new Options();
         options.addOption("exp", "expected", false, "generate expected result (for setting up tests)");
         CommandLineParser parser = new BasicParser();
-        CommandLine cmd = parser.parse(options, args);
+
+        CommandLine cmd;
+        try {
+            cmd = parser.parse(options, args);
+        } catch (Exception e) {
+            _.die("failed to parse args: " + args);
+            return;
+        }
 
         args = cmd.getArgs();
         String inputDir = _.unifyPath(args[0]);
