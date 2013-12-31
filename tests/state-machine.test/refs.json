@@ -50,6 +50,324 @@
   {
     "ref": {
       "name": "x",
+      "file": "addition-range.py",
+      "start": 25,
+      "end": 26
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "addition-range.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "addition-range.py",
+      "start": 41,
+      "end": 42
+    },
+    "dests": [
+      {
+        "name": "y",
+        "file": "addition-range.py",
+        "start": 10,
+        "end": 11
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "addition-range.py",
+      "start": 46,
+      "end": 47
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "addition-range.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "addition-range.py",
+      "start": 66,
+      "end": 67
+    },
+    "dests": [
+      {
+        "name": "y",
+        "file": "addition-range.py",
+        "start": 10,
+        "end": 11
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "addition-range.py",
+      "start": 101,
+      "end": 102
+    },
+    "dests": [
+      {
+        "name": "y",
+        "file": "addition-range.py",
+        "start": 10,
+        "end": 11
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "addition-range.py",
+      "start": 125,
+      "end": 126
+    },
+    "dests": [
+      {
+        "name": "y",
+        "file": "addition-range.py",
+        "start": 10,
+        "end": 11
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "u",
+      "file": "addition-range.py",
+      "start": 146,
+      "end": 147
+    },
+    "dests": [
+      {
+        "name": "u",
+        "file": "addition-range.py",
+        "start": 62,
+        "end": 63
+      },
+      {
+        "name": "u",
+        "file": "addition-range.py",
+        "start": 97,
+        "end": 98
+      },
+      {
+        "name": "u",
+        "file": "addition-range.py",
+        "start": 121,
+        "end": 122
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "addition-range2.py",
+      "start": 31,
+      "end": 32
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "addition-range2.py",
+        "start": 0,
+        "end": 1
+      },
+      {
+        "name": "x",
+        "file": "addition-range2.py",
+        "start": 0,
+        "end": 1
+      },
+      {
+        "name": "x",
+        "file": "addition-range2.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "addition-range2.py",
+      "start": 47,
+      "end": 48
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "addition-range2.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "addition-range2.py",
+      "start": 56,
+      "end": 57
+    },
+    "dests": [
+      {
+        "name": "y",
+        "file": "addition-range2.py",
+        "start": 10,
+        "end": 11
+      },
+      {
+        "name": "y",
+        "file": "addition-range2.py",
+        "start": 10,
+        "end": 11
+      },
+      {
+        "name": "y",
+        "file": "addition-range2.py",
+        "start": 10,
+        "end": 11
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "addition-range2.py",
+      "start": 61,
+      "end": 62
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "addition-range2.py",
+        "start": 0,
+        "end": 1
+      },
+      {
+        "name": "x",
+        "file": "addition-range2.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "addition-range2.py",
+      "start": 81,
+      "end": 82
+    },
+    "dests": [
+      {
+        "name": "y",
+        "file": "addition-range2.py",
+        "start": 10,
+        "end": 11
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "addition-range2.py",
+      "start": 117,
+      "end": 118
+    },
+    "dests": [
+      {
+        "name": "y",
+        "file": "addition-range2.py",
+        "start": 10,
+        "end": 11
+      },
+      {
+        "name": "y",
+        "file": "addition-range2.py",
+        "start": 10,
+        "end": 11
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "addition-range2.py",
+      "start": 151,
+      "end": 152
+    },
+    "dests": [
+      {
+        "name": "y",
+        "file": "addition-range2.py",
+        "start": 10,
+        "end": 11
+      },
+      {
+        "name": "y",
+        "file": "addition-range2.py",
+        "start": 10,
+        "end": 11
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "u",
+      "file": "addition-range2.py",
+      "start": 172,
+      "end": 173
+    },
+    "dests": [
+      {
+        "name": "u",
+        "file": "addition-range2.py",
+        "start": 77,
+        "end": 78
+      },
+      {
+        "name": "u",
+        "file": "addition-range2.py",
+        "start": 113,
+        "end": 114
+      },
+      {
+        "name": "u",
+        "file": "addition-range2.py",
+        "start": 113,
+        "end": 114
+      },
+      {
+        "name": "u",
+        "file": "addition-range2.py",
+        "start": 147,
+        "end": 148
+      },
+      {
+        "name": "u",
+        "file": "addition-range2.py",
+        "start": 147,
+        "end": 148
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
       "file": "addition.py",
       "start": 16,
       "end": 17
@@ -3839,8 +4157,8 @@
     "ref": {
       "name": "x",
       "file": "nested-false.py",
-      "start": 98,
-      "end": 99
+      "start": 99,
+      "end": 100
     },
     "dests": [
       {
@@ -3855,8 +4173,8 @@
     "ref": {
       "name": "y",
       "file": "nested-false.py",
-      "start": 122,
-      "end": 123
+      "start": 124,
+      "end": 125
     },
     "dests": [
       {
@@ -3868,8 +4186,8 @@
       {
         "name": "y",
         "file": "nested-false.py",
-        "start": 94,
-        "end": 95
+        "start": 95,
+        "end": 96
       }
     ]
   },

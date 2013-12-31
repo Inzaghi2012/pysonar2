@@ -10,97 +10,75 @@ public class IntType extends Type {
 
     public BigInteger lower;
     public BigInteger upper;
-    public boolean lowerBounded;
-    public boolean upperBounded;
 
 
     public IntType() {
-        this.lower = BigInteger.ZERO;
-        this.upper = BigInteger.ZERO;
-        lowerBounded = upperBounded = false;
-    }
-
-
-    public IntType(BigInteger lower, BigInteger upper, boolean lowerBounded, boolean upperBounded) {
-        this.lower = lower;
-        this.upper = upper;
-        this.lowerBounded = lowerBounded;
-        this.upperBounded = upperBounded;
+        this.lower = null;
+        this.upper = null;
     }
 
 
     public IntType(BigInteger value) {
         this.lower = this.upper = value;
-        lowerBounded = upperBounded = true;
     }
 
 
     public IntType(BigInteger lower, BigInteger upper) {
         this.lower = lower;
         this.upper = upper;
-        lowerBounded = upperBounded = true;
     }
 
 
     public IntType(IntType other) {
         this.lower = other.lower;
         this.upper = other.upper;
-        this.lowerBounded = other.lowerBounded;
-        this.upperBounded = other.upperBounded;
     }
 
 
     public static IntType add(IntType a, IntType b) {
-        BigInteger lower = a.lower.add(b.lower);
-        BigInteger upper = a.upper.add(b.upper);
-        boolean lowerBounded = a.lowerBounded && b.lowerBounded;
-        boolean upperBounded = a.upperBounded && b.upperBounded;
-        return new IntType(lower, upper, lowerBounded, upperBounded);
+        BigInteger lower = a.lower == null || b.lower == null ? null : a.lower.add(b.lower);
+        BigInteger upper = a.upper == null || b.upper == null ? null : a.upper.add(b.upper);
+        return new IntType(lower, upper);
     }
 
 
     public static IntType sub(IntType a, IntType b) {
-        BigInteger lower = a.lower.subtract(b.upper);
-        BigInteger upper = a.upper.subtract(b.lower);
-        boolean lowerBounded = a.lowerBounded && b.lowerBounded;
-        boolean upperBounded = a.upperBounded && b.upperBounded;
-        return new IntType(lower, upper, lowerBounded, upperBounded);
+        BigInteger lower = a.lower == null || b.lower == null ? null : a.lower.subtract(b.upper);
+        BigInteger upper = a.upper == null || b.upper == null ? null : a.upper.subtract(b.lower);
+        return new IntType(lower, upper);
     }
 
 
     public IntType negate() {
-        return new IntType(upper.negate(), lower.negate());
+        BigInteger lower = this.lower == null ? null : this.lower.negate();
+        BigInteger upper = this.upper == null ? null : this.upper.negate();
+        return new IntType(upper, lower);
     }
 
 
     public static IntType mul(IntType a, IntType b) {
-        BigInteger lower = a.lower.multiply(b.lower);
-        BigInteger upper = a.upper.multiply(b.upper);
-        boolean lowerBounded = a.lowerBounded && b.lowerBounded;
-        boolean upperBounded = a.upperBounded && b.upperBounded;
-        return new IntType(lower, upper, lowerBounded, upperBounded);
+        BigInteger lower = a.lower == null || b.lower == null ? null : a.lower.multiply(b.lower);
+        BigInteger upper = a.upper == null || b.upper == null ? null : a.upper.multiply(b.upper);
+        return new IntType(lower, upper);
     }
 
 
     public static IntType div(IntType a, IntType b) {
-        boolean lowerBounded = a.lowerBounded && b.upperBounded;
-        boolean upperBounded = a.upperBounded && b.lowerBounded;
-
         BigInteger lower = BigInteger.ZERO;
-        if (lowerBounded && !b.upper.equals(BigInteger.ZERO)) {
+        if (lower != null && !b.upper.equals(BigInteger.ZERO)) {
             lower = a.lower.divide(b.upper);
         } else {
-            lowerBounded = false;
+            lower = null;
         }
 
         BigInteger upper = BigInteger.ZERO;
-        if (upperBounded && !b.lower.equals(BigInteger.ZERO)) {
+        if (upper != null && !b.lower.equals(BigInteger.ZERO)) {
             upper = a.upper.divide(b.lower);
         } else {
-            upperBounded = false;
+            upper = null;
         }
 
-        return new IntType(lower, upper, lowerBounded, upperBounded);
+        return new IntType(lower, upper);
     }
 
 
@@ -164,12 +142,12 @@ public class IntType extends Type {
 
 
     public boolean isUpperBounded() {
-        return upperBounded;
+        return upper != null;
     }
 
 
     public boolean isLowerBounded() {
-        return lowerBounded;
+        return lower != null;
     }
 
 
@@ -185,32 +163,30 @@ public class IntType extends Type {
 
     public void setLowerInclusive(BigInteger lower) {
         this.lower = lower;
-        this.lowerBounded = true;
     }
 
 
     public void setLowerExclusive(BigInteger lower) {
-        this.lower = lower.add(BigInteger.ONE);
-        this.lowerBounded = true;
+        if (lower == null) {
+            this.lower = null;
+        } else {
+            this.lower = lower.add(BigInteger.ONE);
+        }
     }
 
 
     public void setUpperInclusive(BigInteger upper) {
         this.upper = upper;
-        this.upperBounded = true;
     }
 
 
     public void setUpperExclusive(BigInteger upper) {
-        this.upper = upper.subtract(BigInteger.ONE);
-        this.upperBounded = true;
+        if (upper == null) {
+            this.upper = null;
+        } else {
+            this.upper = upper.subtract(BigInteger.ONE);
+        }
     }
-
-
-//    @Override
-//    public boolean equals(Object other) {
-//        return other instanceof IntType;
-//    }
 
 
     @Override

@@ -183,7 +183,7 @@ public class BinOp extends Node {
                                 IntType trueType = new IntType(leftNum);
                                 trueType.setUpperInclusive(rightNum.upper);
 
-                                // false branch: if l >= r, then l's lower bound is r's lower bound (exclusive)
+                                // false branch: if l > r, then l's lower bound is r's lower bound (exclusive)
                                 IntType falseType = new IntType(leftNum);
                                 falseType.setLowerExclusive(rightNum.lower);
 
@@ -213,7 +213,7 @@ public class BinOp extends Node {
                                 IntType trueType = new IntType(leftNum);
                                 trueType.setLowerExclusive(rightNum.lower);
 
-                                // false branch: if l < r, then l's upper bound is r's upper bound
+                                // false branch: if l <= r, then l's upper bound is r's upper bound
                                 IntType falseType = new IntType(leftNum);
                                 falseType.setUpperInclusive(rightNum.upper);
 
