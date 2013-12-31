@@ -25,41 +25,40 @@ public class UnaryOp extends Node {
     @NotNull
     @Override
     public List<State> transform(State s) {
-//        Type valueType = transformExpr(operand, s);
-//
-//        if (op == Op.Add) {
-//            if (valueType.isNumType()) {
-//                return valueType;
-//            } else {
-//                Analyzer.self.putProblem(this, "+ can't be applied to type: " + valueType);
-//                return Type.INT;
-//            }
-//        }
-//
-//        if (op == Op.Sub) {
-//            if (valueType.isIntType()) {
-//                return valueType.asIntType().negate();
-//            } else {
-//                Analyzer.self.putProblem(this, "- can't be applied to type: " + valueType);
-//                return Type.INT;
-//            }
-//        }
-//
-//        if (op == Op.Not) {
-//            if (valueType.isTrue()) {
-//                return Type.FALSE;
-//            }
-//            if (valueType.isFalse()) {
-//                return Type.TRUE;
-//            }
-//            if (valueType.isUndecidedBool()) {
-//                return valueType.asBool().swap();
-//            }
-//        }
-//
-//        Analyzer.self.putProblem(this, "operator " + op + " cannot be applied to type: " + valueType);
-        return s.put(this, Type.UNKNOWN);
+        List<State> ss = transformExpr(operand, s);
 
+        for (State s1 : ss) {
+            Type valueType = s1.lookupType(operand);
+
+            if (op == Op.Add) {
+                if (valueType != null && valueType.isNumType()) {
+                    s1.put(this, valueType);
+                } else {
+                    Analyzer.self.putProblem(this, "+ can't be applied to type: " + valueType);
+                    s1.put(this, Type.INT);
+                }
+            }
+
+            if (op == Op.Sub) {
+                if (valueType != null && valueType.isIntType()) {
+                    s1.put(this, valueType.asIntType().negate());
+                } else {
+                    Analyzer.self.putProblem(this, "- can't be applied to type: " + valueType);
+                    s1.put(this, Type.INT);
+                }
+            }
+
+            if (op == Op.Not) {
+                if (valueType != null && valueType.isTrue()) {
+                    s1.put(this, Type.FALSE);
+                } else {
+                    s1.put(this, Type.TRUE);
+                }
+            }
+        }
+
+//        Analyzer.self.putProblem(this, "operator " + op + " cannot be applied to type: " + valueType);
+        return ss;
     }
 
 
