@@ -2,6 +2,150 @@
   {
     "ref": {
       "name": "x",
+      "file": "addition-bignum.py",
+      "start": 85,
+      "end": 86
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "addition-bignum.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "addition-bignum.py",
+      "start": 89,
+      "end": 90
+    },
+    "dests": [
+      {
+        "name": "y",
+        "file": "addition-bignum.py",
+        "start": 40,
+        "end": 41
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "w",
+      "file": "addition-bignum.py",
+      "start": 178,
+      "end": 179
+    },
+    "dests": [
+      {
+        "name": "w",
+        "file": "addition-bignum.py",
+        "start": 135,
+        "end": 136
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "addition.py",
+      "start": 16,
+      "end": 17
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "addition.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "addition.py",
+      "start": 18,
+      "end": 19
+    },
+    "dests": [
+      {
+        "name": "y",
+        "file": "addition.py",
+        "start": 6,
+        "end": 7
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "u",
+      "file": "addition.py",
+      "start": 73,
+      "end": 74
+    },
+    "dests": [
+      {
+        "name": "u",
+        "file": "addition.py",
+        "start": 30,
+        "end": 31
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "addition.py",
+      "start": 80,
+      "end": 81
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "addition.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "addition.py",
+      "start": 82,
+      "end": 83
+    },
+    "dests": [
+      {
+        "name": "y",
+        "file": "addition.py",
+        "start": 6,
+        "end": 7
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "v",
+      "file": "addition.py",
+      "start": 137,
+      "end": 138
+    },
+    "dests": [
+      {
+        "name": "v",
+        "file": "addition.py",
+        "start": 113,
+        "end": 114
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
       "file": "complex-segmentation.py",
       "start": 297,
       "end": 298
@@ -2196,6 +2340,102 @@
   {
     "ref": {
       "name": "x",
+      "file": "division.py",
+      "start": 18,
+      "end": 19
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "division.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "division.py",
+      "start": 22,
+      "end": 23
+    },
+    "dests": [
+      {
+        "name": "y",
+        "file": "division.py",
+        "start": 7,
+        "end": 8
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "u",
+      "file": "division.py",
+      "start": 77,
+      "end": 78
+    },
+    "dests": [
+      {
+        "name": "u",
+        "file": "division.py",
+        "start": 34,
+        "end": 35
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "division.py",
+      "start": 84,
+      "end": 85
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "division.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "division.py",
+      "start": 88,
+      "end": 89
+    },
+    "dests": [
+      {
+        "name": "y",
+        "file": "division.py",
+        "start": 7,
+        "end": 8
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "v",
+      "file": "division.py",
+      "start": 142,
+      "end": 143
+    },
+    "dests": [
+      {
+        "name": "v",
+        "file": "division.py",
+        "start": 119,
+        "end": 120
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
       "file": "equality-both.py",
       "start": 14,
       "end": 15
@@ -2492,6 +2732,198 @@
         "file": "equality-true.py",
         "start": 22,
         "end": 23
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "multiply-bignum.py",
+      "start": 85,
+      "end": 86
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "multiply-bignum.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "multiply-bignum.py",
+      "start": 89,
+      "end": 90
+    },
+    "dests": [
+      {
+        "name": "y",
+        "file": "multiply-bignum.py",
+        "start": 40,
+        "end": 41
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "u",
+      "file": "multiply-bignum.py",
+      "start": 212,
+      "end": 213
+    },
+    "dests": [
+      {
+        "name": "u",
+        "file": "multiply-bignum.py",
+        "start": 169,
+        "end": 170
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "multiply-bignum.py",
+      "start": 247,
+      "end": 248
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "multiply-bignum.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "multiply-bignum.py",
+      "start": 251,
+      "end": 252
+    },
+    "dests": [
+      {
+        "name": "y",
+        "file": "multiply-bignum.py",
+        "start": 40,
+        "end": 41
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "v",
+      "file": "multiply-bignum.py",
+      "start": 375,
+      "end": 376
+    },
+    "dests": [
+      {
+        "name": "v",
+        "file": "multiply-bignum.py",
+        "start": 350,
+        "end": 351
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "multiply.py",
+      "start": 16,
+      "end": 17
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "multiply.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "multiply.py",
+      "start": 18,
+      "end": 19
+    },
+    "dests": [
+      {
+        "name": "y",
+        "file": "multiply.py",
+        "start": 6,
+        "end": 7
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "u",
+      "file": "multiply.py",
+      "start": 74,
+      "end": 75
+    },
+    "dests": [
+      {
+        "name": "u",
+        "file": "multiply.py",
+        "start": 31,
+        "end": 32
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "multiply.py",
+      "start": 81,
+      "end": 82
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "multiply.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "multiply.py",
+      "start": 83,
+      "end": 84
+    },
+    "dests": [
+      {
+        "name": "y",
+        "file": "multiply.py",
+        "start": 6,
+        "end": 7
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "v",
+      "file": "multiply.py",
+      "start": 139,
+      "end": 140
+    },
+    "dests": [
+      {
+        "name": "v",
+        "file": "multiply.py",
+        "start": 115,
+        "end": 116
       }
     ]
   },
@@ -3690,6 +4122,102 @@
         "file": "simple_true.py",
         "start": 21,
         "end": 22
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "substract.py",
+      "start": 19,
+      "end": 20
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "substract.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "substract.py",
+      "start": 23,
+      "end": 24
+    },
+    "dests": [
+      {
+        "name": "y",
+        "file": "substract.py",
+        "start": 8,
+        "end": 9
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "u",
+      "file": "substract.py",
+      "start": 80,
+      "end": 81
+    },
+    "dests": [
+      {
+        "name": "u",
+        "file": "substract.py",
+        "start": 37,
+        "end": 38
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "substract.py",
+      "start": 87,
+      "end": 88
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "substract.py",
+        "start": 0,
+        "end": 1
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "substract.py",
+      "start": 91,
+      "end": 92
+    },
+    "dests": [
+      {
+        "name": "y",
+        "file": "substract.py",
+        "start": 8,
+        "end": 9
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "v",
+      "file": "substract.py",
+      "start": 146,
+      "end": 147
+    },
+    "dests": [
+      {
+        "name": "v",
+        "file": "substract.py",
+        "start": 123,
+        "end": 124
       }
     ]
   }

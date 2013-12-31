@@ -64,10 +64,6 @@ public enum Op {
             return Op.LtE;
         }
 
-        if (op == Op.Eq) {
-            return Op.Eq;
-        }
-
         if (op == Op.And) {
             return Op.Or;
         }
@@ -76,9 +72,8 @@ public enum Op {
             return Op.And;
         }
 
-        _.die("invalid operator name for invert: " + op);
-        return null;  // unreacheable
+        // all the rest are the same as themselves
+        return op;
     }
-
 
 }

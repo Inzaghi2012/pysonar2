@@ -105,18 +105,22 @@ public class BinOp extends Node {
 
                 if (op == Op.Add) {
                     s1.put(this, IntType.add(leftNum, rightNum));
+                    ret.add(s1);
                 }
 
                 if (op == Op.Sub) {
                     s1.put(this, IntType.sub(leftNum, rightNum));
+                    ret.add(s1);
                 }
 
                 if (op == Op.Mul) {
                     s1.put(this, IntType.mul(leftNum, rightNum));
+                    ret.add(s1);
                 }
 
                 if (op == Op.Div) {
                     s1.put(this, IntType.div(leftNum, rightNum));
+                    ret.add(s1);
                 }
 
                 // comparison
