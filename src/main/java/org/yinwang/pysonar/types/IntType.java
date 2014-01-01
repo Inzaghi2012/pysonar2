@@ -6,7 +6,7 @@ import org.yinwang.pysonar.Analyzer;
 import java.math.BigInteger;
 
 
-public class IntType extends Type {
+public class IntType extends NumType {
 
     public BigInteger lower;
     public BigInteger upper;
@@ -156,36 +156,38 @@ public class IntType extends Type {
     }
 
 
-    public boolean isFeasible() {
-        return lower.compareTo(upper) <= 0;
+    public void setLowerInclusive(IntType other) {
+        this.lower = other.lower;
     }
 
 
-    public void setLowerInclusive(BigInteger lower) {
-        this.lower = lower;
-    }
-
-
-    public void setLowerExclusive(BigInteger lower) {
-        if (lower == null) {
+    public void setLowerExclusive(IntType other) {
+        if (other.lower == null) {
             this.lower = null;
         } else {
-            this.lower = lower.add(BigInteger.ONE);
+            this.lower = other.lower.add(BigInteger.ONE);
         }
     }
 
 
-    public void setUpperInclusive(BigInteger upper) {
-        this.upper = upper;
+    public void setUpperInclusive(IntType other) {
+        this.upper = other.upper;
     }
 
 
-    public void setUpperExclusive(BigInteger upper) {
-        if (upper == null) {
+    public void setUpperExclusive(IntType other) {
+        if (other.upper == null) {
             this.upper = null;
         } else {
-            this.upper = upper.subtract(BigInteger.ONE);
+            this.upper = other.upper.subtract(BigInteger.ONE);
         }
+    }
+
+
+    public FloatType toFloatType() {
+        double lower = this.lower == null ? Double.NEGATIVE_INFINITY : this.lower.doubleValue();
+        double upper = this.upper == null ? Double.POSITIVE_INFINITY : this.upper.doubleValue();
+        return new FloatType(lower, upper);
     }
 
 

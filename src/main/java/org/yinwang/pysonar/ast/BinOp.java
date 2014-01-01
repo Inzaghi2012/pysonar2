@@ -2,7 +2,7 @@ package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.types.IntType;
+import org.yinwang.pysonar.types.NumType;
 import org.yinwang.pysonar.types.Type;
 
 import java.util.ArrayList;
@@ -98,28 +98,28 @@ public class BinOp extends Node {
             Type rtype = s1.lookupType(right);
 
             if (ltype != null && rtype != null &&
-                    ltype.isIntType() && rtype.isIntType())
+                    ltype instanceof NumType && rtype instanceof NumType)
             {
-                IntType leftNum = ltype.asIntType();
-                IntType rightNum = rtype.asIntType();
+                NumType leftNum = (NumType) ltype;
+                NumType rightNum = (NumType) rtype;
 
                 if (op == Op.Add) {
-                    s1.put(this, IntType.add(leftNum, rightNum));
+                    s1.put(this, NumType.add(leftNum, rightNum));
                     ret.add(s1);
                 }
 
                 if (op == Op.Sub) {
-                    s1.put(this, IntType.sub(leftNum, rightNum));
+                    s1.put(this, NumType.sub(leftNum, rightNum));
                     ret.add(s1);
                 }
 
                 if (op == Op.Mul) {
-                    s1.put(this, IntType.mul(leftNum, rightNum));
+                    s1.put(this, NumType.mul(leftNum, rightNum));
                     ret.add(s1);
                 }
 
                 if (op == Op.Div) {
-                    s1.put(this, IntType.div(leftNum, rightNum));
+                    s1.put(this, NumType.div(leftNum, rightNum));
                     ret.add(s1);
                 }
 
@@ -131,7 +131,7 @@ public class BinOp extends Node {
                     if (!left.isName()) {
                         leftNode = right;
 
-                        IntType tmpNum = rightNum;
+                        NumType tmpNum = rightNum;
                         rightNum = leftNum;
                         leftNum = tmpNum;
 
@@ -139,22 +139,22 @@ public class BinOp extends Node {
                     }
 
                     if (op1 == Op.Lt) {
-                        if (leftNum.lt(rightNum)) {
+                        if (NumType.lt(leftNum, rightNum)) {
                             s1.put(this, Type.TRUE);
                             ret.add(s1);
-                        } else if (leftNum.gte(rightNum)) {
+                        } else if (NumType.gte(leftNum, rightNum)) {
                             s1.put(this, Type.FALSE);
                             ret.add(s1);
                         } else {
                             // transfer bound information
                             if (leftNode.isName()) {
                                 // true branch: if l < r, then l's upper bound is r's upper bound (exclusive)
-                                IntType trueType = new IntType(leftNum);
-                                trueType.setUpperExclusive(rightNum.upper);
+                                NumType trueType = NumType.copy(leftNum);
+                                NumType.setUpperExclusive(trueType, rightNum);
 
                                 // false branch: if l >= r, then l's lower bound is r's lower bound (inclusive)
-                                IntType falseType = new IntType(leftNum);
-                                falseType.setLowerInclusive(rightNum.lower);
+                                NumType falseType = NumType.copy(leftNum);
+                                NumType.setLowerInclusive(falseType, rightNum);
 
                                 State s1true = s1.copy();
                                 s1true.put(this, Type.TRUE);
@@ -170,22 +170,22 @@ public class BinOp extends Node {
                     }
 
                     if (op1 == Op.LtE) {
-                        if (leftNum.lte(rightNum)) {
+                        if (NumType.lte(leftNum, rightNum)) {
                             s1.put(this, Type.TRUE);
                             ret.add(s1);
-                        } else if (leftNum.gt(rightNum)) {
+                        } else if (NumType.gt(leftNum, rightNum)) {
                             s1.put(this, Type.FALSE);
                             ret.add(s1);
                         } else {
                             // transfer bound information
                             if (leftNode.isName()) {
                                 // true branch: if l <= r, then l's upper bound is r's upper bound (inclusive)
-                                IntType trueType = new IntType(leftNum);
-                                trueType.setUpperInclusive(rightNum.upper);
+                                NumType trueType = NumType.copy(leftNum);
+                                NumType.setUpperInclusive(trueType, rightNum);
 
                                 // false branch: if l > r, then l's lower bound is r's lower bound (exclusive)
-                                IntType falseType = new IntType(leftNum);
-                                falseType.setLowerExclusive(rightNum.lower);
+                                NumType falseType = NumType.copy(leftNum);
+                                NumType.setLowerExclusive(falseType, rightNum);
 
                                 State s1true = s1.copy();
                                 s1true.put(this, Type.TRUE);
@@ -201,21 +201,21 @@ public class BinOp extends Node {
                     }
 
                     if (op1 == Op.Gt) {
-                        if (leftNum.gt(rightNum)) {
+                        if (NumType.gt(leftNum, rightNum)) {
                             s1.put(this, Type.TRUE);
                             ret.add(s1);
-                        } else if (leftNum.lte(rightNum)) {
+                        } else if (NumType.lte(leftNum, rightNum)) {
                             s1.put(this, Type.FALSE);
                             ret.add(s1);
                         } else {
                             if (leftNode.isName()) {
                                 // true branch: if l > r, then l's lower bound is r's lower bound
-                                IntType trueType = new IntType(leftNum);
-                                trueType.setLowerExclusive(rightNum.lower);
+                                NumType trueType = NumType.copy(leftNum);
+                                NumType.setLowerExclusive(trueType, rightNum);
 
                                 // false branch: if l <= r, then l's upper bound is r's upper bound
-                                IntType falseType = new IntType(leftNum);
-                                falseType.setUpperInclusive(rightNum.upper);
+                                NumType falseType = NumType.copy(leftNum);
+                                NumType.setUpperInclusive(falseType, rightNum);
 
                                 State s1true = s1.copy();
                                 s1true.put(this, Type.TRUE);
@@ -231,21 +231,21 @@ public class BinOp extends Node {
                     }
 
                     if (op1 == Op.GtE) {
-                        if (leftNum.gte(rightNum)) {
+                        if (NumType.gte(leftNum, rightNum)) {
                             s1.put(this, Type.TRUE);
                             ret.add(s1);
-                        } else if (leftNum.lt(rightNum)) {
+                        } else if (NumType.lt(leftNum, rightNum)) {
                             s1.put(this, Type.FALSE);
                             ret.add(s1);
                         } else {
                             if (leftNode.isName()) {
                                 // true branch: if l >= r, then l's lower bound is r's lower bound
-                                IntType trueType = new IntType(leftNum);
-                                trueType.setLowerInclusive(rightNum.lower);
+                                NumType trueType = NumType.copy(leftNum);
+                                NumType.setLowerInclusive(trueType, rightNum);
 
                                 // false branch: if l < r, then l's upper bound is r's upper bound
-                                IntType falseType = new IntType(leftNum);
-                                falseType.setUpperExclusive(rightNum.upper);
+                                NumType falseType = NumType.copy(leftNum);
+                                NumType.setUpperExclusive(falseType, rightNum);
 
                                 State s1true = s1.copy();
                                 s1true.put(this, Type.TRUE);
@@ -261,24 +261,24 @@ public class BinOp extends Node {
                     }
 
                     if (op1 == Op.Equal) {
-                        if (leftNum.eq(rightNum)) {
+                        if (NumType.eq(leftNum, rightNum)) {
                             s1.put(this, Type.TRUE);
                             ret.add(s1);
-                        } else if (leftNum.lt(rightNum) || leftNum.gt(rightNum)) {
+                        } else if (NumType.lt(leftNum, rightNum) || NumType.gt(leftNum, rightNum)) {
                             s1.put(this, Type.FALSE);
                             ret.add(s1);
                         } else {
                             // transfer bound information
                             if (leftNode.isName()) {
                                 // true branch: if l == r, then l is r
-                                IntType trueType = new IntType(rightNum);
+                                NumType trueType = NumType.copy(rightNum);
 
                                 // false branch: if l != r, then l < r or l > r
-                                IntType falseType1 = new IntType(leftNum);
-                                falseType1.setLowerExclusive(rightNum.lower);
+                                NumType falseType1 = NumType.copy(leftNum);
+                                NumType.setLowerExclusive(falseType1, rightNum);
 
-                                IntType falseType2 = new IntType(leftNum);
-                                falseType2.setUpperExclusive(rightNum.upper);
+                                NumType falseType2 = NumType.copy(leftNum);
+                                NumType.setUpperExclusive(falseType2, rightNum);
 
                                 State s1true = s1.copy();
                                 State s1false1 = s1.copy();

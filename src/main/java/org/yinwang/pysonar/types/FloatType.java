@@ -4,7 +4,7 @@ package org.yinwang.pysonar.types;
 import org.yinwang.pysonar.Analyzer;
 
 
-public class FloatType extends Type {
+public class FloatType extends NumType {
     public double upper = Double.POSITIVE_INFINITY;
     public double lower = Double.NEGATIVE_INFINITY;
 
@@ -64,22 +64,42 @@ public class FloatType extends Type {
 
 
     public boolean lt(FloatType other) {
-        return isFeasible() && this.upper < other.lower;
+        return this.upper < other.lower;
     }
 
 
     public boolean lt(double other) {
-        return isFeasible() && this.upper < other;
+        return this.upper < other;
+    }
+
+
+    public boolean lte(FloatType other) {
+        return this.upper <= other.lower;
+    }
+
+
+    public boolean lte(double other) {
+        return this.upper <= other;
     }
 
 
     public boolean gt(FloatType other) {
-        return isFeasible() && this.lower > other.upper;
+        return this.lower > other.upper;
     }
 
 
     public boolean gt(double other) {
-        return isFeasible() && this.lower > other;
+        return this.lower > other;
+    }
+
+
+    public boolean gte(FloatType other) {
+        return this.lower >= other.upper;
+    }
+
+
+    public boolean gte(double other) {
+        return this.lower >= other;
     }
 
 
@@ -98,18 +118,8 @@ public class FloatType extends Type {
     }
 
 
-    public void setUpperUnbounded(boolean upperUnbounded) {
-        this.upper = Double.POSITIVE_INFINITY;
-    }
-
-
     public boolean isLowerBounded() {
         return lower != Double.NEGATIVE_INFINITY;
-    }
-
-
-    public void setLowerUnbounded(boolean lowerUnbounded) {
-        this.lower = Double.NEGATIVE_INFINITY;
     }
 
 
@@ -118,30 +128,24 @@ public class FloatType extends Type {
     }
 
 
-    public boolean isFeasible() {
-        return lower <= upper;
+    public void setUpperInclusive(FloatType other) {
+        this.upper = other.upper;
     }
 
 
-    public void setUpper(double upper) {
-        this.upper = upper;
+    public void setLowerInclusive(FloatType other) {
+        this.lower = other.lower;
     }
 
 
-    public void setLower(double lower) {
-        this.lower = lower;
+    public void setUpperExclusive(FloatType other) {
+        this.upper = other.upper - Double.MIN_VALUE;
     }
 
 
-    public void setActual(double actual) {
-        this.lower = this.upper = actual;
+    public void setLowerExclusive(FloatType other) {
+        this.lower = other.lower - Double.MIN_VALUE;
     }
-
-
-//    @Override
-//    public boolean equals(Object other) {
-//        return other instanceof FloatType;
-//    }
 
 
     @Override
