@@ -127,8 +127,8 @@ abstract public class NumType extends Type {
 
     public static boolean lt(NumType a, NumType b) {
         if (a instanceof FloatType || b instanceof FloatType) {
-            FloatType af = null;
-            FloatType bf = null;
+            FloatType af;
+            FloatType bf;
 
             if (a instanceof IntType) {
                 af = ((IntType) a).toFloatType();
@@ -151,8 +151,8 @@ abstract public class NumType extends Type {
 
     public static boolean lte(NumType a, NumType b) {
         if (a instanceof FloatType || b instanceof FloatType) {
-            FloatType af = null;
-            FloatType bf = null;
+            FloatType af;
+            FloatType bf;
 
             if (a instanceof IntType) {
                 af = ((IntType) a).toFloatType();
@@ -175,8 +175,8 @@ abstract public class NumType extends Type {
 
     public static boolean gt(NumType a, NumType b) {
         if (a instanceof FloatType || b instanceof FloatType) {
-            FloatType af = null;
-            FloatType bf = null;
+            FloatType af;
+            FloatType bf;
 
             if (a instanceof IntType) {
                 af = ((IntType) a).toFloatType();
@@ -199,8 +199,8 @@ abstract public class NumType extends Type {
 
     public static boolean gte(NumType a, NumType b) {
         if (a instanceof FloatType || b instanceof FloatType) {
-            FloatType af = null;
-            FloatType bf = null;
+            FloatType af;
+            FloatType bf;
 
             if (a instanceof IntType) {
                 af = ((IntType) a).toFloatType();
@@ -223,8 +223,8 @@ abstract public class NumType extends Type {
 
     public static boolean eq(NumType a, NumType b) {
         if (a instanceof FloatType || b instanceof FloatType) {
-            FloatType af = null;
-            FloatType bf = null;
+            FloatType af;
+            FloatType bf;
 
             if (a instanceof IntType) {
                 af = ((IntType) a).toFloatType();
@@ -264,6 +264,14 @@ abstract public class NumType extends Type {
         if (a instanceof FloatType && b instanceof FloatType) {
             ((FloatType) a).setLowerInclusive((FloatType) b);
         }
+
+        if (a instanceof IntType && b instanceof FloatType) {
+            ((IntType) a).setLowerInclusive((FloatType) b);
+        }
+
+        if (a instanceof FloatType && b instanceof IntType) {
+            ((FloatType) a).setLowerInclusive((IntType) b);
+        }
     }
 
 
@@ -274,6 +282,14 @@ abstract public class NumType extends Type {
 
         if (a instanceof FloatType && b instanceof FloatType) {
             ((FloatType) a).setLowerExclusive((FloatType) b);
+        }
+
+        if (a instanceof IntType && b instanceof FloatType) {
+            ((IntType) a).setLowerExclusive((FloatType) b);
+        }
+
+        if (a instanceof FloatType && b instanceof IntType) {
+            ((FloatType) a).setLowerExclusive((IntType) b);
         }
     }
 
@@ -286,6 +302,14 @@ abstract public class NumType extends Type {
         if (a instanceof FloatType && b instanceof FloatType) {
             ((FloatType) a).setUpperInclusive((FloatType) b);
         }
+
+        if (a instanceof IntType && b instanceof FloatType) {
+            ((IntType) a).setUpperInclusive((FloatType) b);
+        }
+
+        if (a instanceof FloatType && b instanceof IntType) {
+            ((FloatType) a).setUpperInclusive((IntType) b);
+        }
     }
 
 
@@ -297,36 +321,14 @@ abstract public class NumType extends Type {
         if (a instanceof FloatType && b instanceof FloatType) {
             ((FloatType) a).setUpperExclusive((FloatType) b);
         }
+
+        if (a instanceof IntType && b instanceof FloatType) {
+            ((IntType) a).setUpperExclusive((FloatType) b);
+        }
+
+        if (a instanceof FloatType && b instanceof IntType) {
+            ((FloatType) a).setUpperExclusive((IntType) b);
+        }
     }
-
-
-//
-//
-//    @Override
-//    protected String printType(CyclicTypeRecorder ctr) {
-//        StringBuilder sb = new StringBuilder("float");
-//
-//        if (Analyzer.self.hasOption("debug")) {
-//            if (lower == upper) {
-//                sb.append("(" + lower + ")");
-//            } else if (isLowerBounded() || isUpperBounded()) {
-//                sb.append("[");
-//                if (isLowerBounded()) {
-//                    sb.append(lower);
-//                } else {
-//                    sb.append("-∞");
-//                }
-//                sb.append("..");
-//                if (isUpperBounded()) {
-//                    sb.append(upper);
-//                } else {
-//                    sb.append("+∞");
-//                }
-//                sb.append("]");
-//            }
-//        }
-//
-//        return sb.toString();
-//    }
 
 }
