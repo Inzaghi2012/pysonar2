@@ -4,10 +4,10 @@ x = int()
 
 if not (x < 0 or x > 10):
     if x < 5:
-        y = x     # [0..4]
+        y = x     # [0, 5)
     else:
-        y = x     # [5..10]
+        y = x     # [5, 10]
 else:
-    y = x         # [..-1] [11..]
+    y = x         # (-inf, 0) (10, +inf)
 
 print y

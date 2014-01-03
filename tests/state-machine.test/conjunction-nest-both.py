@@ -2,17 +2,17 @@ x = int()
 
 if 2 < x and x < 5:
     if x < 6:
-        y = x     # [3..4]
+        y = x     # (2, 5)
     else:
         y = x
 
     if x > 6:
         z = x
     else:
-        z = x     # [3..4]
+        z = x     # (2, 5)
 
 else:
-    y = x         # [..2] | [5..]
-    z = x         # [..2] | [5..]
+    y = x         # (-inf, 2] [5, +inf)
+    z = x         # (-inf, 2] [5, +inf)
 
 print y, z

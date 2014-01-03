@@ -7,7 +7,7 @@ if 0 < x and x < 10:
         y = x
 
     if x < 15:
-        y = x          # [1..9]
+        y = x          # (0, 6) [6, 10)  simplify: (0, 10)
     else:
         y = x        
 

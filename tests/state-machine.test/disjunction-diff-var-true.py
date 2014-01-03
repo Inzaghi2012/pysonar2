@@ -9,7 +9,12 @@ if x < 0 or y > 15:
 
 
 # three possible combinations for (x, y)
-# (int[-∞..-1], int) 
-# (int[0..4], int[16..+∞]) 
-# (int[5..+∞], int[16..+∞])
+# (-inf, 0), any 
+# [0, 5), (15, +inf)
+# [5, +inf), (15, +inf)
+
+# simplify to two cases:
+# (-inf, 0), any 
+# [0, +inf), (15, +inf)
+
 print u

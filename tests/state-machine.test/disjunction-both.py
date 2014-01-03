@@ -3,8 +3,8 @@ y = int()
 
 if x < 0 or x > 10:
     if x < 5:
-        w = x      # [..-1]
+        w = x      # (-inf, 0)
     else:
-        w = x      # [11..]
+        w = x      # (10, +inf)
 
-print w            # [..-1] [11..]
+print w            # (-inf, 0) (10, +inf)

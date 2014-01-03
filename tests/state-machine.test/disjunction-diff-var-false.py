@@ -9,13 +9,13 @@ if x < 0 or y > 15:
 
 
 # displays 4 possibilities for (x, y):
-# (int[-∞..-1], int[-∞..9]) 
-# (int[-∞..-1], int[10..+∞]) 
-# (int[6..+∞], int[16..+∞]) 
-# (int[0..5], int[16..+∞])
+# (-inf, 0), (-inf, 10)
+# (-inf, 0), [10, +inf) 
+# (5, +inf), (15, +inf) 
+# [0, 5], (15, +inf)
 
 # TODO: can be simlified to 2 cases:
-# (int[-∞..-1], int)
-# (int[0..+∞], int[16..+∞]) 
+# (-inf, 0), (-inf, +inf)
+# [0, +inf), (15, +inf) 
 
 print u
