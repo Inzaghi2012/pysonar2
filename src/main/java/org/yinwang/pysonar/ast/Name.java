@@ -4,7 +4,6 @@ import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.Analyzer;
 import org.yinwang.pysonar.Binding;
 import org.yinwang.pysonar.State;
-import org.yinwang.pysonar.types.Type;
 
 import java.util.List;
 
@@ -66,11 +65,11 @@ public class Name extends Node {
         Binding b = s.lookup(this);
         if (b != null) {
             Analyzer.self.putRef(this, b);
-            Analyzer.self.stats.inc("resolved");
+            Analyzer.self.resolved.add(this);
             return s.single();
         } else {
             Analyzer.self.putProblem(this, "unbound variable " + id);
-            Analyzer.self.stats.inc("unresolved");
+            Analyzer.self.unresolved.add(this);
             return s.single();
         }
     }
