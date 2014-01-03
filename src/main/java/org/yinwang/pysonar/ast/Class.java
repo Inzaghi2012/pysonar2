@@ -44,15 +44,17 @@ public class Class extends Node {
             List<State> ss = transformExpr(base, s);
             for (State s1 : ss) {
                 Type baseType = s1.lookupType(base);
-                if (baseType.isClassType()) {
-                    classType.addSuper(baseType);
-                } else if (baseType.isUnionType()) {
-                    for (Type b : baseType.asUnionType().types) {
-                        classType.addSuper(b);
-                        break;
+                if (baseType != null) {
+                    if (baseType.isClassType()) {
+                        classType.addSuper(baseType);
+                    } else if (baseType.isUnionType()) {
+                        for (Type b : baseType.asUnionType().types) {
+                            classType.addSuper(b);
+                            break;
+                        }
+                    } else {
+                        Analyzer.self.putProblem(base, base + " is not a class");
                     }
-                } else {
-                    Analyzer.self.putProblem(base, base + " is not a class");
                 }
                 baseTypes.add(baseType);
             }

@@ -30,29 +30,31 @@ public class UnaryOp extends Node {
         for (State s1 : ss) {
             Type valueType = s1.lookupType(operand);
 
-            if (op == Op.Add) {
-                if (valueType != null && valueType.isNumType()) {
-                    s1.put(this, valueType);
-                } else {
-                    Analyzer.self.putProblem(this, "+ can't be applied to type: " + valueType);
-                    s1.put(this, Type.INT);
+            if (valueType != null) {
+                if (op == Op.Add) {
+                    if (valueType.isNumType()) {
+                        s1.put(this, valueType);
+                    } else {
+                        Analyzer.self.putProblem(this, "+ can't be applied to type: " + valueType);
+                        s1.put(this, Type.INT);
+                    }
                 }
-            }
 
-            if (op == Op.Sub) {
-                if (valueType != null && valueType.isIntType()) {
-                    s1.put(this, valueType.asIntType().negate());
-                } else {
-                    Analyzer.self.putProblem(this, "- can't be applied to type: " + valueType);
-                    s1.put(this, Type.INT);
+                if (op == Op.Sub) {
+                    if (valueType.isIntType()) {
+                        s1.put(this, valueType.asIntType().negate());
+                    } else {
+                        Analyzer.self.putProblem(this, "- can't be applied to type: " + valueType);
+                        s1.put(this, Type.INT);
+                    }
                 }
-            }
 
-            if (op == Op.Not) {
-                if (valueType != null && valueType.isTrue()) {
-                    s1.put(this, Type.FALSE);
-                } else {
-                    s1.put(this, Type.TRUE);
+                if (op == Op.Not) {
+                    if (valueType.isTrue()) {
+                        s1.put(this, Type.FALSE);
+                    } else {
+                        s1.put(this, Type.TRUE);
+                    }
                 }
             }
         }

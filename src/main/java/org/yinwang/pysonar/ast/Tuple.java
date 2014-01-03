@@ -3,6 +3,7 @@ package org.yinwang.pysonar.ast;
 import org.jetbrains.annotations.NotNull;
 import org.yinwang.pysonar.State;
 import org.yinwang.pysonar.types.TupleType;
+import org.yinwang.pysonar.types.Type;
 
 import java.util.List;
 
@@ -24,7 +25,10 @@ public class Tuple extends Sequence {
         for (State s1 : ss) {
             TupleType t = new TupleType();
             for (Node e : elts) {
-                t.add(s1.lookupType(e));
+                Type elType = s1.lookupType(e);
+                if (elType != null) {
+                    t.add(elType);
+                }
             }
             s1.put(this, t);
         }

@@ -63,13 +63,19 @@ public class Call extends Node {
             if (fun instanceof FunType) {
                 List<Type> pos = new ArrayList<>();
                 for (Node arg : args) {
-                    pos.add(s1.lookupType(arg));
+                    Type t1 = s1.lookupType(arg);
+                    if (t1 != null) {
+                        pos.add(t1);
+                    }
                 }
 
                 Map<String, Type> hash = new HashMap<>();
                 if (keywords != null) {
                     for (Keyword kw : keywords) {
-                        hash.put(kw.arg, s1.lookupType(kw.value));
+                        Type t1 = s1.lookupType(kw.value);
+                        if (t1 != null) {
+                            hash.put(kw.arg, t1);
+                        }
                     }
                 }
 
@@ -85,7 +91,6 @@ public class Call extends Node {
     }
 
 
-    @NotNull
     public static void apply(@NotNull FunType func,
                              @Nullable List<Type> pos,
                              Map<String, Type> hash,
@@ -146,7 +151,13 @@ public class Call extends Node {
         Type cachedTo = func.getMapping(fromType);
         if (cachedTo != null) {
             func.setSelfType(null);
-            s.put(call, cachedTo);
+            if (call != null) {
+                s.put(call, cachedTo);
+            }
+        } else if (func.func == null) {
+            if (call != null) {
+                s.put(call, Type.UNKNOWN);
+            }
         } else {
             List<State> outStates = transformExpr(func.func.body, funcTable);
             for (State os : outStates) {
@@ -154,7 +165,9 @@ public class Call extends Node {
                 if (b != null) {
                     Type toType = b.type;
                     func.addMapping(fromType, toType);
-                    s.put(call, b);
+                    if (call != null) {
+                        s.put(call, b);
+                    }
                 }
             }
 

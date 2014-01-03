@@ -21,7 +21,11 @@ public class Yield extends Node {
     @NotNull
     @Override
     public List<State> transform(State s) {
-        return transformExpr(value, s);
+        if (value != null) {
+            return transformExpr(value, s);
+        } else {
+            return s.single();
+        }
     }
 
 

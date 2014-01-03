@@ -99,23 +99,25 @@ public class Binder {
 
         for (State s1 : ss) {
             Type iterType = s1.lookupType(iter);
-            if (iterType.isListType()) {
-                bind(s, target, iterType.asListType().eltType, kind);
-            } else if (iterType.isTupleType()) {
-                bind(s, target, iterType.asTupleType().toListType().eltType, kind);
-            } else {
-                Binding ent = iterType.table.lookupAttr("__iter__");
-                if (ent != null) {
-                    if (!ent.type.isFuncType()) {
-                        if (!iterType.isUnknownType()) {
-                            Analyzer.self.putProblem(iter, "not an iterable type: " + iterType);
-                        }
-                        bind(s, target, Type.UNKNOWN, kind);
-                    } else {
-                        bind(s, target, ent.type.asFuncType().getReturnType(), kind);
-                    }
+            if (iterType != null) {
+                if (iterType.isListType()) {
+                    bind(s, target, iterType.asListType().eltType, kind);
+                } else if (iterType.isTupleType()) {
+                    bind(s, target, iterType.asTupleType().toListType().eltType, kind);
                 } else {
-                    bind(s, target, Type.UNKNOWN, kind);
+                    Binding ent = iterType.table.lookupAttr("__iter__");
+                    if (ent != null) {
+                        if (!ent.type.isFuncType()) {
+                            if (!iterType.isUnknownType()) {
+                                Analyzer.self.putProblem(iter, "not an iterable type: " + iterType);
+                            }
+                            bind(s, target, Type.UNKNOWN, kind);
+                        } else {
+                            bind(s, target, ent.type.asFuncType().getReturnType(), kind);
+                        }
+                    } else {
+                        bind(s, target, Type.UNKNOWN, kind);
+                    }
                 }
             }
         }

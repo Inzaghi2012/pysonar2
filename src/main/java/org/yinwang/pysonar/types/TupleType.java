@@ -50,7 +50,7 @@ public class TupleType extends Type {
     }
 
 
-    public void add(Type elt) {
+    public void add(@NotNull Type elt) {
         eltTypes.add(elt);
     }
 

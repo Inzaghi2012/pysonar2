@@ -118,7 +118,7 @@ public class ImportFrom extends Node {
         } else {
             // Fall back to importing all names not starting with "_".
             for (Entry<Object, Binding> e : mt.table.entrySet()) {
-                if (!(e.getKey() instanceof String) && ((String) e.getKey()).startsWith("_")) {
+                if (!(e.getKey() instanceof String && ((String) e.getKey()).startsWith("_"))) {
                     s.put(e.getKey(), e.getValue());
                 }
             }

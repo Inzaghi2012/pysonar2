@@ -31,9 +31,11 @@ public class NList extends Sequence {
             ListType listType = new ListType();
             for (Node elt : elts) {
                 Type t = s1.lookupType(elt);
-                listType.add(t);
-                if (elt instanceof Str) {
-                    listType.addValue(((Str) elt).value);
+                if (t != null) {
+                    listType.add(t);
+                    if (elt instanceof Str) {
+                        listType.addValue(((Str) elt).value);
+                    }
                 }
             }
             s1.put(this, listType);

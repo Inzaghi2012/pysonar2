@@ -33,13 +33,14 @@ public class Subscript extends Node {
         for (State s1 : ss) {
             Type vt = s1.lookupType(value);
             Type st = s1.lookupType(slice);
-            getSubscript(vt, st, s1);
+            if (vt != null) {
+                getSubscript(vt, st, s1);
+            }
         }
         return ss;
     }
 
 
-    @NotNull
     private void getSubscript(@NotNull Type vt, @Nullable Type st, State s) {
         if (vt.isUnknownType()) {
             s.put(this, Type.UNKNOWN);

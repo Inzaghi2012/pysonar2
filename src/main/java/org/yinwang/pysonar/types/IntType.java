@@ -64,15 +64,15 @@ public class IntType extends NumType {
 
 
     public static IntType div(IntType a, IntType b) {
-        BigInteger lower = BigInteger.ZERO;
-        if (lower != null && !b.upper.equals(BigInteger.ZERO)) {
+        BigInteger lower;
+        if (b.upper != null && !b.upper.equals(BigInteger.ZERO)) {
             lower = a.lower.divide(b.upper);
         } else {
             lower = null;
         }
 
-        BigInteger upper = BigInteger.ZERO;
-        if (upper != null && !b.lower.equals(BigInteger.ZERO)) {
+        BigInteger upper;
+        if (b.lower != null && !b.lower.equals(BigInteger.ZERO)) {
             upper = a.upper.divide(b.lower);
         } else {
             upper = null;
