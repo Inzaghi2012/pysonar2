@@ -151,20 +151,23 @@ public class BinOp extends Node {
                                 // true branch: if l < r, then l's upper bound is r's upper bound (exclusive)
                                 NumType trueType = NumType.copy(leftNum);
                                 NumType.setUpperExclusive(trueType, rightNum);
+                                if (NumType.isFeasible(trueType)) {
+                                    State s1true = s1.copy();
+                                    s1true.put(this, Type.TRUE);
+                                    s1true.updateType(leftNode, trueType);
+                                    ret.add(s1true);
+                                }
+
 
                                 // false branch: if l >= r, then l's lower bound is r's lower bound (inclusive)
                                 NumType falseType = NumType.copy(leftNum);
                                 NumType.setLowerInclusive(falseType, rightNum);
-
-                                State s1true = s1.copy();
-                                s1true.put(this, Type.TRUE);
-                                s1true.updateType(leftNode, trueType);
-                                ret.add(s1true);
-
-                                State s1false = s1.copy();
-                                s1false.put(this, Type.FALSE);
-                                s1false.updateType(leftNode, falseType);
-                                ret.add(s1false);
+                                if (NumType.isFeasible(falseType)) {
+                                    State s1false = s1.copy();
+                                    s1false.put(this, Type.FALSE);
+                                    s1false.updateType(leftNode, falseType);
+                                    ret.add(s1false);
+                                }
                             }
                         }
                     }
@@ -182,20 +185,22 @@ public class BinOp extends Node {
                                 // true branch: if l <= r, then l's upper bound is r's upper bound (inclusive)
                                 NumType trueType = NumType.copy(leftNum);
                                 NumType.setUpperInclusive(trueType, rightNum);
+                                if (NumType.isFeasible(trueType)) {
+                                    State s1true = s1.copy();
+                                    s1true.put(this, Type.TRUE);
+                                    s1true.updateType(leftNode, trueType);
+                                    ret.add(s1true);
+                                }
 
                                 // false branch: if l > r, then l's lower bound is r's lower bound (exclusive)
                                 NumType falseType = NumType.copy(leftNum);
                                 NumType.setLowerExclusive(falseType, rightNum);
-
-                                State s1true = s1.copy();
-                                s1true.put(this, Type.TRUE);
-                                s1true.updateType(leftNode, trueType);
-                                ret.add(s1true);
-
-                                State s1false = s1.copy();
-                                s1false.put(this, Type.FALSE);
-                                s1false.updateType(leftNode, falseType);
-                                ret.add(s1false);
+                                if (NumType.isFeasible(falseType)) {
+                                    State s1false = s1.copy();
+                                    s1false.put(this, Type.FALSE);
+                                    s1false.updateType(leftNode, falseType);
+                                    ret.add(s1false);
+                                }
                             }
                         }
                     }
@@ -212,20 +217,22 @@ public class BinOp extends Node {
                                 // true branch: if l > r, then l's lower bound is r's lower bound
                                 NumType trueType = NumType.copy(leftNum);
                                 NumType.setLowerExclusive(trueType, rightNum);
+                                if (NumType.isFeasible(trueType)) {
+                                    State s1true = s1.copy();
+                                    s1true.put(this, Type.TRUE);
+                                    s1true.updateType(leftNode, trueType);
+                                    ret.add(s1true);
+                                }
 
                                 // false branch: if l <= r, then l's upper bound is r's upper bound
                                 NumType falseType = NumType.copy(leftNum);
                                 NumType.setUpperInclusive(falseType, rightNum);
-
-                                State s1true = s1.copy();
-                                s1true.put(this, Type.TRUE);
-                                s1true.updateType(leftNode, trueType);
-                                ret.add(s1true);
-
-                                State s1false = s1.copy();
-                                s1false.put(this, Type.FALSE);
-                                s1false.updateType(leftNode, falseType);
-                                ret.add(s1false);
+                                if (NumType.isFeasible(falseType)) {
+                                    State s1false = s1.copy();
+                                    s1false.put(this, Type.FALSE);
+                                    s1false.updateType(leftNode, falseType);
+                                    ret.add(s1false);
+                                }
                             }
                         }
                     }
@@ -242,20 +249,22 @@ public class BinOp extends Node {
                                 // true branch: if l >= r, then l's lower bound is r's lower bound
                                 NumType trueType = NumType.copy(leftNum);
                                 NumType.setLowerInclusive(trueType, rightNum);
+                                if (NumType.isFeasible(trueType)) {
+                                    State s1true = s1.copy();
+                                    s1true.put(this, Type.TRUE);
+                                    s1true.updateType(leftNode, trueType);
+                                    ret.add(s1true);
+                                }
 
                                 // false branch: if l < r, then l's upper bound is r's upper bound
                                 NumType falseType = NumType.copy(leftNum);
                                 NumType.setUpperExclusive(falseType, rightNum);
-
-                                State s1true = s1.copy();
-                                s1true.put(this, Type.TRUE);
-                                s1true.updateType(leftNode, trueType);
-                                ret.add(s1true);
-
-                                State s1false = s1.copy();
-                                s1false.put(this, Type.FALSE);
-                                s1false.updateType(leftNode, falseType);
-                                ret.add(s1false);
+                                if (NumType.isFeasible(falseType)) {
+                                    State s1false = s1.copy();
+                                    s1false.put(this, Type.FALSE);
+                                    s1false.updateType(leftNode, falseType);
+                                    ret.add(s1false);
+                                }
                             }
                         }
                     }
@@ -264,37 +273,41 @@ public class BinOp extends Node {
                         if (NumType.eq(leftNum, rightNum)) {
                             s1.put(this, Type.TRUE);
                             ret.add(s1);
-                        } else if (NumType.lt(leftNum, rightNum) || NumType.gt(leftNum, rightNum)) {
+                        } else if (NumType.neq(leftNum, rightNum)) {
                             s1.put(this, Type.FALSE);
                             ret.add(s1);
                         } else {
                             // transfer bound information
                             if (leftNode.isName()) {
+
                                 // true branch: if l == r, then l is r
                                 NumType trueType = NumType.copy(rightNum);
+                                if (NumType.isFeasible(trueType)) {
+                                    State s1true = s1.copy();
+                                    s1true.put(this, Type.TRUE);
+                                    s1true.updateType(leftNode, trueType);
+                                    ret.add(s1true);
+                                }
 
-                                // false branch: if l != r, then l < r or l > r
+                                // false branch 1: l < r
                                 NumType falseType1 = NumType.copy(leftNum);
                                 NumType.setLowerExclusive(falseType1, rightNum);
+                                if (NumType.isFeasible(falseType1)) {
+                                    State s1false1 = s1.copy();
+                                    s1false1.put(this, Type.FALSE);
+                                    s1false1.updateType(leftNode, falseType1);
+                                    ret.add(s1false1);
+                                }
 
+                                // false branch 2: l > r
                                 NumType falseType2 = NumType.copy(leftNum);
                                 NumType.setUpperExclusive(falseType2, rightNum);
-
-                                State s1true = s1.copy();
-                                State s1false1 = s1.copy();
-                                State s1false2 = s1.copy();
-
-                                s1true.put(this, Type.TRUE);
-                                s1true.updateType(leftNode, trueType);
-                                ret.add(s1true);
-
-                                s1false1.put(this, Type.FALSE);
-                                s1false1.updateType(leftNode, falseType1);
-                                ret.add(s1false1);
-
-                                s1false2.put(this, Type.FALSE);
-                                s1false2.updateType(leftNode, falseType2);
-                                ret.add(s1false2);
+                                if (NumType.isFeasible(falseType2)) {
+                                    State s1false2 = s1.copy();
+                                    s1false2.put(this, Type.FALSE);
+                                    s1false2.updateType(leftNode, falseType2);
+                                    ret.add(s1false2);
+                                }
                             }
                         }
                     }

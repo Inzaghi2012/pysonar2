@@ -125,6 +125,11 @@ abstract public class NumType extends Type {
     }
 
 
+    public static boolean neq(NumType a, NumType b) {
+        return NumType.lt(a, b) || NumType.gt(a, b);
+    }
+
+
     public static boolean lt(NumType a, NumType b) {
         if (a instanceof FloatType || b instanceof FloatType) {
             FloatType af;
@@ -250,6 +255,17 @@ abstract public class NumType extends Type {
             return ((FloatType) a).isZero();
         } else if (a instanceof IntType) {
             return ((IntType) a).isZero();
+        } else {
+            return false;
+        }
+    }
+
+
+    public static boolean isFeasible(NumType a) {
+        if (a instanceof FloatType) {
+            return ((FloatType) a).isFeasible();
+        } else if (a instanceof IntType) {
+            return ((IntType) a).isFeasible();
         } else {
             return false;
         }

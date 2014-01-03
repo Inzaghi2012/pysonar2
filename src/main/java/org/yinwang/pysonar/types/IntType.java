@@ -50,6 +50,16 @@ public class IntType extends NumType {
     }
 
 
+    public boolean isLowerBounded() {
+        return lower != null;
+    }
+
+
+    public boolean isUpperBounded() {
+        return upper != null;
+    }
+
+
     public static IntType add(IntType a, IntType b) {
         BigInteger lower = a.lower == null || b.lower == null ? null : a.lower.add(b.lower);
         BigInteger upper = a.upper == null || b.upper == null ? null : a.upper.add(b.upper);
@@ -60,8 +70,8 @@ public class IntType extends NumType {
 
 
     public static IntType sub(IntType a, IntType b) {
-        BigInteger lower = a.lower == null || b.lower == null ? null : a.lower.subtract(b.upper);
-        BigInteger upper = a.upper == null || b.upper == null ? null : a.upper.subtract(b.lower);
+        BigInteger lower = a.lower == null || b.upper == null ? null : a.lower.subtract(b.upper);
+        BigInteger upper = a.upper == null || b.lower == null ? null : a.upper.subtract(b.lower);
         boolean lowerInclusive = !b.upperInclusive;
         boolean upperInclusive = !b.lowerInclusive;
         return new IntType(lower, upper, lowerInclusive, upperInclusive);
@@ -115,7 +125,7 @@ public class IntType extends NumType {
 
     public boolean lte(IntType other) {
         return upper != null &&
-                other.lower != null &&
+                other.isLowerBounded() &&
                 this.upper.compareTo(other.lower) <= 0;
     }
 
@@ -133,7 +143,7 @@ public class IntType extends NumType {
 
 
     public boolean gt(IntType other) {
-        return this.lower != null &&
+        return isLowerBounded() &&
                 other.upper != null &&
                 (this.lower.compareTo(other.upper) > 0 ||
                         (this.lower.compareTo(other.upper) == 0 && (!this.lowerInclusive || !other.upperInclusive)));
@@ -141,20 +151,20 @@ public class IntType extends NumType {
 
 
     public boolean gte(IntType other) {
-        return lower != null &&
+        return isLowerBounded() &&
                 other.upper != null &&
                 this.lower.compareTo(other.upper) >= 0;
     }
 
 
     public boolean gt(BigInteger other) {
-        return this.lower != null &&
+        return isLowerBounded() &&
                 (this.lower.compareTo(other) > 0 || (this.lower.compareTo(other) == 0 && !this.lowerInclusive));
     }
 
 
     public boolean gte(BigInteger other) {
-        return lower != null && this.lower.compareTo(other) >= 0;
+        return isLowerBounded() && this.lower.compareTo(other) >= 0;
     }
 
 
@@ -170,7 +180,7 @@ public class IntType extends NumType {
 
 
     public boolean isActualValue() {
-        return lower != null && upper != null && lower.equals(upper);
+        return isLowerBounded() && upper != null && lower.equals(upper);
     }
 
 
@@ -240,6 +250,28 @@ public class IntType extends NumType {
     }
 
 
+    public boolean isFeasible() {
+        // one of the ends are unbounded
+        if (lower == null || upper == null) {
+            return true;
+        }
+        // l <= r - 2, e.g. (1, 3)
+        if (lower.compareTo(upper.subtract(BigInteger.ONE)) < 0) {
+            return true;
+        }
+        // l <= r - 1 and at least one end inclusive, e.g. (1, 2] or [1, 2)
+        if (lower.compareTo(upper) < 0 && (lowerInclusive || upperInclusive)) {
+            return true;
+        }
+        // l == r and both inclusive, e.g. [1]
+        if (lower.compareTo(upper) == 0 && lowerInclusive && upperInclusive) {
+            return true;
+        }
+
+        return false;
+    }
+
+
     public FloatType toFloatType() {
         double lower = this.lower == null ? Double.NEGATIVE_INFINITY : this.lower.doubleValue();
         double upper = this.upper == null ? Double.POSITIVE_INFINITY : this.upper.doubleValue();
@@ -255,13 +287,13 @@ public class IntType extends NumType {
             if (isActualValue() && lower.equals(upper)) {
                 sb.append("[" + lower + "]");
             } else {
-                if (lower != null || upper != null) {
-                    if (lowerInclusive) {
+                if (isLowerBounded() || upper != null) {
+                    if (lowerInclusive && isLowerBounded()) {
                         sb.append("[");
                     } else {
                         sb.append("(");
                     }
-                    if (lower != null) {
+                    if (isLowerBounded()) {
                         sb.append(lower);
                     } else {
                         sb.append("-∞");
@@ -272,7 +304,7 @@ public class IntType extends NumType {
                     } else {
                         sb.append("+∞");
                     }
-                    if (upperInclusive) {
+                    if (upperInclusive && upper != null) {
                         sb.append("]");
                     } else {
                         sb.append(")");

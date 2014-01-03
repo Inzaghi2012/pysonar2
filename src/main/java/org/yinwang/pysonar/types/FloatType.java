@@ -87,7 +87,7 @@ public class FloatType extends NumType {
 
     public boolean lt(FloatType other) {
         return (this.upper < other.lower ||
-                this.upper == other.lower && (!this.lowerInclusive || !other.upperInclusive));
+                this.upper == other.lower && (!this.upperInclusive || !other.lowerInclusive));
     }
 
 
@@ -202,6 +202,17 @@ public class FloatType extends NumType {
     }
 
 
+    public boolean isFeasible() {
+        if (lower < upper) {
+            return true;
+        }
+        if (lower == upper && lowerInclusive && upperInclusive) {
+            return true;
+        }
+        return false;
+    }
+
+
     @Override
     protected String printType(CyclicTypeRecorder ctr) {
         StringBuilder sb = new StringBuilder("float");
@@ -210,7 +221,7 @@ public class FloatType extends NumType {
             if (lower == upper) {
                 sb.append("[" + lower + "]");
             } else if (isLowerBounded() || isUpperBounded()) {
-                if (lowerInclusive) {
+                if (lowerInclusive && isLowerBounded()) {
                     sb.append("[");
                 } else {
                     sb.append("(");
@@ -228,7 +239,7 @@ public class FloatType extends NumType {
                     sb.append("+∞");
                 }
 
-                if (upperInclusive) {
+                if (upperInclusive && isUpperBounded()) {
                     sb.append("]");
                 } else {
                     sb.append(")");
